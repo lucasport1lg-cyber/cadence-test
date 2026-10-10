@@ -94,3 +94,9 @@ body { background: #0f1411; overscroll-behavior: none; }
   .t-page .t-h1 { font-size: 32px; }
 }
 @media (prefers-reduced-motion: reduce) { .t-progress i { transition: none; } }
+
+/* Dans les zones qui défilent, les blocs gardent leur hauteur au lieu d'être écrasés
+   (sinon les listes à coins arrondis sont coupées quand l'écran est moins haut que 844 px) */
+.t-phone-inner [style*="overflow-y: auto"] > *,
+.t-phone-inner [style*="overflow: auto"] > *,
+.t-phone-inner [style*="overflow-y: scroll"] > * { flex-shrink: 0; }

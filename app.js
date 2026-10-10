@@ -286,6 +286,11 @@
         h('p', { className: 't-help' }, 'Quand tu penses avoir terminé, touche « J’ai terminé » en haut de l’écran. Tu peux aussi abandonner.'),
         h('div', { className: 't-actions' },
           h('button', { className: 't-btn', onClick: () => {
+            // Après le premier lancement, active les modules dont les missions ont besoin
+            // (coach, compétitions, social), même si le testeur les a désactivés.
+            if (m.id !== 'T0') {
+              try { ['competitions', 'coach', 'social'].forEach((k) => window.localStorage.setItem('cadence.mod.' + k, '1')); } catch (e) {}
+            }
             setScreen(m.start); setNavKey((k) => k + 1); setExpanded(false);
             update((x) => { x.step = 'run'; x.run = { start: Date.now(), navs: 0, clicks: 0, path: [SCREENS[m.start]], screen: m.start }; return x; });
           } }, 'C’est parti')));

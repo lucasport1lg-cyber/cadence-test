@@ -910,7 +910,7 @@ class Component extends DCLogic {
     const prov = g('watchProv', 'apple');
     const isOn = (k) => g('conn.' + k, '0') === '1';
     let prof = {}; try { prof = JSON.parse(g('profile', '{}')) || {}; } catch (e) {}
-    prof = Object.assign({ first: 'Lucas', last: 'G.', email: '', birth: '', club: '' }, prof);
+    prof = Object.assign({ first: 'Lucas', last: String(prof.first || '').trim() ? '' : 'G.', email: '', birth: '', club: '' }, prof);
 
     const out = { sheetOn: !!s.sheet, closeSheet: close };
 

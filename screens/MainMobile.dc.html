@@ -131,7 +131,7 @@ button{font-family:inherit}
             <span style="position: absolute; top: 0; right: 0; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg);">2</span>
           </a>
         </sc-if>
-        <a data-tuto="profil" href="ProfilMobile.dc.html" aria-label="Profil et réglages" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0;">LG</a>
+        <a data-tuto="profil" href="ProfilMobile.dc.html" aria-label="Profil et réglages" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0;">{{ me.ini }}</a>
       </div>
     </div>
 
@@ -182,14 +182,14 @@ button{font-family:inherit}
       <div style="display: flex; align-items: flex-start; justify-content: space-between;">
         <div>
           <div style="font-size: 12px; color: var(--text-3);">Index actuel</div>
-          <div class="display" style="font-size: 40px; font-weight: 600; line-height: 1.1; margin-top: 4px; color: var(--accent);">14.2</div>
-          <div style="font-size: 12px; color: var(--status-good); margin-top: 4px;">▼ 4.2 sur 10 semaines</div>
+          <div class="display" style="font-size: 40px; font-weight: 600; line-height: 1.1; margin-top: 4px; color: var(--accent);">{{ me.idx }}</div>
+          <div style="font-size: 12px; color: {{ me.trendColor }}; margin-top: 4px;">{{ me.trend }}</div>
         </div>
-        <svg width="130" height="56" viewBox="0 0 120 32" style="flex-shrink: 0; margin-top: 10px;">
+        <sc-if value="{{ me.demoTrend }}" hint-placeholder-val="{{ true }}"><svg width="130" height="56" viewBox="0 0 120 32" style="flex-shrink: 0; margin-top: 10px;">
           <polyline points="4,4 16.4,6.9 28.9,9.7 41.3,7.4 53.8,12.6 66.2,16 78.7,18.9 91.1,22.9 103.6,25.7" fill="none" stroke="var(--text-3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           <polyline points="103.6,25.7 116,28" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           <circle cx="116" cy="28" r="2.6" fill="var(--accent)" stroke="var(--surface)" stroke-width="1.2"/>
-        </svg>
+        </svg></sc-if>
       </div>
       <div style="display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--accent);">Voir l’évolution dans Progression<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></div>
     </a>
@@ -783,7 +783,7 @@ class Component extends DCLogic {
     let prof = {}; try { prof = JSON.parse(ls('profile', '{}')) || {}; } catch (e) {}
     const ITEMS = [
       ['account', fr ? 'Crée ton compte' : 'Create your account', fr ? 'Pour sauvegarder tes séances' : 'To back up your sessions', !!ls('account', '')],
-      ['bag', fr ? 'Renseigne ton sac' : 'Fill in your bag', fr ? 'Ta distance avec chaque club' : 'Your distance with each club', ls('bag', null) !== null],
+      ['bag', fr ? 'Renseigne ton sac' : 'Fill in your bag', fr ? 'Les clubs que tu as' : 'The clubs you carry', ls('bag', null) !== null],
       ['golf', fr ? 'Ajoute ton golf' : 'Add your course', fr ? 'Club et parcours favori' : 'Club and home course', ls('favCourse', null) !== null || !!(prof.club || '').trim()],
       ['connex', fr ? 'Connecte tes services' : 'Connect your services', 'ffgolf, TrackMan, ' + (fr ? 'montre' : 'watch'), ['ffgolf', 'trackman', 'watch'].some((k) => ls('conn.' + k, '0') === '1')],
       ['tour', fr ? 'Fais la visite guidée' : 'Take the guided tour', fr ? '30 secondes pour tout repérer' : '30 seconds to find your way', ls('tourSeen', '0') === '1']
@@ -844,6 +844,7 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state || {};
     return {
+      me: window.cadenceMe(),
       theme: this.themeNow(),
       palette: this.paletteNow(),
       cvd: this.cvdNow(),

@@ -264,5 +264,24 @@
     return cache[name];
   }
 
+  // Identité affichée : celle saisie au premier lancement, sinon le joueur de démonstration
+  window.cadenceMe = function () {
+    let p = {}, idx = null;
+    try { p = JSON.parse(window.localStorage.getItem('cadence.profile') || '{}') || {}; } catch (e) {}
+    try { idx = window.localStorage.getItem('cadence.index'); } catch (e) {}
+    const first = String(p.first || '').trim();
+    const last = String(p.last || '').trim();
+    const own = !!first || idx !== null;
+    const raw = idx === null ? '' : String(idx).trim().replace(',', '.');
+    return {
+      own: own,
+      ini: first ? (first[0] + (last[0] || '')).toUpperCase() : (own ? '?' : 'LG'),
+      idx: idx === null ? '14.2' : (raw || '—'),
+      trend: idx === null ? '▼ 4.2 sur 10 semaines' : (raw ? 'Ton index de départ' : 'Pas encore d’index : joue ta première partie'),
+      trendColor: idx === null ? 'var(--status-good)' : 'var(--text-3)',
+      demoTrend: idx === null
+    };
+  };
+
   window.CadenceRuntime = { DCLogic: DCLogic, Guard: Guard, loadScreen: loadScreen, h: h };
 })();

@@ -147,7 +147,7 @@ button{font-family:inherit}
       <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--text-3);">
         <span>1 · L'essentiel · moins d'une minute</span>
         <span>2 · Ton profil · facultatif</span>
-        <span>3 · C'est parti · comme tu veux</span>
+        <span>3 · Découvrir l'appli · visite guidée ou seul</span>
       </div>
     </div>
     <div style="flex-shrink: 0; padding: 12px 20px 28px 20px; display: flex; flex-direction: column; gap: 8px;">
@@ -266,17 +266,23 @@ button{font-family:inherit}
         <h1 style="font-size: 24px; font-weight: 600;">Ton sac</h1>
         <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">{{ bagSub }}</p>
       </div>
-      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
-        <sc-for list="{{ bagRows }}" as="c" hint-placeholder-count="5">
-          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: {{ c.border }};">
-            <span style="width: 10px; height: 10px; border-radius: 50%; background: var(--{{ c.color }}); flex-shrink: 0;"></span>
-            <span style="flex-grow: 1; font-size: 15px;">{{ c.name }}</span>
-            <input type="text" inputmode="numeric" value="{{ c.v }}" onChange="{{ c.on }}" aria-label="{{ c.aria }}" class="display" style="width: 64px; text-align: right; font-size: 17px; font-weight: 600; border: none; border-bottom: 2px dashed {{ c.line }}; border-radius: 0; background: transparent; color: var(--text); outline: none; padding: 2px 0;">
-            <span style="font-size: 13px; color: var(--text-3); width: 22px;">{{ unit }}</span>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <sc-for list="{{ bagGroups }}" as="g" hint-placeholder-count="5">
+          <div>
+            <div style="font-size: 12px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">{{ g.label }}</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <sc-for list="{{ g.clubs }}" as="c" hint-placeholder-count="3">
+                <button role="checkbox" aria-checked="{{ c.aria }}" onClick="{{ c.toggle }}" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid {{ c.border }}; background: {{ c.bg }}; color: {{ c.color }}; font-size: 14px; font-weight: {{ c.weight }}; cursor: pointer; display: flex; align-items: center; gap: 6px;">{{ c.mark }}{{ c.name }}</button>
+              </sc-for>
+            </div>
           </div>
         </sc-for>
       </div>
-      <div style="font-size: 12px; color: var(--text-3); line-height: 1.45;">Touche une distance pour la corriger. Tu as TrackMan ? Tes distances réelles pourront remplacer ces valeurs (étape Connexions).</div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 10px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border);">
+        <span style="font-size: 14px; font-weight: 600;">{{ bagCount }}</span>
+        <span style="font-size: 12px; color: {{ bagCountColor }};">{{ bagRule }}</span>
+      </div>
+      <div style="font-size: 12px; color: var(--text-3); line-height: 1.45;">Pas besoin de connaître tes distances : Cadence les apprendra au fil de tes parties. Tu pourras aussi les saisir dans ton Profil ou les importer depuis TrackMan.</div>
     </sc-if>
 
     <!-- 6 · Ton golf -->
@@ -526,6 +532,12 @@ class Component extends DCLogic {
     const bag = s.bag || CLUBS.reduce((o, c, i) => Object.assign(o, { [c[0]]: toU(PRESET[level][i]) }), {});
     const bagOk = (v) => /^\d{2,3}$/.test(String(v).trim()) && +v >= 30 && +v <= (yd ? 440 : 400);
     const bagBad = CLUBS.find((c) => !bagOk(bag[c[0]]));
+    // Composition du sac : les clubs que le joueur possède (14 au maximum en partie)
+    const CLUB_GROUPS = [['Bois', [['driver', 'Driver'], ['wood3', 'Bois 3'], ['wood5', 'Bois 5']]], ['Hybrides', [['hyb3', 'Hybride 3'], ['hyb4', 'Hybride 4']]], ['Fers', [['iron4', 'Fer 4'], ['iron5', 'Fer 5'], ['iron6', 'Fer 6'], ['iron7', 'Fer 7'], ['iron8', 'Fer 8'], ['iron9', 'Fer 9']]], ['Wedges', [['pw', 'PW'], ['gw', 'GW'], ['sw', 'SW'], ['lw', 'LW']]], ['Putter', [['putter', 'Putter']]]];
+    const CLUB_NAMES = {}; CLUB_GROUPS.forEach((g) => g[1].forEach((c) => { CLUB_NAMES[c[0]] = c[1]; }));
+    const CLUB_DEF = level === 'debutant' ? ['driver', 'wood5', 'hyb4', 'iron6', 'iron7', 'iron8', 'iron9', 'pw', 'sw', 'putter'] : ['driver', 'wood3', 'wood5', 'hyb4', 'iron5', 'iron6', 'iron7', 'iron8', 'iron9', 'pw', 'gw', 'sw', 'putter'];
+    const clubs = s.clubs || CLUB_DEF;
+    const clubsBad = clubs.length === 0 ? 'none' : clubs.length > 14 ? 'many' : '';
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(s.email || '').trim());
     const picks = s.picks || { loisir: true };
     const conn = Object.assign({ ffgolf: false, trackman: false, watch: false }, s.conn || {}, s.ff ? { ffgolf: true } : {});
@@ -537,7 +549,8 @@ class Component extends DCLogic {
     const errOf = (id) => {
       if (id === 'role' && !player && !coach) return fr ? 'Choisis au moins une option.' : 'Pick at least one option.';
       if (id === 'jeu' && player && !s.noIdx && !idxOk) return fr ? 'L’index est un nombre entre −10 et 54 (ex. 18.4).' : 'The handicap is a number from −10 to 54 (e.g. 18.4).';
-      if (id === 'bag' && bagBad) return (fr ? 'Vérifie la distance du ' : 'Check the distance for ') + bagBad[1] + (fr ? ' : un nombre entre 30 et ' : ': a number from 30 to ') + (yd ? 440 : 400) + ' ' + unit + '.';
+      if (id === 'bag' && clubsBad === 'none') return 'Choisis au moins un club.';
+      if (id === 'bag' && clubsBad === 'many') return 'En partie, la règle autorise 14 clubs au maximum. Retires-en ' + (clubs.length - 14) + '.';
       return '';
     };
     const recapAt = seq.indexOf('recap');
@@ -557,7 +570,7 @@ class Component extends DCLogic {
     const bagMeters = () => CLUBS.reduce((o, c) => Object.assign(o, { [c[0]]: yd ? Math.round(+bag[c[0]] / 1.0936) : +bag[c[0]] }), {});
     const saveStep = (id) => {
       if (id === 'account' && s.account) { put('account', s.account); if (s.account === 'email') saveProfile({ email: String(s.email || '').trim() }); }
-      if (id === 'bag') put('bag', JSON.stringify(bagMeters()));
+      if (id === 'bag') { put('bag', JSON.stringify(bagMeters())); put('bagClubs', JSON.stringify(clubs)); }
       if (id === 'golf') { put('favCourse', fav); saveProfile({ club: String(s.club || '').trim() }); }
       if (id === 'connex') ['ffgolf', 'trackman', 'watch'].forEach((k) => put('conn.' + k, conn[k] ? '1' : '0'));
     };
@@ -594,7 +607,7 @@ class Component extends DCLogic {
 
     // En-tête : temps, avancement
     const inPhase = seq.filter((id) => PHASE[id] === PHASE[cur]);
-    const PH = fr ? ['', '1 · L’essentiel', '2 · Ton profil', '3 · C’est parti'] : ['', '1 · The essentials', '2 · Your profile', '3 · Let’s go'];
+    const PH = fr ? ['', '1 · L’essentiel', '2 · Ton profil', '3 · Découvrir l’appli'] : ['', '1 · The essentials', '2 · Your profile', '3 · Let’s go'];
     const flow = seq.slice(1);
     const errNow = s.err || '';
     const stepValid = !errOf(cur) && !(cur === 'account' && !s.account);
@@ -608,7 +621,7 @@ class Component extends DCLogic {
     ] : []).concat([
       ['account', fr ? 'Compte' : 'Account', s.account ? accName : later, !s.account]
     ]).concat(player ? [
-      ['bag', fr ? 'Sac' : 'Bag', isSkipped('bag') ? later : CLUBS.map((c) => c[1] + ' ' + bag[c[0]]).slice(0, 2).join(' · ') + ' ' + unit + '…', isSkipped('bag')],
+      ['bag', fr ? 'Sac' : 'Bag', isSkipped('bag') ? later : clubs.length + ' clubs · ' + clubs.slice(0, 2).map((k) => CLUB_NAMES[k]).join(', ') + '…', isSkipped('bag')],
       ['golf', 'Golf', isSkipped('golf') ? later : (String(s.club || '').trim() || nameOf(COURSES, fav)), isSkipped('golf')],
       ['connex', fr ? 'Connexions' : 'Connections', isSkipped('connex') ? later : (['ffgolf', 'trackman', 'watch'].filter((k) => conn[k]).map((k) => ({ ffgolf: 'ffgolf', trackman: 'TrackMan', watch: fr ? 'montre' : 'watch' })[k]).join(', ') || (fr ? 'Aucune' : 'None')), isSkipped('connex')]
     ] : []);
@@ -662,8 +675,12 @@ class Component extends DCLogic {
       email: s.email || '', onEmail: (e) => this.setState({ email: e.target.value, err: '' }), emailBorder: s.email && !emailOk ? 'var(--status-critical)' : 'var(--border)',
       sendLink: () => (emailOk ? this.setState({ account: 'email', err: '' }) : this.setState({ err: fr ? 'Saisis une adresse e-mail valide.' : 'Enter a valid email address.' })),
       // Sac
-      bagSub: (fr ? 'Distances moyennes pré-remplies pour un joueur ' : 'Average distances pre-filled for ') + (fr ? LEVELS[level].toLowerCase() : (level === 'expert' ? 'an expert' : 'an ' + LEVELS[level].toLowerCase()) + ' player') + (fr ? ', à ajuster.' : ', adjust them.'),
+      bagSub: 'Touche les clubs que tu as. Une sélection courante est déjà cochée.',
       unit: unit,
+      bagGroups: CLUB_GROUPS.map(([label, list]) => ({ label: label, clubs: list.map(([k, name]) => { const on = clubs.indexOf(k) >= 0; return { name: name, aria: on ? 'true' : 'false', mark: on ? '✓ ' : '', border: on ? 'var(--accent)' : 'var(--border)', bg: on ? 'color-mix(in srgb, var(--accent) 16%, transparent)' : 'var(--surface)', color: on ? 'var(--text)' : 'var(--text-2)', weight: on ? '600' : '400', toggle: () => this.setState({ clubs: on ? clubs.filter((x) => x !== k) : clubs.concat(k), err: '' }) }; }) })),
+      bagCount: clubs.length + (clubs.length > 1 ? ' clubs dans ton sac' : ' club dans ton sac'),
+      bagRule: clubs.length > 14 ? '14 au maximum en partie' : '14 au maximum',
+      bagCountColor: clubs.length > 14 ? 'var(--status-critical)' : 'var(--text-3)',
       bagRows: CLUBS.map(([k, name, color], i) => ({ name: name, color: color, v: bag[k], aria: name + (fr ? ', distance en ' : ', distance in ') + unit, line: bagOk(bag[k]) ? 'var(--border)' : 'var(--status-critical)', border: i < CLUBS.length - 1 ? '1px solid var(--border)' : 'none', on: (e) => this.setState({ bag: Object.assign({}, bag, { [k]: e.target.value }), err: '' }) })),
       // Golf
       club: s.club || '', onClub: (e) => this.setState({ club: e.target.value }),

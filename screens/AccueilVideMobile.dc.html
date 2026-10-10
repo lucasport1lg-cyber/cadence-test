@@ -490,7 +490,7 @@ class Component extends DCLogic {
     let prof = {}; try { prof = JSON.parse(ls('profile', '{}')) || {}; } catch (e) {}
     const ITEMS = [
       ['account', fr ? 'Crée ton compte' : 'Create your account', fr ? 'Pour sauvegarder tes séances' : 'To back up your sessions', !!ls('account', '')],
-      ['bag', fr ? 'Renseigne ton sac' : 'Fill in your bag', fr ? 'Ta distance avec chaque club' : 'Your distance with each club', ls('bag', null) !== null],
+      ['bag', fr ? 'Renseigne ton sac' : 'Fill in your bag', fr ? 'Les clubs que tu as' : 'The clubs you carry', ls('bag', null) !== null],
       ['golf', fr ? 'Ajoute ton golf' : 'Add your course', fr ? 'Club et parcours favori' : 'Club and home course', ls('favCourse', null) !== null || !!(prof.club || '').trim()],
       ['connex', fr ? 'Connecte tes services' : 'Connect your services', 'ffgolf, TrackMan, ' + (fr ? 'montre' : 'watch'), ['ffgolf', 'trackman', 'watch'].some((k) => ls('conn.' + k, '0') === '1')],
       ['tour', fr ? 'Fais la visite guidée' : 'Take the guided tour', fr ? '30 secondes pour tout repérer' : '30 seconds to find your way', ls('tourSeen', '0') === '1']
