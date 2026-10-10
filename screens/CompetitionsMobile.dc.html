@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Compétitions — Golf</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{
+  --on-accent:#0d0d0d;
+  --bg:#0d0d0d;
+  --surface:#1a1a19;
+  --surface-2:#242422;
+  --border:rgba(255,255,255,0.10);
+  --text:#ffffff;
+  --text-2:#c3c2b7;
+  --text-3:#898781;
+  --accent:#3987e5;
+  --status-good:#0ca30c;
+  --status-critical:#e66767;
+  --driving:#3987e5;
+  --fers:#d95926;
+  --petitjeu:#199e70;
+  --putting:#c98500;
+  --mental:#d55181;
+  --physique:#008300;
+}
+[data-theme="light"]{
+  --bg:#f7f3ea;
+  --surface:#fffffd;
+  --surface-2:#ece4d3;
+  --border:rgba(27,29,34,0.12);
+  --text:#1b1d22;
+  --text-2:#45433c;
+  --text-3:#6e6758;
+  --grid:#e4dccb;
+  --accent:#1e5c3f;
+  --on-accent:#ffffff;
+  --status-good:#0a7f0a;
+  --status-critical:#c23a3a;
+  --driving:#2b73cc;
+  --fers:#c24e1f;
+  --petitjeu:#0f7c86;
+  --putting:#9a6700;
+  --mental:#b83d6b;
+  --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="classique"]{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#ebe9e3; --border:rgba(13,13,13,0.12);
+  --text:#141413; --text-2:#44433e; --text-3:#6b6962; --grid:#e2e0d9; --accent:#2b73cc;
+}
+[data-theme="light"][data-palette="fairway"]{
+  --bg:#f2f5f1; --surface:#ffffff; --surface-2:#e2e9e0; --border:rgba(18,32,26,0.12);
+  --text:#12201a; --text-2:#3c4a42; --text-3:#5e6c65; --grid:#dce4da; --accent:#1e7a4f; --petitjeu:#0f7c86; --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="rose"]{
+  --bg:#fbf4f6; --surface:#ffffff; --surface-2:#f3e4ea; --border:rgba(42,22,32,0.12);
+  --text:#2a1620; --text-2:#553f49; --text-3:#7a5e6a; --grid:#eedde4; --accent:#c2477a; --mental:#7a4fc4;
+}
+[data-theme="light"][data-palette="lisible"]{
+  --bg:#ffffff; --surface:#f4f4f6; --surface-2:#e6e6eb; --border:rgba(0,0,0,0.18);
+  --text:#000000; --text-2:#2e2e31; --text-3:#5e5e63; --grid:#dddde2; --accent:#0a5fcc;
+}
+[data-theme="dark"][data-palette="clubhouse"]{
+  --bg:#0f1411; --surface:#171d19; --surface-2:#212923; --border:rgba(242,239,231,0.10);
+  --text:#f2efe7; --text-2:#c9c3b4; --text-3:#8e8878; --grid:#28302a;
+  --accent:#4fbf86; --on-accent:#0f1411; --driving:#4fc3f7; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="fairway"]{
+  --bg:#0b1510; --surface:#13201a; --surface-2:#1c2c24; --border:rgba(238,243,238,0.10);
+  --text:#eef3ee; --text-2:#bfcbc3; --text-3:#85948b; --grid:#22342a;
+  --accent:#3fbf7f; --on-accent:#0b1510; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="rose"]{
+  --bg:#1a0f15; --surface:#24161e; --surface-2:#2f1e28; --border:rgba(247,237,241,0.10);
+  --text:#f7edf1; --text-2:#d6c2cb; --text-3:#a18c96; --grid:#3a2632;
+  --accent:#f07aa8; --on-accent:#1a0f15; --mental:#a98bf0;
+}
+[data-theme="dark"][data-palette="lisible"]{
+  --bg:#000000; --surface:#111114; --surface-2:#222228; --border:rgba(255,255,255,0.22);
+  --text:#ffffff; --text-2:#e6e6ea; --text-3:#b4b4bb; --grid:#2a2a30;
+  --accent:#5aa2ff; --on-accent:#000000;
+}
+[data-theme][data-palette][data-cvd="rg"]{
+  --status-good:#56b4e9; --status-critical:#e69f00;
+  --driving:#56b4e9; --fers:#e69f00; --petitjeu:#009e73; --putting:#f0e442; --mental:#cc79a7; --physique:#bdbdbd;
+}
+[data-theme="light"][data-palette][data-cvd="rg"]{
+  --status-good:#0072b2; --status-critical:#b85000;
+  --driving:#0072b2; --fers:#d55e00; --petitjeu:#007a5a; --putting:#a88f00; --mental:#b0588d; --physique:#6b6b6b;
+}
+[data-theme][data-palette][data-cvd="by"]{
+  --status-good:#3dd6c4; --status-critical:#ff5c8a;
+  --driving:#90caf9; --fers:#ff7043; --petitjeu:#00897b; --putting:#f48fb1; --mental:#ba68c8; --physique:#e0e0e0;
+}
+[data-theme="light"][data-palette][data-cvd="by"]{
+  --status-good:#00796b; --status-critical:#c2185b;
+  --driving:#1e5fa8; --fers:#d84315; --petitjeu:#00695c; --putting:#ad1457; --mental:#7b1fa2; --physique:#616161;
+}
+*{box-sizing:border-box;scrollbar-width:none}
+*::-webkit-scrollbar{display:none}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" data-palette="{{ palette }}" data-cvd="{{ cvd }}" style="width: 390px; height: 844px; background: var(--bg); color: var(--text); display: flex; flex-direction: column; overflow: hidden; position: relative; {{ cvdStyle }}">
+
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 20px 20px 28px 20px; display: flex; flex-direction: column; gap: 16px;">
+
+    <!-- Top bar -->
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <a href="MainMobile.dc.html" aria-label="Retour à l'accueil" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); color: var(--text); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+      </a>
+      <div style="flex-grow: 1;">
+        <h1 style="font-size: 22px; font-weight: 600; line-height: 1.1;">Compétitions</h1>
+        <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Autour de toi · {{ radius }} km</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 3px; flex-shrink: 0;">
+        <button aria-pressed="{{ listAria }}" aria-label="Vue liste" onClick="{{ showList }}" style="width: 38px; height: 34px; border: none; border-radius: 8px; background: {{ listBg }}; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        </button>
+        <button aria-pressed="{{ mapAria }}" aria-label="Vue carte" onClick="{{ showMap }}" style="width: 38px; height: 34px; border: none; border-radius: 8px; background: {{ mapBg }}; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <label style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text-3);">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <input type="search" placeholder="Nom, golf ou ville" aria-label="Rechercher une compétition" style="flex-grow: 1; border: none; outline: none; background: transparent; color: var(--text); font-family: inherit; font-size: 14px;">
+    </label>
+
+    <!-- Filters -->
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; gap: 6px; overflow-x: auto; margin: 0 -20px; padding: 0 20px;">
+        <sc-for list="{{ radii }}" as="r" hint-placeholder-count="3">
+          <button aria-pressed="{{ r.aria }}" onClick="{{ r.pick }}" style="flex-shrink: 0; height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid {{ r.border }}; background: {{ r.bg }}; color: {{ r.color }}; font-size: 13px; font-weight: {{ r.weight }}; cursor: pointer;">{{ r.label }}</button>
+        </sc-for>
+        <span style="width: 1px; background: var(--border); flex-shrink: 0; margin: 4px 2px;"></span>
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="4">
+          <button aria-pressed="{{ c.aria }}" onClick="{{ c.pick }}" style="flex-shrink: 0; height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid {{ c.border }}; background: {{ c.bg }}; color: {{ c.color }}; font-size: 13px; font-weight: {{ c.weight }}; cursor: pointer;">{{ c.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border);">
+        <div style="flex-grow: 1;"><div style="font-size: 14px;">Accessibles avec mon index</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Index 14.2 · masque les compétitions trop exigeantes</div></div>
+        <button role="switch" aria-checked="{{ idxAria }}" aria-label="Accessibles avec mon index" onClick="{{ toggleIdx }}" style="width: 51px; height: 31px; border-radius: 999px; border: none; background: {{ idxBg }}; padding: 2px; display: flex; justify-content: {{ idxJustify }}; flex-shrink: 0; cursor: pointer;"><span style="width: 27px; height: 27px; border-radius: 50%; background: #ffffff;"></span></button>
+      </div>
+    </div>
+
+    <div style="font-size: 12px; color: var(--text-3); margin: 0 4px;">{{ countLabel }}</div>
+
+    <!-- Map -->
+    <sc-if value="{{ isMap }}" hint-placeholder-val="{{ false }}">
+      <div style="position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); background: #141a1f;" role="img" aria-label="Carte des compétitions autour de toi">
+        <svg viewBox="0 0 350 260" style="width: 100%; height: auto; display: block;" aria-hidden="true">
+          <path d="M0 180 C80 160 140 200 220 170 S330 120 350 130" stroke="#2c2c2a" stroke-width="10" fill="none"/>
+          <path d="M120 0 C130 80 110 160 140 260" stroke="#2c2c2a" stroke-width="8" fill="none"/>
+          <path d="M260 0 C250 60 280 120 250 260" stroke="#242422" stroke-width="5" fill="none"/>
+          <circle cx="160" cy="140" r="{{ ringR }}" fill="#3987e5" fill-opacity="0.08" stroke="#3987e5" stroke-opacity="0.4" stroke-dasharray="4 4"/>
+          <circle cx="160" cy="140" r="7" fill="#3987e5" stroke="#ffffff" stroke-width="2.5"/>
+        </svg>
+        <sc-for list="{{ pins }}" as="p" hint-placeholder-count="5">
+          <span style="position: absolute; left: {{ p.left }}; top: {{ p.top }}; transform: translate(-50%, -50%); width: 24px; height: 24px; border-radius: 50%; background: var(--accent); border: 2px solid #0d0d0d; color: var(--on-accent); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">{{ p.n }}</span>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- List -->
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <sc-for list="{{ comps }}" as="c" hint-placeholder-count="4">
+        <button onClick="{{ c.open }}" style="display: flex; align-items: flex-start; gap: 12px; padding: 14px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--text); text-align: left; cursor: pointer;">
+          <span style="width: 48px; height: 54px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span style="font-size: 12px; font-weight: 600;">{{ c.wd }}</span>
+            <span class="display" style="font-size: 18px; font-weight: 700; line-height: 1.1;">{{ c.d }}</span>
+            <span style="font-size: 12px; font-weight: 600; text-transform: uppercase;">{{ c.m }}</span>
+          </span>
+          <span style="flex-grow: 1; min-width: 0;">
+            <span style="display: flex; align-items: center; gap: 6px;"><span style="font-size: 12px; font-weight: 700; color: var(--text-3);">{{ c.n }}</span><span style="font-size: 14px; font-weight: 600;">{{ c.name }}</span></span>
+            <span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ c.golf }} · {{ c.km }} km</span>
+            <span style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;">
+              <span style="font-size: 12px; color: var(--text-2); background: var(--surface-2); padding: 2px 8px; border-radius: 999px;">{{ c.fmt }}</span>
+              <span style="font-size: 12px; color: {{ c.idxColor }}; background: var(--surface-2); padding: 2px 8px; border-radius: 999px;">Index max {{ c.idx }}</span>
+              <span style="font-size: 12px; color: {{ c.placesColor }}; background: var(--surface-2); padding: 2px 8px; border-radius: 999px;">{{ c.places }} places</span>
+            </span>
+          </span>
+        </button>
+      </sc-for>
+      <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 24px; text-align: center; border-radius: 14px; border: 1px dashed var(--border); font-size: 13px; color: var(--text-3);">Aucune compétition avec ces filtres. Élargis le rayon ou change de catégorie.</div>
+      </sc-if>
+    </div>
+  </div>
+
+  <!-- Detail sheet -->
+  <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ closeSel }}" aria-label="Fermer la fiche" style="position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); border: none; cursor: pointer;"></button>
+    <div role="dialog" aria-label="{{ sel.name }}" style="position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--border); border-radius: 24px 24px 0 0; padding: 10px 20px 30px 20px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="width: 36px; height: 4px; border-radius: 2px; background: var(--surface-2); align-self: center;"></div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+        <div>
+          <div style="font-size: 12px; color: var(--accent); font-weight: 600;">{{ sel.wd }} {{ sel.d }} {{ sel.m }} · départs dès 8 h</div>
+          <h2 style="font-size: 20px; font-weight: 600; margin-top: 4px;">{{ sel.name }}</h2>
+          <div style="font-size: 13px; color: var(--text-3); margin-top: 2px;">{{ sel.golf }} · {{ sel.km }} km</div>
+        </div>
+        <button onClick="{{ closeSel }}" aria-label="Fermer" style="width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text-2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div style="background: var(--bg); border-radius: 12px; overflow: hidden;">
+        <div style="display: flex; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 14px;"><span style="color: var(--text-3);">Formule</span><span>{{ sel.fmt }}</span></div>
+        <div style="display: flex; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 14px;"><span style="color: var(--text-3);">Index maximum</span><span style="color: {{ sel.idxColor }};">{{ sel.idx }}</span></div>
+        <div style="display: flex; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 14px;"><span style="color: var(--text-3);">Places restantes</span><span style="color: {{ sel.placesColor }};">{{ sel.places }}</span></div>
+        <div style="display: flex; justify-content: space-between; padding: 12px 14px; font-size: 14px;"><span style="color: var(--text-3);">Droit de jeu</span><span>[Tarif]</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <a href="#" style="height: 52px; border-radius: 14px; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;">S'inscrire sur ffgolf
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+        </a>
+        <button style="height: 48px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font-size: 15px; cursor: pointer;">Ajouter à mon calendrier</button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  // Couleurs du mode daltonien, posées directement sur l'écran
+  // Taille du texte : l'écran entier est agrandi, en gardant le format du téléphone
+  zoomStyle() {
+    let z = 'md';
+    try { z = window.localStorage.getItem('cadence.textSize') || 'md'; } catch (e) {}
+    const f = { sm: 0.9, md: 1, lg: 1.1, xl: 1.2 }[z] || 1;
+    if (f === 1) return '';
+    return ' zoom: ' + f + '; width: ' + (390 / f).toFixed(2) + 'px; height: ' + (844 / f).toFixed(2) + 'px;';
+  }
+  cvdVars() {
+    const c = this.cvdNow();
+    if (c !== 'rg' && c !== 'by') return '';
+    const light = this.themeNow() === 'light';
+    const sets = {
+      rg: light
+        ? ['#0072b2', '#b85000', '#0072b2', '#d55e00', '#007a5a', '#a88f00', '#b0588d', '#6b6b6b']
+        : ['#56b4e9', '#e69f00', '#56b4e9', '#e69f00', '#009e73', '#f0e442', '#cc79a7', '#bdbdbd'],
+      by: light
+        ? ['#00796b', '#c2185b', '#1e5fa8', '#d84315', '#00695c', '#ad1457', '#7b1fa2', '#616161']
+        : ['#3dd6c4', '#ff5c8a', '#90caf9', '#ff7043', '#00897b', '#f48fb1', '#ba68c8', '#e0e0e0']
+    }[c];
+    const names = ['status-good', 'status-critical', 'driving', 'fers', 'petitjeu', 'putting', 'mental', 'physique'];
+    return names.map((n, i) => '--' + n + ': ' + sets[i] + ';').join(' ');
+  }
+  cvdNow() {
+    let c = 'off';
+    try { c = window.localStorage.getItem('cadence.cvd') || 'off'; } catch (e) {}
+    return c;
+  }
+  paletteNow() {
+    let p = 'clubhouse';
+    try { p = window.localStorage.getItem('cadence.palette') || 'clubhouse'; } catch (e) {}
+    return p;
+  }
+  // Thème : sombre par défaut, clair ou automatique (suit le téléphone) selon les Paramètres
+  themeNow() {
+    let t = 'dark';
+    try { t = window.localStorage.getItem('cadence.theme') || 'dark'; } catch (e) {}
+    if (t === 'auto') { try { t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { t = 'dark'; } }
+    return t;
+  }
+  componentDidMount() {
+    // Suit le thème choisi dans les Paramètres, même si l'écran est déjà ouvert
+    this._lastTheme = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle();
+    this._themeTimer = setInterval(() => { const t = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle(); if (t !== this._lastTheme) { this._lastTheme = t; this.forceUpdate(); } }, 400);
+  }
+  componentWillUnmount() {
+    clearInterval(this._themeTimer);
+  }
+  renderVals() {
+    const s = this.state || {};
+    const myIdx = 14.2;
+    const data = [
+      { wd: 'Sam.', d: '4', m: 'oct.', name: 'Coupe d’automne', golf: '[Nom du golf]', km: 12, fmt: 'Stroke play', idx: 24, cat: 'mixte', places: 18, x: 190, y: 110 },
+      { wd: 'Dim.', d: '12', m: 'oct.', name: 'Grand Prix du club', golf: '[Nom du golf]', km: 34, fmt: 'Stableford', idx: 54, cat: 'mixte', places: 6, x: 90, y: 200 },
+      { wd: 'Sam.', d: '18', m: 'oct.', name: 'Trophée seniors', golf: '[Autre golf]', km: 27, fmt: 'Stableford', idx: 36, cat: 'seniors', places: 24, x: 250, y: 190 },
+      { wd: 'Sam.', d: '25', m: 'oct.', name: 'Open régional', golf: '[Golf C]', km: 78, fmt: 'Stroke play', idx: 11.4, cat: 'mixte', places: 3, x: 320, y: 40 },
+      { wd: 'Dim.', d: '2', m: 'nov.', name: 'Coupe des jeunes', golf: '[Autre golf]', km: 27, fmt: 'Match play', idx: 36, cat: 'jeunes', places: 12, x: 240, y: 70 }
+    ];
+    const radius = s.radius || 50;
+    const cat = s.cat || 'all';
+    const idxOnly = !!s.idxOnly;
+    const view = s.view || 'list';
+    const list = data.filter((c) => c.km <= radius && (cat === 'all' || c.cat === cat) && (!idxOnly || myIdx <= c.idx));
+    const chip = (on) => ({ bg: on ? 'var(--accent)' : 'var(--surface)', color: on ? 'var(--on-accent)' : 'var(--text-2)', border: on ? 'var(--accent)' : 'var(--border)', weight: on ? '600' : '400', aria: on ? 'true' : 'false' });
+    const deco = (c, i) => Object.assign({}, c, {
+      n: String(i + 1),
+      idxColor: myIdx <= c.idx ? 'var(--text-2)' : 'var(--status-critical)',
+      placesColor: c.places <= 6 ? 'var(--putting)' : 'var(--text-2)'
+    });
+    const shown = list.map(deco);
+    const sel = s.sel != null ? shown.find((c) => c.name === s.sel) : null;
+    return {
+      theme: this.themeNow(),
+      palette: this.paletteNow(),
+      cvd: this.cvdNow(),
+      cvdStyle: this.cvdVars() + this.zoomStyle(),
+      radius: radius,
+      radii: [20, 50, 100].map((km) => Object.assign({ label: km + ' km', pick: () => this.setState({ radius: km }) }, chip(km === radius))),
+      cats: [['all', 'Toutes'], ['mixte', 'Mixte'], ['seniors', 'Seniors'], ['jeunes', 'Jeunes']].map(([k, l]) => Object.assign({ label: l, pick: () => this.setState({ cat: k }) }, chip(k === cat))),
+      idxBg: idxOnly ? 'var(--accent)' : 'var(--surface-2)', idxJustify: idxOnly ? 'flex-end' : 'flex-start', idxAria: idxOnly ? 'true' : 'false',
+      toggleIdx: () => this.setState({ idxOnly: !idxOnly }),
+      isMap: view === 'map',
+      listBg: view === 'list' ? 'var(--surface-2)' : 'transparent', mapBg: view === 'map' ? 'var(--surface-2)' : 'transparent',
+      listAria: view === 'list' ? 'true' : 'false', mapAria: view === 'map' ? 'true' : 'false',
+      showList: () => this.setState({ view: 'list' }), showMap: () => this.setState({ view: 'map' }),
+      ringR: radius === 20 ? 55 : radius === 50 ? 110 : 200,
+      pins: shown.map((c) => ({ left: (100 * c.x / 350).toFixed(1) + '%', top: (100 * c.y / 260).toFixed(1) + '%', n: c.n })),
+      countLabel: list.length + (list.length > 1 ? ' compétitions' : ' compétition') + ' dans les 6 prochaines semaines',
+      comps: shown.map((c) => Object.assign({}, c, { open: () => this.setState({ sel: c.name }) })),
+      empty: list.length === 0,
+      hasSel: !!sel, sel: sel || {},
+      closeSel: () => this.setState({ sel: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

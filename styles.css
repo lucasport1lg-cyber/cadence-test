@@ -1,0 +1,96 @@
+/* Interface du test (autour du prototype). Préfixe t- pour ne pas croiser les styles des écrans. */
+html, body { margin: 0; padding: 0; height: 100%; }
+body { background: #0f1411; overscroll-behavior: none; }
+#app { min-height: 100%; }
+
+.t-page {
+  --t-bg: #0f1411; --t-surface: #171d19; --t-sunk: #212923; --t-line: rgba(242,239,231,0.12);
+  --t-ink: #f2efe7; --t-ink-2: #c9c3b4; --t-ink-3: #948e7f; --t-accent: #4fbf86; --t-on-accent: #0f1411; --t-warn: #e0a94a;
+  min-height: 100vh; min-height: 100dvh; box-sizing: border-box;
+  background: var(--t-bg); color: var(--t-ink);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+  display: flex; justify-content: center; align-items: flex-start;
+  padding: max(20px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+}
+.t-card { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 18px; padding-top: 8px; }
+.t-card.is-wide { max-width: 640px; }
+.t-page .t-h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 28px; font-weight: 700; line-height: 1.15; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+.t-lead { margin: 0; font-size: 17px; color: var(--t-ink-2); }
+.t-help { margin: 0; font-size: 15px; color: var(--t-ink-3); }
+.t-fine { margin: 0; font-size: 13px; color: var(--t-ink-3); }
+.t-warn { margin: 0; font-size: 14px; color: var(--t-warn); background: rgba(224,169,74,0.12); border-radius: 12px; padding: 12px 14px; }
+.t-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t-accent); }
+.t-brand { display: flex; align-items: center; gap: 10px; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 20px; }
+.t-list { margin: 0; padding: 0 0 0 20px; display: flex; flex-direction: column; gap: 10px; color: var(--t-ink-2); font-size: 15px; }
+.t-list strong { color: var(--t-ink); }
+.t-say { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 24px; font-weight: 600; line-height: 1.3; border-left: 3px solid var(--t-accent); padding: 4px 0 4px 16px; text-wrap: pretty; }
+
+.t-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+.t-actions.is-row { flex-direction: row; flex-wrap: wrap; }
+.t-actions.is-row .t-btn { flex: 1 1 140px; }
+.t-btn {
+  font: inherit; font-size: 16px; font-weight: 600; min-height: 52px; padding: 0 20px; border-radius: 14px;
+  border: 1px solid var(--t-accent, #4fbf86); background: var(--t-accent, #4fbf86); color: var(--t-on-accent, #0f1411);
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center; text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.t-btn.is-ghost { background: transparent; color: var(--t-ink, #f2efe7); border-color: var(--t-line, rgba(242,239,231,0.18)); }
+.t-btn.is-small { min-height: 40px; font-size: 14px; padding: 0 14px; border-radius: 11px; }
+.t-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.t-btn:focus-visible, .t-chip:focus-visible, .t-dot:focus-visible, .t-bar-title:focus-visible, textarea:focus-visible { outline: 2px solid var(--t-accent, #4fbf86); outline-offset: 2px; }
+
+.t-field { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.t-field legend, .t-legend { padding: 0; font-size: 15px; font-weight: 600; color: var(--t-ink); margin-bottom: 10px; }
+.t-legend { margin-bottom: 0; }
+.t-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.t-chip { font: inherit; font-size: 15px; min-height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--t-line); background: var(--t-surface); color: var(--t-ink-2); cursor: pointer; }
+.t-chip.is-on { background: var(--t-accent); border-color: var(--t-accent); color: var(--t-on-accent); font-weight: 600; }
+.t-page textarea { font: inherit; font-size: 16px; color: var(--t-ink); background: var(--t-surface); border: 1px solid var(--t-line); border-radius: 12px; padding: 12px 14px; min-height: 96px; resize: vertical; box-sizing: border-box; width: 100%; }
+.t-page textarea::placeholder { color: var(--t-ink-3); }
+
+.t-progress { height: 6px; border-radius: 3px; background: var(--t-sunk); overflow: hidden; }
+.t-progress i { display: block; height: 100%; background: var(--t-accent); border-radius: 3px; transition: width .3s; }
+
+.t-scale7, .t-scale5 { display: grid; gap: 6px; }
+.t-scale7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.t-scale5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.t-dot { font: inherit; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 17px; font-weight: 600; min-height: 48px; border-radius: 12px; border: 1px solid var(--t-line); background: var(--t-surface); color: var(--t-ink-2); cursor: pointer; padding: 0; }
+.t-dot.is-on { background: var(--t-accent); border-color: var(--t-accent); color: var(--t-on-accent); }
+.t-scale-l { display: flex; justify-content: space-between; font-size: 12px; color: var(--t-ink-3); margin-top: -10px; }
+.t-sus .t-scale-l { margin-top: 6px; }
+.t-sus { margin: 0; padding: 0; list-style: none; counter-reset: q; display: flex; flex-direction: column; }
+.t-sus li { counter-increment: q; padding: 16px 0; border-top: 1px solid var(--t-line); }
+.t-sus li:first-child { border-top: 0; padding-top: 4px; }
+.t-sus p { margin: 0 0 10px; font-size: 16px; }
+.t-sus p::before { content: counter(q) '. '; color: var(--t-ink-3); font-weight: 600; }
+
+/* Mission en cours */
+.t-run {
+  --t-bg: #0f1411; --t-line: rgba(242,239,231,0.14); --t-ink: #f2efe7; --t-ink-2: #c9c3b4; --t-ink-3: #948e7f; --t-accent: #4fbf86; --t-on-accent: #0f1411;
+  height: 100vh; height: 100dvh; display: flex; flex-direction: column; align-items: center; background: #050806; overflow: hidden;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+}
+.t-bar { width: 100%; max-width: 560px; box-sizing: border-box; padding: max(8px, env(safe-area-inset-top)) 12px 8px; background: #050806; color: var(--t-ink); flex-shrink: 0; }
+.t-bar-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.t-bar-title { font: inherit; font-size: 14px; font-weight: 600; color: var(--t-ink); background: none; border: 0; padding: 4px 0; cursor: pointer; display: flex; flex-direction: column; align-items: flex-start; text-align: left; min-height: 40px; justify-content: center; }
+.t-bar-title.is-static { cursor: default; }
+.t-bar-toggle { font-size: 12px; font-weight: 500; color: var(--t-accent); }
+.t-bar-btns { display: flex; gap: 6px; flex-shrink: 0; }
+.t-bar-say { margin: 6px 0 2px; font-size: 15px; line-height: 1.4; color: var(--t-ink-2); }
+
+.t-phone { position: relative; overflow: hidden; flex-shrink: 0; background: #0d0d0d; }
+.t-phone:not(.is-full) { border-radius: 28px; box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 20px 60px rgba(0,0,0,0.5); }
+.t-phone-inner { transform-origin: 0 0; position: absolute; left: 0; top: 0; overflow: hidden; }
+.t-phone-loading { color: #c9c3b4; font: 15px 'IBM Plex Sans', system-ui, sans-serif; padding: 40px 24px; text-align: center; }
+
+.t-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: flex-end; justify-content: center; z-index: 50; padding: 16px; }
+.t-modal-box { width: 100%; max-width: 420px; background: #171d19; color: #f2efe7; border-radius: 20px; padding: 20px; box-sizing: border-box; margin-bottom: env(safe-area-inset-bottom); }
+.t-modal-text { margin: 0 0 14px; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 20px; font-weight: 600; }
+
+.t-toast { position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom)); transform: translateX(-50%); background: #f2efe7; color: #0f1411; font: 600 14px 'IBM Plex Sans', system-ui, sans-serif; padding: 10px 16px; border-radius: 999px; z-index: 60; max-width: calc(100% - 32px); text-align: center; }
+
+@media (min-width: 700px) {
+  .t-page { padding-top: 48px; }
+  .t-page .t-h1 { font-size: 32px; }
+}
+@media (prefers-reduced-motion: reduce) { .t-progress i { transition: none; } }

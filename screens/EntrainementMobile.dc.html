@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Nouvelle séance — Golf</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{
+  --on-accent:#0d0d0d;
+  --bg:#0d0d0d;
+  --surface:#1a1a19;
+  --surface-2:#242422;
+  --border:rgba(255,255,255,0.10);
+  --text:#ffffff;
+  --text-2:#c3c2b7;
+  --text-3:#898781;
+  --accent:#3987e5;
+  --status-good:#0ca30c;
+  --status-critical:#e66767;
+  --driving:#3987e5;
+  --fers:#d95926;
+  --petitjeu:#199e70;
+  --putting:#c98500;
+  --mental:#d55181;
+  --physique:#008300;
+}
+[data-theme="light"]{
+  --bg:#f7f3ea;
+  --surface:#fffffd;
+  --surface-2:#ece4d3;
+  --border:rgba(27,29,34,0.12);
+  --text:#1b1d22;
+  --text-2:#45433c;
+  --text-3:#6e6758;
+  --grid:#e4dccb;
+  --accent:#1e5c3f;
+  --on-accent:#ffffff;
+  --status-good:#0a7f0a;
+  --status-critical:#c23a3a;
+  --driving:#2b73cc;
+  --fers:#c24e1f;
+  --petitjeu:#0f7c86;
+  --putting:#9a6700;
+  --mental:#b83d6b;
+  --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="classique"]{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#ebe9e3; --border:rgba(13,13,13,0.12);
+  --text:#141413; --text-2:#44433e; --text-3:#6b6962; --grid:#e2e0d9; --accent:#2b73cc;
+}
+[data-theme="light"][data-palette="fairway"]{
+  --bg:#f2f5f1; --surface:#ffffff; --surface-2:#e2e9e0; --border:rgba(18,32,26,0.12);
+  --text:#12201a; --text-2:#3c4a42; --text-3:#5e6c65; --grid:#dce4da; --accent:#1e7a4f; --petitjeu:#0f7c86; --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="rose"]{
+  --bg:#fbf4f6; --surface:#ffffff; --surface-2:#f3e4ea; --border:rgba(42,22,32,0.12);
+  --text:#2a1620; --text-2:#553f49; --text-3:#7a5e6a; --grid:#eedde4; --accent:#c2477a; --mental:#7a4fc4;
+}
+[data-theme="light"][data-palette="lisible"]{
+  --bg:#ffffff; --surface:#f4f4f6; --surface-2:#e6e6eb; --border:rgba(0,0,0,0.18);
+  --text:#000000; --text-2:#2e2e31; --text-3:#5e5e63; --grid:#dddde2; --accent:#0a5fcc;
+}
+[data-theme="dark"][data-palette="clubhouse"]{
+  --bg:#0f1411; --surface:#171d19; --surface-2:#212923; --border:rgba(242,239,231,0.10);
+  --text:#f2efe7; --text-2:#c9c3b4; --text-3:#8e8878; --grid:#28302a;
+  --accent:#4fbf86; --on-accent:#0f1411; --driving:#4fc3f7; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="fairway"]{
+  --bg:#0b1510; --surface:#13201a; --surface-2:#1c2c24; --border:rgba(238,243,238,0.10);
+  --text:#eef3ee; --text-2:#bfcbc3; --text-3:#85948b; --grid:#22342a;
+  --accent:#3fbf7f; --on-accent:#0b1510; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="rose"]{
+  --bg:#1a0f15; --surface:#24161e; --surface-2:#2f1e28; --border:rgba(247,237,241,0.10);
+  --text:#f7edf1; --text-2:#d6c2cb; --text-3:#a18c96; --grid:#3a2632;
+  --accent:#f07aa8; --on-accent:#1a0f15; --mental:#a98bf0;
+}
+[data-theme="dark"][data-palette="lisible"]{
+  --bg:#000000; --surface:#111114; --surface-2:#222228; --border:rgba(255,255,255,0.22);
+  --text:#ffffff; --text-2:#e6e6ea; --text-3:#b4b4bb; --grid:#2a2a30;
+  --accent:#5aa2ff; --on-accent:#000000;
+}
+[data-theme][data-palette][data-cvd="rg"]{
+  --status-good:#56b4e9; --status-critical:#e69f00;
+  --driving:#56b4e9; --fers:#e69f00; --petitjeu:#009e73; --putting:#f0e442; --mental:#cc79a7; --physique:#bdbdbd;
+}
+[data-theme="light"][data-palette][data-cvd="rg"]{
+  --status-good:#0072b2; --status-critical:#b85000;
+  --driving:#0072b2; --fers:#d55e00; --petitjeu:#007a5a; --putting:#a88f00; --mental:#b0588d; --physique:#6b6b6b;
+}
+[data-theme][data-palette][data-cvd="by"]{
+  --status-good:#3dd6c4; --status-critical:#ff5c8a;
+  --driving:#90caf9; --fers:#ff7043; --petitjeu:#00897b; --putting:#f48fb1; --mental:#ba68c8; --physique:#e0e0e0;
+}
+[data-theme="light"][data-palette][data-cvd="by"]{
+  --status-good:#00796b; --status-critical:#c2185b;
+  --driving:#1e5fa8; --fers:#d84315; --petitjeu:#00695c; --putting:#ad1457; --mental:#7b1fa2; --physique:#616161;
+}
+*{box-sizing:border-box;scrollbar-width:none}
+*::-webkit-scrollbar{display:none}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" data-palette="{{ palette }}" data-cvd="{{ cvd }}" style="width: 390px; height: 844px; background: var(--bg); color: var(--text); display: flex; flex-direction: column; overflow: hidden; position: relative; {{ cvdStyle }}">
+
+  <!-- Header -->
+  <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 12px 20px;">
+    <a href="MainMobile.dc.html" aria-label="Fermer sans enregistrer" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); color: var(--text-2); display: flex; align-items: center; justify-content: center;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </a>
+    <h1 style="font-size: 17px; font-weight: 600;">Nouvelle séance</h1>
+    <div style="width: 44px;"></div>
+  </div>
+
+  <!-- Form -->
+  <sc-if value="{{ editing }}" hint-placeholder-val="{{ true }}">
+    <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 8px 20px 24px 20px; display: flex; flex-direction: column; gap: 22px;">
+
+      <sc-if value="{{ hasHabits }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;"><h2 style="font-size: 15px; font-weight: 600;">{{ habTitle }}</h2><span style="font-size: 12px; color: var(--text-3);">{{ habSub }}</span></div>
+        <div style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -20px; padding: 0 20px;">
+          <sc-for list="{{ habits }}" as="h" hint-placeholder-count="2">
+            <button onClick="{{ h.pick }}" aria-pressed="{{ h.aria }}" style="flex-shrink: 0; height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid {{ h.border }}; background: {{ h.bg }}; color: var(--text); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap;"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{ h.color }};"></span>{{ h.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <div>
+        <h2 style="font-size: 15px; font-weight: 600; margin-bottom: 10px;">Domaine travaillé</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+          <sc-for list="{{ domains }}" as="d" hint-placeholder-count="6">
+            <button aria-pressed="{{ d.aria }}" onClick="{{ d.pick }}" style="height: 48px; border-radius: 12px; border: 1px solid {{ d.border }}; background: {{ d.bg }}; color: var(--text); font-size: 13px; font-weight: {{ d.weight }}; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: {{ d.color }};"></span>{{ d.label }}
+            </button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div>
+        <h2 style="font-size: 15px; font-weight: 600; margin-bottom: 10px;">Durée</h2>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <button aria-label="Retirer 5 minutes" onClick="{{ durDown }}" style="width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text); font-size: 22px; cursor: pointer;">−</button>
+            <div style="text-align: center;"><input type="text" inputmode="numeric" value="{{ durTxt }}" onChange="{{ onDur }}" aria-label="{{ durLbl }}" class="display" style="width: 84px; text-align: center; font-size: 30px; font-weight: 600; border: none; border-bottom: 2px solid {{ durLine }}; border-radius: 10px 10px 0 0; background: var(--surface-2); color: var(--text); outline: none; padding: 0;"><span style="font-size: 14px; color: var(--text-3);"> min</span></div>
+            <button aria-label="Ajouter 5 minutes" onClick="{{ durUp }}" style="width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text); font-size: 22px; cursor: pointer;">+</button>
+          </div>
+          <sc-if value="{{ hasDurErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="font-size: 12px; color: var(--status-critical); text-align: center; margin-top: -4px;">{{ durErr }}</div></sc-if>
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;">
+            <sc-for list="{{ quick }}" as="q" hint-placeholder-count="4">
+              <button onClick="{{ q.pick }}" style="height: 36px; border-radius: 999px; border: 1px solid var(--border); background: {{ q.bg }}; color: {{ q.color }}; font-size: 12px; cursor: pointer;">{{ q.label }}</button>
+            </sc-for>
+          </div>
+          <div style="font-size: 12px; color: var(--text-3); text-align: center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="m14 6 4 4"/></svg>Touche le nombre pour écrire ta durée exacte.</div>
+        </div>
+      </div>
+
+      <div>
+        <h2 style="font-size: 15px; font-weight: 600; margin-bottom: 10px;">Mesures · {{ domainLabel }}</h2>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+          <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="3">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: {{ m.border }};">
+              <span style="flex-grow: 1; font-size: 14px;">{{ m.label }}</span>
+              <button aria-label="Diminuer" onClick="{{ m.dec }}" style="width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text); font-size: 18px; cursor: pointer;">−</button>
+              <input type="text" inputmode="numeric" value="{{ m.txt }}" onChange="{{ m.onTxt }}" aria-label="{{ m.label }}" class="display" style="width: 56px; text-align: center; font-size: 17px; font-weight: 600; border: none; border-bottom: 2px solid {{ m.line }}; border-radius: 8px 8px 0 0; background: var(--surface-2); color: var(--text); outline: none; padding: 2px 0;">
+              <button aria-label="Augmenter" onClick="{{ m.inc }}" style="width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text); font-size: 18px; cursor: pointer;">+</button>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-size: 12px; color: var(--text-3); margin: 8px 4px 0 4px;">{{ ratioText }}</div>
+        <div style="font-size: 12px; color: var(--text-3); margin: 2px 4px 0 4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 4px;"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="m14 6 4 4"/></svg>Touche un nombre pour l’écrire directement.</div>
+        <sc-if value="{{ hasCap }}" hint-placeholder-val="{{ false }}"><div role="alert" style="font-size: 12px; color: var(--status-critical); margin: 4px 4px 0 4px;">{{ capMsg }}</div></sc-if>
+      </div>
+
+      <div>
+        <h2 style="font-size: 15px; font-weight: 600; margin-bottom: 10px;">Ressenti</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+          <sc-for list="{{ feels }}" as="f" hint-placeholder-count="3">
+            <button aria-pressed="{{ f.aria }}" onClick="{{ f.pick }}" style="height: 48px; border-radius: 12px; border: 1px solid {{ f.border }}; background: {{ f.bg }}; color: var(--text); font-size: 13px; font-weight: {{ f.weight }}; cursor: pointer;">{{ f.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div>
+        <label for="note" style="display: block; font-size: 15px; font-weight: 600; margin-bottom: 10px;">Note <span style="font-size: 12px; font-weight: 400; color: var(--text-3);">(facultatif)</span></label>
+        <textarea id="note" rows="3" placeholder="Ce que tu as travaillé, ce qui a marché…" style="width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: inherit; font-size: 14px; resize: none; outline: none;"></textarea>
+      </div>
+    </div>
+
+    <div style="flex-shrink: 0; padding: 12px 20px 28px 20px; border-top: 1px solid var(--border); background: var(--bg);">
+      <sc-if value="{{ hasSaveErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="font-size: 13px; color: var(--status-critical); margin-bottom: 8px; text-align: center;">{{ saveErr }}</div></sc-if>
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 8px;">
+        <a href="MainMobile.dc.html" style="height: 52px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--text-2); font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Annuler</a>
+        <button onClick="{{ save }}" style="height: 52px; border-radius: 14px; border: none; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; cursor: pointer;">Enregistrer la séance</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Saved -->
+  <sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}">
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 28px; gap: 14px;">
+      <div style="width: 72px; height: 72px; border-radius: 50%; background: color-mix(in srgb, var(--status-good) 15%, transparent); color: var(--status-good); display: flex; align-items: center; justify-content: center;">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>
+      </div>
+      <h2 style="font-size: 22px; font-weight: 600;">Séance enregistrée</h2>
+      <div style="font-size: 14px; color: var(--text-2); line-height: 1.5;">{{ domainLabel }} · {{ duration }} min · ressenti « {{ feelLabel }} »<br>{{ ratioText }}</div>
+      <div style="width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; font-size: 13px; color: var(--text-2);">Cette semaine : <strong style="color: var(--text);">{{ weekTotal }}</strong> d'entraînement</div>
+    </div>
+    <div style="flex-shrink: 0; padding: 12px 20px 28px 20px; display: flex; flex-direction: column; gap: 8px;">
+      <a href="MainMobile.dc.html" style="height: 52px; border-radius: 14px; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Retour à l'accueil</a>
+      <a href="SeancesMobile.dc.html" style="height: 48px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); font-size: 15px; display: flex; align-items: center; justify-content: center;">Voir mes séances</a>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  // Couleurs du mode daltonien, posées directement sur l'écran
+  // Taille du texte : l'écran entier est agrandi, en gardant le format du téléphone
+  zoomStyle() {
+    let z = 'md';
+    try { z = window.localStorage.getItem('cadence.textSize') || 'md'; } catch (e) {}
+    const f = { sm: 0.9, md: 1, lg: 1.1, xl: 1.2 }[z] || 1;
+    if (f === 1) return '';
+    return ' zoom: ' + f + '; width: ' + (390 / f).toFixed(2) + 'px; height: ' + (844 / f).toFixed(2) + 'px;';
+  }
+  cvdVars() {
+    const c = this.cvdNow();
+    if (c !== 'rg' && c !== 'by') return '';
+    const light = this.themeNow() === 'light';
+    const sets = {
+      rg: light
+        ? ['#0072b2', '#b85000', '#0072b2', '#d55e00', '#007a5a', '#a88f00', '#b0588d', '#6b6b6b']
+        : ['#56b4e9', '#e69f00', '#56b4e9', '#e69f00', '#009e73', '#f0e442', '#cc79a7', '#bdbdbd'],
+      by: light
+        ? ['#00796b', '#c2185b', '#1e5fa8', '#d84315', '#00695c', '#ad1457', '#7b1fa2', '#616161']
+        : ['#3dd6c4', '#ff5c8a', '#90caf9', '#ff7043', '#00897b', '#f48fb1', '#ba68c8', '#e0e0e0']
+    }[c];
+    const names = ['status-good', 'status-critical', 'driving', 'fers', 'petitjeu', 'putting', 'mental', 'physique'];
+    return names.map((n, i) => '--' + n + ': ' + sets[i] + ';').join(' ');
+  }
+  cvdNow() {
+    let c = 'off';
+    try { c = window.localStorage.getItem('cadence.cvd') || 'off'; } catch (e) {}
+    return c;
+  }
+  paletteNow() {
+    let p = 'clubhouse';
+    try { p = window.localStorage.getItem('cadence.palette') || 'clubhouse'; } catch (e) {}
+    return p;
+  }
+  // Thème : sombre par défaut, clair ou automatique (suit le téléphone) selon les Paramètres
+  themeNow() {
+    let t = 'dark';
+    try { t = window.localStorage.getItem('cadence.theme') || 'dark'; } catch (e) {}
+    if (t === 'auto') { try { t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { t = 'dark'; } }
+    return t;
+  }
+  componentDidMount() {
+    try { const r = JSON.parse(window.localStorage.getItem('cadence.redo') || 'null'); if (r) { window.localStorage.removeItem('cadence.redo'); this.setState({ domain: r.dom, duration: r.mins || 45 }); } } catch (e) {}
+    // Suit le thème choisi dans les Paramètres, même si l'écran est déjà ouvert
+    this._lastTheme = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle();
+    this._themeTimer = setInterval(() => { const t = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle(); if (t !== this._lastTheme) { this._lastTheme = t; this.forceUpdate(); } }, 400);
+  }
+  componentWillUnmount() {
+    clearInterval(this._themeTimer);
+  }
+  renderVals() {
+    const s = this.state || {};
+    const defs = {
+      putting: { label: 'Putting', color: 'var(--putting)', tint: 'color-mix(in srgb, var(--putting) 18%, transparent)', metrics: [['Putts tentés', 40, 1], ['Putts réussis', 28, 1], ['Distance travaillée (m)', 2, 1]], ratio: [1, 0, 'putts réussis'] },
+      driving: { label: 'Driving', color: 'var(--driving)', tint: 'color-mix(in srgb, var(--accent) 15%, transparent)', metrics: [['Balles tapées', 40, 5], ['Dans la cible', 24, 1], ['Distance moyenne (m)', 218, 2]], ratio: [1, 0, 'balles dans la cible'] },
+      fers: { label: 'Fers', color: 'var(--fers)', tint: 'color-mix(in srgb, var(--fers) 15%, transparent)', metrics: [['Balles tapées', 50, 5], ['Cibles touchées', 29, 1]], ratio: [1, 0, 'cibles touchées'] },
+      petitjeu: { label: 'Petit jeu', color: 'var(--petitjeu)', tint: 'color-mix(in srgb, var(--petitjeu) 15%, transparent)', metrics: [['Approches tentées', 30, 1], ['Approches réussies', 21, 1]], ratio: [1, 0, 'approches réussies'] },
+      mental: { label: 'Mental', color: 'var(--mental)', tint: 'color-mix(in srgb, var(--mental) 15%, transparent)', metrics: [['Concentration (/10)', 7, 1], ['Routines pré-coup', 15, 1]], ratio: null },
+      physique: { label: 'Physique', color: 'var(--physique)', tint: 'color-mix(in srgb, var(--physique) 15%, transparent)', metrics: [['Exercices', 6, 1], ['Mobilité (min)', 10, 5]], ratio: null }
+    };
+    const dk = s.domain || 'putting';
+    const d = defs[dk];
+    const vals = (s.vals && s.vals[dk]) || d.metrics.map((m) => m[1]);
+    const setVal = (i, v) => {
+      const nv = vals.slice(); nv[i] = Math.max(0, v); let cap = '';
+      if (d.ratio) { const ok = d.ratio[0], tot = d.ratio[1]; if (i === ok && nv[ok] > nv[tot]) { nv[ok] = nv[tot]; cap = 'Les réussites ne peuvent pas dépasser le nombre de tentatives.'; } if (i === tot && nv[ok] > nv[tot]) nv[ok] = nv[tot]; }
+      this.setState({ vals: Object.assign({}, s.vals || {}, { [dk]: nv }), capMsg: cap, mTxt: Object.assign({}, s.mTxt || {}, { [dk]: undefined }), saveErr: '' });
+    };
+    // Saisie au clavier : le texte tapé est gardé tel quel tant qu'il n'est pas un nombre valide
+    const fr = 'fr' === 'fr';
+    const intOk = (txt, min, max) => /^\d{1,4}$/.test(String(txt).trim()) && +txt >= min && +txt <= max;
+    const maxOf = (m) => /\/10\)$/.test(m[0]) ? 10 : 9999;
+    const typed = (s.mTxt && s.mTxt[dk]) || [];
+    const txtOf = (i) => typed[i] !== undefined ? typed[i] : String(vals[i]);
+    const setTxt = (i, txt) => {
+      const nt = typed.slice(); nt[i] = txt;
+      const next = { mTxt: Object.assign({}, s.mTxt || {}, { [dk]: nt }), capMsg: '', saveErr: '' };
+      if (intOk(txt, 0, maxOf(d.metrics[i]))) { const nv = vals.slice(); nv[i] = +txt; next.vals = Object.assign({}, s.vals || {}, { [dk]: nv }); }
+      this.setState(next);
+    };
+    const badField = d.metrics.findIndex((m, i) => !intOk(txtOf(i), 0, maxOf(m)));
+    const over = !!d.ratio && vals[d.ratio[0]] > vals[d.ratio[1]];
+    const overMsg = over ? (fr ? 'Réussites (' + vals[d.ratio[0]] + ') supérieures aux tentatives (' + vals[d.ratio[1]] + ') : corrige l’un des deux.' : 'Successes (' + vals[d.ratio[0]] + ') are higher than attempts (' + vals[d.ratio[1]] + '): fix one of them.') : '';
+    const duration = s.duration || 45;
+    const durTxt = s.durTxt !== undefined ? s.durTxt : String(duration);
+    const durOk = intOk(durTxt, 1, 600);
+    const feel = s.feel || 'bien';
+    const feelDefs = [['dur', 'Difficile'], ['ok', 'Correct'], ['bien', 'Très bien']];
+    const ratioText = d.ratio ? (vals[d.ratio[0]] + ' / ' + vals[d.ratio[1]] + ' ' + d.ratio[2] + ' · ' + Math.round(100 * vals[d.ratio[0]] / Math.max(1, vals[d.ratio[1]])) + ' %') : 'Mesures enregistrées avec ta séance';
+    const total = 300 + duration;
+    return {
+      theme: this.themeNow(),
+      palette: this.paletteNow(),
+      cvd: this.cvdNow(),
+      cvdStyle: this.cvdVars() + this.zoomStyle(),
+      editing: !s.saved, saved: !!s.saved,
+      hasCap: !!(s.capMsg || overMsg), capMsg: overMsg || s.capMsg || '',
+      ...(() => { let h = null; try { h = JSON.parse(window.localStorage.getItem('cadence.habits') || 'null'); } catch (e) {} if (!Array.isArray(h)) h = [{ dom: 'putting', mins: 35 }, { dom: 'petitjeu', mins: 45 }]; h = h.filter((x) => defs[x.dom]); return { hasHabits: h.length > 0, habTitle: 'Mes séances habituelles', habSub: 'Celles que tu refais', habits: h.map((x) => { const on = x.dom === dk && x.mins === duration; return { label: defs[x.dom].label + ' · ' + x.mins + ' min', color: defs[x.dom].color, aria: on ? 'true' : 'false', border: on ? defs[x.dom].color : 'var(--border)', bg: on ? defs[x.dom].tint : 'var(--surface)', pick: () => this.setState({ domain: x.dom, duration: x.mins, durTxt: undefined, saveErr: '' }) }; }) }; })(),
+      durTxt: durTxt, durLbl: fr ? 'Durée en minutes' : 'Duration in minutes', durLine: durOk ? 'var(--border)' : 'var(--status-critical)',
+      onDur: (e) => { const v = e.target.value; this.setState(intOk(v, 1, 600) ? { durTxt: v, duration: +v, saveErr: '' } : { durTxt: v, saveErr: '' }); },
+      hasDurErr: !durOk, durErr: fr ? 'Écris une durée entre 1 et 600 minutes.' : 'Type a duration from 1 to 600 minutes.',
+      hasSaveErr: !!s.saveErr, saveErr: s.saveErr || '',
+      domains: Object.keys(defs).map((k) => ({
+        label: defs[k].label, color: defs[k].color,
+        bg: k === dk ? defs[k].tint : 'var(--surface)', border: k === dk ? defs[k].color : 'var(--border)',
+        weight: k === dk ? '600' : '400', aria: k === dk ? 'true' : 'false',
+        pick: () => this.setState({ domain: k })
+      })),
+      domainLabel: d.label,
+      duration: duration,
+      durDown: () => this.setState({ duration: Math.max(5, duration - 5), durTxt: undefined, saveErr: '' }),
+      durUp: () => this.setState({ duration: Math.min(600, duration + 5), durTxt: undefined, saveErr: '' }),
+      quick: [30, 45, 60, 90].map((m) => ({ label: m + ' min', bg: m === duration ? 'var(--surface-2)' : 'transparent', color: m === duration ? 'var(--text)' : 'var(--text-3)', pick: () => this.setState({ duration: m, durTxt: undefined, saveErr: '' }) })),
+      metrics: d.metrics.map((m, i) => ({ label: m[0], v: vals[i], txt: txtOf(i), onTxt: (e) => setTxt(i, e.target.value), line: intOk(txtOf(i), 0, maxOf(m)) ? 'var(--border)' : 'var(--status-critical)', border: i < d.metrics.length - 1 ? '1px solid var(--border)' : 'none', dec: () => setVal(i, Math.min(maxOf(m), vals[i] - m[2])), inc: () => setVal(i, Math.min(maxOf(m), vals[i] + m[2])) })),
+      ratioText: ratioText,
+      feels: feelDefs.map(([k, l]) => ({ label: l, bg: k === feel ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'var(--surface)', border: k === feel ? 'var(--accent)' : 'var(--border)', weight: k === feel ? '600' : '400', aria: k === feel ? 'true' : 'false', pick: () => this.setState({ feel: k }) })),
+      feelLabel: feelDefs.find((f) => f[0] === feel)[1],
+      weekTotal: Math.floor(total / 60) + 'h' + String(total % 60).padStart(2, '0'),
+      save: () => {
+        if (!durOk) { this.setState({ saveErr: fr ? 'Vérifie la durée avant d’enregistrer.' : 'Check the duration before saving.' }); return; }
+        if (badField >= 0) { this.setState({ saveErr: (fr ? 'Vérifie la mesure « ' : 'Check “') + d.metrics[badField][0] + (fr ? ' » : un nombre entier' : '”: a whole number') + (maxOf(d.metrics[badField]) === 10 ? (fr ? ' de 0 à 10.' : ' from 0 to 10.') : '.') }); return; }
+        if (over) { this.setState({ saveErr: overMsg }); return; }
+        try {
+          const list = JSON.parse(window.localStorage.getItem('cadence.trainings') || '[]') || [];
+          list.unshift({ id: 'u' + Date.now(), dom: dk, desc: d.ratio ? ratioText : d.metrics.map((m, i) => m[0] + ' ' + vals[i]).join(' · '), mins: duration, metrics: d.metrics.map((m, i) => [m[0], String(vals[i])]), feel: feelDefs.find((f) => f[0] === feel)[1] });
+          window.localStorage.setItem('cadence.trainings', JSON.stringify(list));
+          window.localStorage.setItem('cadence.seances.tab', 'train');
+        } catch (e) {}
+        this.setState({ saved: true });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

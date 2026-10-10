@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Séance guidée</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{
+  --on-accent:#0d0d0d;
+  --bg:#0d0d0d;
+  --surface:#1a1a19;
+  --surface-2:#242422;
+  --border:rgba(255,255,255,0.10);
+  --text:#ffffff;
+  --text-2:#c3c2b7;
+  --text-3:#898781;
+  --accent:#3987e5;
+  --status-good:#0ca30c;
+  --status-critical:#e66767;
+  --driving:#3987e5;
+  --fers:#d95926;
+  --petitjeu:#199e70;
+  --putting:#c98500;
+  --mental:#d55181;
+  --physique:#008300;
+}
+[data-theme="light"]{
+  --bg:#f7f3ea;
+  --surface:#fffffd;
+  --surface-2:#ece4d3;
+  --border:rgba(27,29,34,0.12);
+  --text:#1b1d22;
+  --text-2:#45433c;
+  --text-3:#6e6758;
+  --grid:#e4dccb;
+  --accent:#1e5c3f;
+  --on-accent:#ffffff;
+  --status-good:#0a7f0a;
+  --status-critical:#c23a3a;
+  --driving:#2b73cc;
+  --fers:#c24e1f;
+  --petitjeu:#0f7c86;
+  --putting:#9a6700;
+  --mental:#b83d6b;
+  --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="classique"]{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#ebe9e3; --border:rgba(13,13,13,0.12);
+  --text:#141413; --text-2:#44433e; --text-3:#6b6962; --grid:#e2e0d9; --accent:#2b73cc;
+}
+[data-theme="light"][data-palette="fairway"]{
+  --bg:#f2f5f1; --surface:#ffffff; --surface-2:#e2e9e0; --border:rgba(18,32,26,0.12);
+  --text:#12201a; --text-2:#3c4a42; --text-3:#5e6c65; --grid:#dce4da; --accent:#1e7a4f; --petitjeu:#0f7c86; --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="rose"]{
+  --bg:#fbf4f6; --surface:#ffffff; --surface-2:#f3e4ea; --border:rgba(42,22,32,0.12);
+  --text:#2a1620; --text-2:#553f49; --text-3:#7a5e6a; --grid:#eedde4; --accent:#c2477a; --mental:#7a4fc4;
+}
+[data-theme="light"][data-palette="lisible"]{
+  --bg:#ffffff; --surface:#f4f4f6; --surface-2:#e6e6eb; --border:rgba(0,0,0,0.18);
+  --text:#000000; --text-2:#2e2e31; --text-3:#5e5e63; --grid:#dddde2; --accent:#0a5fcc;
+}
+[data-theme="dark"][data-palette="clubhouse"]{
+  --bg:#0f1411; --surface:#171d19; --surface-2:#212923; --border:rgba(242,239,231,0.10);
+  --text:#f2efe7; --text-2:#c9c3b4; --text-3:#8e8878; --grid:#28302a;
+  --accent:#4fbf86; --on-accent:#0f1411; --driving:#4fc3f7; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="fairway"]{
+  --bg:#0b1510; --surface:#13201a; --surface-2:#1c2c24; --border:rgba(238,243,238,0.10);
+  --text:#eef3ee; --text-2:#bfcbc3; --text-3:#85948b; --grid:#22342a;
+  --accent:#3fbf7f; --on-accent:#0b1510; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="rose"]{
+  --bg:#1a0f15; --surface:#24161e; --surface-2:#2f1e28; --border:rgba(247,237,241,0.10);
+  --text:#f7edf1; --text-2:#d6c2cb; --text-3:#a18c96; --grid:#3a2632;
+  --accent:#f07aa8; --on-accent:#1a0f15; --mental:#a98bf0;
+}
+[data-theme="dark"][data-palette="lisible"]{
+  --bg:#000000; --surface:#111114; --surface-2:#222228; --border:rgba(255,255,255,0.22);
+  --text:#ffffff; --text-2:#e6e6ea; --text-3:#b4b4bb; --grid:#2a2a30;
+  --accent:#5aa2ff; --on-accent:#000000;
+}
+[data-theme][data-palette][data-cvd="rg"]{
+  --status-good:#56b4e9; --status-critical:#e69f00;
+  --driving:#56b4e9; --fers:#e69f00; --petitjeu:#009e73; --putting:#f0e442; --mental:#cc79a7; --physique:#bdbdbd;
+}
+[data-theme="light"][data-palette][data-cvd="rg"]{
+  --status-good:#0072b2; --status-critical:#b85000;
+  --driving:#0072b2; --fers:#d55e00; --petitjeu:#007a5a; --putting:#a88f00; --mental:#b0588d; --physique:#6b6b6b;
+}
+[data-theme][data-palette][data-cvd="by"]{
+  --status-good:#3dd6c4; --status-critical:#ff5c8a;
+  --driving:#90caf9; --fers:#ff7043; --petitjeu:#00897b; --putting:#f48fb1; --mental:#ba68c8; --physique:#e0e0e0;
+}
+[data-theme="light"][data-palette][data-cvd="by"]{
+  --status-good:#00796b; --status-critical:#c2185b;
+  --driving:#1e5fa8; --fers:#d84315; --petitjeu:#00695c; --putting:#ad1457; --mental:#7b1fa2; --physique:#616161;
+}
+*{box-sizing:border-box;scrollbar-width:none}
+*::-webkit-scrollbar{display:none}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" data-palette="{{ palette }}" data-cvd="{{ cvd }}" style="width: 390px; height: 844px; background: var(--bg); color: var(--text); display: flex; flex-direction: column; overflow: hidden; position: relative; {{ cvdStyle }}">
+
+  <!-- En-tête -->
+  <div style="flex-shrink: 0; display: flex; align-items: center; gap: 12px; padding: 16px 20px 8px 20px;">
+    <a href="MainMobile.dc.html" aria-label="Quitter la séance" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); color: var(--text); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </a>
+    <div style="flex-grow: 1; min-width: 0;">
+      <div style="font-size: 12px; color: var(--text-3);">{{ kicker }}</div>
+      <div style="font-size: 17px; font-weight: 600;">{{ heading }}</div>
+    </div>
+    <span style="width: 40px; height: 40px; border-radius: 12px; background: color-mix(in srgb, var(--{{ dom }}) 16%, transparent); flex-shrink: 0; display: flex; align-items: center; justify-content: center;"><span style="width: 12px; height: 12px; border-radius: 50%; background: var(--{{ dom }});"></span></span>
+  </div>
+  <div style="flex-shrink: 0; display: grid; grid-template-columns: repeat({{ nSteps }}, minmax(0, 1fr)); gap: 6px; padding: 4px 20px 8px 20px;">
+    <sc-for list="{{ bars }}" as="b" hint-placeholder-count="5"><span style="height: 4px; border-radius: 2px; background: {{ b.bg }};"></span></sc-for>
+  </div>
+
+  <!-- 1 · Présentation -->
+  <sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+    <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 12px 20px 16px 20px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent);">Pourquoi cette séance</div>
+        <div style="font-size: 14px; line-height: 1.5;">{{ why }}</div>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;">
+          <h2 style="font-size: 16px; font-weight: 600;">Au programme</h2>
+          <span style="font-size: 13px; color: var(--text-3);">{{ totalLabel }}</span>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+          <sc-for list="{{ plan }}" as="p" hint-placeholder-count="4">
+            <div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-bottom: {{ p.border }};">
+              <span style="width: 26px; height: 26px; border-radius: 50%; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0;">{{ p.n }}</span>
+              <div style="flex-grow: 1; min-width: 0;">
+                <div style="font-size: 14px; font-weight: 600;">{{ p.title }}</div>
+                <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ p.goal }}</div>
+              </div>
+              <span style="font-size: 12px; color: var(--text-3); flex-shrink: 0;">{{ p.min }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-size: 12px; color: var(--text-3); margin-bottom: 8px;">Un autre domaine ?</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          <sc-for list="{{ doms }}" as="d" hint-placeholder-count="6">
+            <button aria-pressed="{{ d.aria }}" onClick="{{ d.pick }}" style="display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid {{ d.border }}; background: {{ d.bg }}; color: var(--text); font-size: 13px; font-weight: {{ d.weight }}; cursor: pointer;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--{{ d.key }});"></span>{{ d.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="flex-shrink: 0; padding: 12px 20px 28px 20px; border-top: 1px solid var(--border);">
+      <button onClick="{{ begin }}" style="width: 100%; height: 52px; border-radius: 14px; border: none; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; cursor: pointer;">Commencer la séance</button>
+    </div>
+  </sc-if>
+
+  <!-- 2 · Exercice en cours -->
+  <sc-if value="{{ isStep }}" hint-placeholder-val="{{ false }}">
+    <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 8px 20px 16px 20px; display: flex; flex-direction: column; gap: 14px;">
+      <div>
+        <div style="font-size: 12px; color: var(--text-3);">{{ ex.count }}</div>
+        <h1 style="font-size: 24px; font-weight: 600; margin-top: 2px;">{{ ex.title }}</h1>
+      </div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <div class="display" role="timer" aria-live="off" style="font-size: 56px; font-weight: 600; line-height: 1; color: {{ ex.timeColor }};">{{ ex.time }}</div>
+        <div style="width: 100%; height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden;"><div style="width: {{ ex.timeW }}; height: 100%; background: var(--{{ dom }}); transition: width 1s linear;"></div></div>
+        <div style="display: flex; gap: 8px;">
+          <button onClick="{{ toggleTimer }}" style="height: 42px; padding: 0 20px; border-radius: 999px; border: none; background: {{ ex.btnBg }}; color: {{ ex.btnColor }}; font-size: 14px; font-weight: 600; cursor: pointer;">{{ ex.btn }}</button>
+          <button onClick="{{ resetTimer }}" style="height: 42px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-2); font-size: 14px; cursor: pointer;">Recommencer</button>
+        </div>
+      </div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3);">Consigne</div>
+        <sc-for list="{{ ex.how }}" as="h" hint-placeholder-count="3">
+          <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45;"><span style="color: var(--{{ dom }}); font-weight: 700; flex-shrink: 0;">{{ h.n }}</span><span>{{ h.t }}</span></div>
+        </sc-for>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, var(--{{ dom }}) 10%, transparent);">
+        <span style="font-size: 18px;">🎯</span>
+        <div style="font-size: 14px;"><strong>Objectif :</strong> {{ ex.goal }}</div>
+      </div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px;">
+        <div style="flex-grow: 1;">
+          <div style="font-size: 14px; font-weight: 600;">{{ ex.metric }}</div>
+          <div style="font-size: 12px; color: {{ ex.resColor }}; margin-top: 2px;">{{ ex.resNote }}</div>
+        </div>
+        <button onClick="{{ dec }}" aria-label="Moins" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 18px; cursor: pointer;">−</button>
+        <span class="display" style="min-width: 64px; text-align: center; font-size: 22px; font-weight: 600;">{{ ex.res }}</span>
+        <button onClick="{{ inc }}" aria-label="Plus" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 18px; cursor: pointer;">+</button>
+      </div>
+    </div>
+    <div style="flex-shrink: 0; padding: 12px 20px 28px 20px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 2fr; gap: 8px;">
+      <button onClick="{{ prev }}" style="height: 52px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 15px; cursor: pointer;">‹ Retour</button>
+      <button onClick="{{ next }}" style="height: 52px; border-radius: 14px; border: none; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; cursor: pointer;">{{ nextLabel }}</button>
+    </div>
+  </sc-if>
+
+  <!-- 3 · Bilan -->
+  <sc-if value="{{ isEnd }}" hint-placeholder-val="{{ false }}">
+    <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 8px 20px 16px 20px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="text-align: center; padding-top: 8px;">
+        <div style="width: 64px; height: 64px; margin: 0 auto; border-radius: 50%; background: color-mix(in srgb, var(--status-good) 15%, transparent); color: var(--status-good); display: flex; align-items: center; justify-content: center;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></div>
+        <h1 style="font-size: 24px; font-weight: 600; margin-top: 12px;">{{ endTitle }}</h1>
+        <div style="font-size: 14px; color: var(--text-2); margin-top: 4px;">{{ endSub }}</div>
+      </div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <sc-for list="{{ results }}" as="r" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: {{ r.border }};">
+            <span style="width: 24px; height: 24px; border-radius: 50%; background: {{ r.badgeBg }}; color: {{ r.badgeColor }}; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">{{ r.badge }}</span>
+            <div style="flex-grow: 1; min-width: 0;"><div style="font-size: 13px; font-weight: 600;">{{ r.title }}</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ r.goal }}</div></div>
+            <span style="font-size: 14px; font-weight: 600; flex-shrink: 0;">{{ r.res }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div>
+        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Ressenti</div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+          <sc-for list="{{ feels }}" as="f" hint-placeholder-count="3">
+            <button aria-pressed="{{ f.aria }}" onClick="{{ f.pick }}" style="height: 44px; border-radius: 12px; border: 1px solid {{ f.border }}; background: {{ f.bg }}; color: var(--text); font-size: 14px; font-weight: {{ f.weight }}; cursor: pointer;">{{ f.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, var(--status-good) 14%, transparent); color: var(--status-good); font-size: 14px;">{{ savedText }}</div>
+      </sc-if>
+    </div>
+    <div style="flex-shrink: 0; padding: 12px 20px 28px 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px;">
+      <sc-if value="{{ notSaved }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ save }}" style="width: 100%; height: 52px; border-radius: 14px; border: none; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; cursor: pointer;">Enregistrer la séance</button>
+      </sc-if>
+      <sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}">
+        <a href="SeancesMobile.dc.html" style="height: 52px; border-radius: 14px; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Voir mes séances</a>
+        <a href="MainMobile.dc.html" style="height: 46px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); font-size: 15px; display: flex; align-items: center; justify-content: center;">Retour à l’accueil</a>
+      </sc-if>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  // Couleurs du mode daltonien, posées directement sur l'écran
+  // Taille du texte : l'écran entier est agrandi, en gardant le format du téléphone
+  zoomStyle() {
+    let z = 'md';
+    try { z = window.localStorage.getItem('cadence.textSize') || 'md'; } catch (e) {}
+    const f = { sm: 0.9, md: 1, lg: 1.1, xl: 1.2 }[z] || 1;
+    if (f === 1) return '';
+    return ' zoom: ' + f + '; width: ' + (390 / f).toFixed(2) + 'px; height: ' + (844 / f).toFixed(2) + 'px;';
+  }
+  cvdVars() {
+    const c = this.cvdNow();
+    if (c !== 'rg' && c !== 'by') return '';
+    const light = this.themeNow() === 'light';
+    const sets = {
+      rg: light
+        ? ['#0072b2', '#b85000', '#0072b2', '#d55e00', '#007a5a', '#a88f00', '#b0588d', '#6b6b6b']
+        : ['#56b4e9', '#e69f00', '#56b4e9', '#e69f00', '#009e73', '#f0e442', '#cc79a7', '#bdbdbd'],
+      by: light
+        ? ['#00796b', '#c2185b', '#1e5fa8', '#d84315', '#00695c', '#ad1457', '#7b1fa2', '#616161']
+        : ['#3dd6c4', '#ff5c8a', '#90caf9', '#ff7043', '#00897b', '#f48fb1', '#ba68c8', '#e0e0e0']
+    }[c];
+    const names = ['status-good', 'status-critical', 'driving', 'fers', 'petitjeu', 'putting', 'mental', 'physique'];
+    return names.map((n, i) => '--' + n + ': ' + sets[i] + ';').join(' ');
+  }
+  cvdNow() {
+    let c = 'off';
+    try { c = window.localStorage.getItem('cadence.cvd') || 'off'; } catch (e) {}
+    return c;
+  }
+  paletteNow() {
+    let p = 'clubhouse';
+    try { p = window.localStorage.getItem('cadence.palette') || 'clubhouse'; } catch (e) {}
+    return p;
+  }
+  // Thème : sombre par défaut, clair ou automatique (suit le téléphone) selon les Paramètres
+  themeNow() {
+    let t = 'dark';
+    try { t = window.localStorage.getItem('cadence.theme') || 'dark'; } catch (e) {}
+    if (t === 'auto') { try { t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { t = 'dark'; } }
+    return t;
+  }
+  componentDidMount() {
+    this._lastTheme = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle();
+    this._themeTimer = setInterval(() => { const t = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle(); if (t !== this._lastTheme) { this._lastTheme = t; this.forceUpdate(); } }, 400);
+    // Chronomètre de l'exercice en cours
+    this._tick = setInterval(() => { const s = this.state || {}; if (s.running && s.left > 0) this.setState({ left: s.left - 1, running: s.left - 1 > 0 }); }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this._themeTimer); clearInterval(this._tick); }
+  // Séances guidées : exercices, consignes et objectifs par domaine
+  guideData() {
+    const fr = 'fr' === 'fr';
+    const yd = (() => { try { return window.localStorage.getItem('cadence.units') === 'yd'; } catch (e) { return false; } })();
+    const D = (m) => (yd ? Math.round(m * 1.0936) + ' yd' : m + ' m');
+    const ex = (title, min, how, goal, metric, target, max) => ({ title, min, how, goal, metric, target, max });
+    return fr ? {
+      label: { driving: 'Driving', fers: 'Fers', petitjeu: 'Petit jeu', putting: 'Putting', mental: 'Mental', physique: 'Physique' },
+      why: {
+        petitjeu: 'Tu perds environ 2,1 coups par partie autour du green : 38 % de up & down, contre 50 % pour un joueur de ton index.',
+        putting: 'Tu fais 1,8 trois-putts par partie, surtout sur les putts de plus de ' + D(8) + ' : le dosage est la priorité.',
+        driving: 'Seulement 52 % de fairways touchés : gagner en régularité t’évitera des coups de récupération.',
+        fers: '7 greens en régulation sur 18 : viser plus juste avec les fers moyens te donnera plus d’occasions de birdie.',
+        mental: 'Ta routine avant le coup n’est respectée qu’à 74 % : une routine stable limite les mauvais trous.',
+        physique: 'Aucune séance physique cette semaine : 15 minutes de mobilité protègent ton dos et ton swing.'
+      },
+      ex: {
+        petitjeu: [
+          ex('Chips de mise en route', 5, ['Pose 10 balles à 2 pas du bord du green.', 'Fer 8, balle au centre du stance, mains devant la balle.', 'Fais rouler la balle comme un putt jusqu’au drapeau.'], '6 balles sur 10 à moins de ' + D(1) + ' du trou', 'Balles à moins de ' + D(1), 6, 10),
+          ex('Approches lobées à ' + D(15), 10, ['Lob wedge, 20 balles vers un drapeau à ' + D(15) + '.', 'Garde la face ouverte et accélère dans la balle.', 'Change de position de départ toutes les 5 balles.'], '10 balles sur 20 dans un cercle de ' + D(3), 'Balles dans le cercle', 10, 20),
+          ex('Up & down sur 9 « trous »', 10, ['Choisis 9 positions différentes autour du green.', 'Une approche puis un putt, comme en partie.', 'Compte un point si la balle est rentrée en 2 coups.'], '4 up & down sur 9', 'Up & down réussis', 4, 9),
+          ex('Défi bunker', 5, ['3 balles dans le bunker de practice.', 'Tape le sable 5 cm derrière la balle, finis haut.', 'Recommence la série 3 fois.'], '6 balles sur 9 sur le green', 'Balles sur le green', 6, 9)
+        ],
+        putting: [
+          ex('Porte de départ', 5, ['Deux tees espacés d’une largeur de balle, à 20 cm devant la balle.', 'Putt de ' + D(1) + ' en passant entre les tees.', 'Garde la tête immobile jusqu’au bruit de la balle.'], '15 putts réussis sur 20', 'Putts rentrés', 15, 20),
+          ex('Échelle de dosage', 10, ['Place 4 tees à ' + D(4) + ', ' + D(6) + ', ' + D(8) + ' et ' + D(10) + '.', 'Putte 3 balles vers chaque distance.', 'La balle doit s’arrêter à moins d’un putter du trou.'], '9 balles sur 12 dans la zone', 'Balles dans la zone', 9, 12),
+          ex('Le tour de l’horloge', 10, ['8 balles en cercle à ' + D(1) + ' du trou.', 'Rentre-les toutes à la suite.', 'Si tu en rates une, recommence le tour.'], '2 tours complets', 'Tours complets', 2, 4)
+        ],
+        driving: [
+          ex('Tempo à 70 %', 5, ['10 balles au driver à 70 % de ta vitesse.', 'Compte « un » à la montée, « deux » à l’impact.', 'Garde ton finish 3 secondes.'], '7 balles sur 10 bien centrées', 'Balles centrées', 7, 10),
+          ex('Couloir de ' + D(30), 15, ['Choisis deux repères pour un couloir de ' + D(30) + '.', '20 balles, routine complète avant chacune.', 'Note les balles qui restent dans le couloir.'], '12 balles sur 20 dans le couloir', 'Balles dans le couloir', 12, 20),
+          ex('Simulation de départs', 10, ['Imagine les 6 premiers départs de ton parcours.', 'Change de cible à chaque balle.', 'Choisis le club comme en partie.'], '4 départs sur 6 en jeu', 'Départs en jeu', 4, 6)
+        ],
+        fers: [
+          ex('Contact au fer 7', 5, ['Pose un tee 5 cm devant la balle.', 'Frappe la balle puis le tee, sans toucher le sol avant.', '10 balles.'], '7 contacts francs sur 10', 'Contacts francs', 7, 10),
+          ex('Trois cibles', 15, ['Fer 7, 9 et pitching wedge vers 3 drapeaux.', '10 balles par cible.', 'Compte celles à moins de 10 % de la distance.'], '15 balles sur 30 proches de la cible', 'Balles proches', 15, 30),
+          ex('Neuf coups', 10, ['Haute, normale, basse × gauche, droite, droite.', 'Annonce le coup avant de frapper.', 'Une balle par combinaison.'], '5 coups réussis sur 9', 'Coups réussis', 5, 9)
+        ],
+        mental: [
+          ex('Respiration avant le coup', 5, ['Inspire 4 secondes, bloque 2, expire 6.', 'Répète 5 fois les yeux fermés.', 'Visualise ton prochain départ.'], '5 cycles complets', 'Cycles complets', 5, 5),
+          ex('Routine chronométrée', 15, ['Écris ta routine en 4 étapes.', 'Applique-la sur 15 balles au practice.', 'Elle doit durer à chaque fois 20 à 30 secondes.'], '12 routines complètes sur 15', 'Routines complètes', 12, 15),
+          ex('Rejouer un mauvais trou', 10, ['Repense à un trou raté de ta dernière partie.', 'Rejoue-le en imagination, coup par coup.', 'Note ce que tu ferais autrement.'], '3 décisions améliorées', 'Décisions améliorées', 3, 5)
+        ],
+        physique: [
+          ex('Mobilité du dos', 5, ['Assis, club derrière les épaules.', 'Rotations lentes à droite et à gauche.', '10 rotations de chaque côté.'], '20 rotations', 'Rotations', 20, 20),
+          ex('Gainage', 5, ['Planche sur les avant-bras, dos droit.', '3 séries de 30 secondes.', '30 secondes de repos entre les séries.'], '3 séries tenues', 'Séries tenues', 3, 3),
+          ex('Échauffement d’avant partie', 5, ['Cercles de bras, fentes, rotations de hanches.', 'Swings lents avec deux clubs.', 'Termine par 5 swings à vide complets.'], 'Routine complète', 'Étapes faites', 3, 3)
+        ]
+      },
+      t: { kicker: 'Séance guidée', start: 'Commencer', pause: 'Pause', resume: 'Reprendre', done: 'Temps écoulé', count: (i, n) => 'Exercice ' + i + ' sur ' + n, next: 'Exercice suivant', finish: 'Voir le bilan', total: (m) => m + ' min au total', met: 'Objectif atteint', notMet: (n) => 'Encore ' + n + ' pour l’objectif', endTitle: (k, n) => k + ' objectif' + (k > 1 ? 's' : '') + ' atteint' + (k > 1 ? 's' : '') + ' sur ' + n, endSub: (m, d) => d + ' · ' + m + ' min', feels: [['dur', 'Difficile'], ['ok', 'Correct'], ['bien', 'Très bien']], saved: 'Séance enregistrée dans ton historique. Elle compte dans ta semaine et ta progression.', desc: (r) => 'Séance guidée · ' + r + ' objectifs atteints' }
+    } : {
+      label: { driving: 'Driving', fers: 'Irons', petitjeu: 'Short game', putting: 'Putting', mental: 'Mental', physique: 'Fitness' },
+      why: {
+        petitjeu: 'You lose about 2.1 strokes per round around the green: 38% up & down, versus 50% for a player of your handicap.',
+        putting: 'You make 1.8 three-putts per round, mostly on putts over ' + D(8) + ': pace is the priority.',
+        driving: 'Only 52% of fairways hit: more consistency will save you recovery shots.',
+        fers: '7 greens in regulation out of 18: better mid-iron accuracy will give you more birdie chances.',
+        mental: 'You follow your pre-shot routine only 74% of the time: a steady routine limits bad holes.',
+        physique: 'No fitness session this week: 15 minutes of mobility protects your back and your swing.'
+      },
+      ex: {
+        petitjeu: [
+          ex('Warm-up chips', 5, ['Place 10 balls two steps off the green.', '8-iron, ball in the middle of your stance, hands ahead.', 'Roll the ball like a putt to the flag.'], '6 balls out of 10 within ' + D(1) + ' of the hole', 'Balls within ' + D(1), 6, 10),
+          ex('Lob shots at ' + D(15), 10, ['Lob wedge, 20 balls to a flag at ' + D(15) + '.', 'Keep the face open and accelerate through.', 'Change your starting spot every 5 balls.'], '10 balls out of 20 inside a ' + D(3) + ' circle', 'Balls in the circle', 10, 20),
+          ex('Up & down on 9 “holes”', 10, ['Pick 9 different spots around the green.', 'One chip, then one putt, like on the course.', 'Score a point when you hole out in 2.'], '4 up & downs out of 9', 'Up & downs made', 4, 9),
+          ex('Bunker challenge', 5, ['3 balls in the practice bunker.', 'Hit the sand 5 cm behind the ball, finish high.', 'Repeat the set 3 times.'], '6 balls out of 9 on the green', 'Balls on the green', 6, 9)
+        ],
+        putting: [
+          ex('Start gate', 5, ['Two tees one ball apart, 20 cm in front of the ball.', D(1) + ' putt through the gate.', 'Keep your head still until you hear the ball drop.'], '15 putts made out of 20', 'Putts made', 15, 20),
+          ex('Pace ladder', 10, ['Place 4 tees at ' + D(4) + ', ' + D(6) + ', ' + D(8) + ' and ' + D(10) + '.', 'Putt 3 balls to each distance.', 'The ball must stop within a putter length.'], '9 balls out of 12 in the zone', 'Balls in the zone', 9, 12),
+          ex('Around the clock', 10, ['8 balls in a circle ' + D(1) + ' from the hole.', 'Hole them all in a row.', 'Miss one and start the circle again.'], '2 full circles', 'Full circles', 2, 4)
+        ],
+        driving: [
+          ex('Tempo at 70%', 5, ['10 drives at 70% of your speed.', 'Count “one” on the way up, “two” at impact.', 'Hold your finish for 3 seconds.'], '7 balls out of 10 well struck', 'Well-struck balls', 7, 10),
+          ex(D(30) + ' corridor', 15, ['Pick two markers for a ' + D(30) + ' corridor.', '20 balls, full routine before each.', 'Count the balls that stay inside.'], '12 balls out of 20 in the corridor', 'Balls in the corridor', 12, 20),
+          ex('Tee shot simulation', 10, ['Picture the first 6 tee shots of your course.', 'Change target on every ball.', 'Pick the club as you would on the course.'], '4 tee shots out of 6 in play', 'Tee shots in play', 4, 6)
+        ],
+        fers: [
+          ex('7-iron contact', 5, ['Place a tee 5 cm in front of the ball.', 'Hit the ball then the tee, without touching the ground first.', '10 balls.'], '7 clean strikes out of 10', 'Clean strikes', 7, 10),
+          ex('Three targets', 15, ['7-iron, 9-iron and pitching wedge to 3 flags.', '10 balls per target.', 'Count those within 10% of the distance.'], '15 balls out of 30 close to the target', 'Close balls', 15, 30),
+          ex('Nine shots', 10, ['High, normal, low × draw, straight, fade.', 'Call the shot before hitting.', 'One ball per combination.'], '5 shots out of 9 pulled off', 'Shots pulled off', 5, 9)
+        ],
+        mental: [
+          ex('Breathing before the shot', 5, ['Breathe in 4 seconds, hold 2, out 6.', 'Repeat 5 times with eyes closed.', 'Picture your next tee shot.'], '5 full cycles', 'Full cycles', 5, 5),
+          ex('Timed routine', 15, ['Write your routine in 4 steps.', 'Apply it on 15 range balls.', 'It should last 20 to 30 seconds every time.'], '12 full routines out of 15', 'Full routines', 12, 15),
+          ex('Replay a bad hole', 10, ['Think back to a bad hole from your last round.', 'Replay it in your head, shot by shot.', 'Note what you would do differently.'], '3 better decisions', 'Better decisions', 3, 5)
+        ],
+        physique: [
+          ex('Back mobility', 5, ['Seated, club behind your shoulders.', 'Slow rotations left and right.', '10 rotations each side.'], '20 rotations', 'Rotations', 20, 20),
+          ex('Core', 5, ['Forearm plank, straight back.', '3 sets of 30 seconds.', '30 seconds rest between sets.'], '3 sets held', 'Sets held', 3, 3),
+          ex('Pre-round warm-up', 5, ['Arm circles, lunges, hip rotations.', 'Slow swings with two clubs.', 'Finish with 5 full practice swings.'], 'Full routine', 'Steps done', 3, 3)
+        ]
+      },
+      t: { kicker: 'Guided session', start: 'Start', pause: 'Pause', resume: 'Resume', done: 'Time’s up', count: (i, n) => 'Drill ' + i + ' of ' + n, next: 'Next drill', finish: 'See the summary', total: (m) => m + ' min in total', met: 'Goal reached', notMet: (n) => n + ' more to reach the goal', endTitle: (k, n) => k + ' goal' + (k > 1 ? 's' : '') + ' reached out of ' + n, endSub: (m, d) => d + ' · ' + m + ' min', feels: [['dur', 'Hard'], ['ok', 'OK'], ['bien', 'Great']], saved: 'Session saved to your history. It counts in your week and your progress.', desc: (r) => 'Guided session · ' + r + ' goals reached' }
+    };
+  }
+  renderVals() {
+    const s = this.state || {};
+    const G = this.guideData();
+    let dom = s.dom;
+    if (!dom) { try { dom = window.localStorage.getItem('cadence.guideDom') || 'petitjeu'; } catch (e) { dom = 'petitjeu'; } }
+    if (!G.ex[dom]) dom = 'petitjeu';
+    const list = G.ex[dom];
+    const n = list.length;
+    const step = s.step || 0; // 0 = présentation, 1..n = exercices, n + 1 = bilan
+    const res = s.res || {};
+    const totalMin = list.reduce((a, e) => a + e.min, 0);
+    const fmt = (sec) => Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+    const go = (k) => { const e = list[k - 1]; this.setState({ step: k, left: e ? e.min * 60 : 0, running: false }); };
+    const cur = step >= 1 && step <= n ? list[step - 1] : null;
+    const val = cur ? (res[step] != null ? res[step] : 0) : 0;
+    const setRes = (v) => this.setState({ res: Object.assign({}, res, { [step]: Math.max(0, Math.min(cur.max, v)) }) });
+    const left = s.left != null ? s.left : (cur ? cur.min * 60 : 0);
+    const met = list.map((e, i) => (res[i + 1] || 0) >= e.target);
+    const feel = s.feel || 'bien';
+    const T = G.t;
+    return {
+      theme: this.themeNow(), palette: this.paletteNow(), cvd: this.cvdNow(), cvdStyle: this.cvdVars() + this.zoomStyle(),
+      dom: dom, kicker: T.kicker, heading: G.label[dom] + ' · ' + totalMin + ' min',
+      nSteps: n + 2, bars: Array.from({ length: n + 2 }, (_, i) => ({ bg: i <= step ? 'var(--accent)' : 'var(--surface-2)' })),
+      isIntro: step === 0, isStep: !!cur, isEnd: step === n + 1,
+      why: G.why[dom], totalLabel: T.total(totalMin),
+      plan: list.map((e, i) => ({ n: i + 1, title: e.title, goal: e.goal, min: e.min + ' min', border: i < n - 1 ? '1px solid var(--border)' : 'none' })),
+      doms: Object.keys(G.label).map((k) => ({ key: k, label: G.label[k], aria: k === dom ? 'true' : 'false', border: k === dom ? 'var(--accent)' : 'var(--border)', bg: k === dom ? 'color-mix(in srgb, var(--accent) 12%, transparent)' : 'var(--surface)', weight: k === dom ? '600' : '400', pick: () => { try { window.localStorage.setItem('cadence.guideDom', k); } catch (e) {} this.setState({ dom: k, res: {} }); } })),
+      begin: () => go(1),
+      ex: cur ? {
+        count: T.count(step, n), title: cur.title, time: left > 0 ? fmt(left) : T.done, timeColor: left > 0 ? 'var(--text)' : 'var(--status-good)',
+        timeW: Math.round((1 - left / (cur.min * 60)) * 100) + '%',
+        btn: s.running ? T.pause : (left < cur.min * 60 && left > 0 ? T.resume : T.start), btnBg: s.running ? 'var(--surface-2)' : 'var(--accent)', btnColor: s.running ? 'var(--text)' : 'var(--on-accent)',
+        how: cur.how.map((t, i) => ({ n: i + 1, t: t })), goal: cur.goal, metric: cur.metric,
+        res: val + ' / ' + cur.max, resColor: val >= cur.target ? 'var(--status-good)' : 'var(--text-3)', resNote: val >= cur.target ? T.met : T.notMet(cur.target - val)
+      } : { count: '', title: '', time: '', timeColor: '', timeW: '0%', btn: '', btnBg: '', btnColor: '', how: [], goal: '', metric: '', res: '', resColor: '', resNote: '' },
+      toggleTimer: () => { if (left <= 0) return; this.setState({ running: !s.running, left: left }); },
+      resetTimer: () => cur && this.setState({ left: cur.min * 60, running: false }),
+      dec: () => cur && setRes(val - 1), inc: () => cur && setRes(val + 1),
+      prev: () => go(step - 1), next: () => go(step + 1), nextLabel: step === n ? T.finish : T.next,
+      endTitle: T.endTitle(met.filter(Boolean).length, n), endSub: T.endSub(totalMin, G.label[dom]),
+      results: list.map((e, i) => ({ title: e.title, goal: e.goal, res: (res[i + 1] || 0) + ' / ' + e.max, badge: met[i] ? '✓' : '·', badgeBg: met[i] ? 'color-mix(in srgb, var(--status-good) 16%, transparent)' : 'var(--surface-2)', badgeColor: met[i] ? 'var(--status-good)' : 'var(--text-3)', border: i < n - 1 ? '1px solid var(--border)' : 'none' })),
+      feels: T.feels.map(([k, l]) => ({ label: l, aria: k === feel ? 'true' : 'false', border: k === feel ? 'var(--accent)' : 'var(--border)', bg: k === feel ? 'color-mix(in srgb, var(--accent) 12%, transparent)' : 'var(--surface)', weight: k === feel ? '600' : '400', pick: () => this.setState({ feel: k }) })),
+      saved: !!s.saved, notSaved: !s.saved, savedText: T.saved,
+      save: () => {
+        try {
+          const all = JSON.parse(window.localStorage.getItem('cadence.trainings') || '[]') || [];
+          all.unshift({ id: 'u' + Date.now(), dom: dom, desc: T.desc(met.filter(Boolean).length + '/' + n), mins: totalMin, metrics: list.map((e, i) => [e.metric, (res[i + 1] || 0) + ' / ' + e.max]), feel: T.feels.find((f) => f[0] === feel)[1], guided: true });
+          window.localStorage.setItem('cadence.trainings', JSON.stringify(all));
+          window.localStorage.setItem('cadence.seances.tab', 'train');
+          window.localStorage.setItem('cadence.guideDone', dom);
+        } catch (e) {}
+        this.setState({ saved: true });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

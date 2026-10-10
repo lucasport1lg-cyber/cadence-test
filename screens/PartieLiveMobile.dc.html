@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Partie en direct — Golf</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{
+  --on-accent:#0d0d0d;
+  --bg:#0d0d0d;
+  --surface:#1a1a19;
+  --surface-2:#242422;
+  --border:rgba(255,255,255,0.10);
+  --text:#ffffff;
+  --text-2:#c3c2b7;
+  --text-3:#898781;
+  --accent:#3987e5;
+  --status-good:#0ca30c;
+  --status-critical:#e66767;
+  --driving:#3987e5;
+  --fers:#d95926;
+  --petitjeu:#199e70;
+  --putting:#c98500;
+  --mental:#d55181;
+  --physique:#008300;
+}
+[data-theme="light"]{
+  --bg:#f7f3ea;
+  --surface:#fffffd;
+  --surface-2:#ece4d3;
+  --border:rgba(27,29,34,0.12);
+  --text:#1b1d22;
+  --text-2:#45433c;
+  --text-3:#6e6758;
+  --grid:#e4dccb;
+  --accent:#1e5c3f;
+  --on-accent:#ffffff;
+  --status-good:#0a7f0a;
+  --status-critical:#c23a3a;
+  --driving:#2b73cc;
+  --fers:#c24e1f;
+  --petitjeu:#0f7c86;
+  --putting:#9a6700;
+  --mental:#b83d6b;
+  --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="classique"]{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#ebe9e3; --border:rgba(13,13,13,0.12);
+  --text:#141413; --text-2:#44433e; --text-3:#6b6962; --grid:#e2e0d9; --accent:#2b73cc;
+}
+[data-theme="light"][data-palette="fairway"]{
+  --bg:#f2f5f1; --surface:#ffffff; --surface-2:#e2e9e0; --border:rgba(18,32,26,0.12);
+  --text:#12201a; --text-2:#3c4a42; --text-3:#5e6c65; --grid:#dce4da; --accent:#1e7a4f; --petitjeu:#0f7c86; --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="rose"]{
+  --bg:#fbf4f6; --surface:#ffffff; --surface-2:#f3e4ea; --border:rgba(42,22,32,0.12);
+  --text:#2a1620; --text-2:#553f49; --text-3:#7a5e6a; --grid:#eedde4; --accent:#c2477a; --mental:#7a4fc4;
+}
+[data-theme="light"][data-palette="lisible"]{
+  --bg:#ffffff; --surface:#f4f4f6; --surface-2:#e6e6eb; --border:rgba(0,0,0,0.18);
+  --text:#000000; --text-2:#2e2e31; --text-3:#5e5e63; --grid:#dddde2; --accent:#0a5fcc;
+}
+[data-theme="dark"][data-palette="clubhouse"]{
+  --bg:#0f1411; --surface:#171d19; --surface-2:#212923; --border:rgba(242,239,231,0.10);
+  --text:#f2efe7; --text-2:#c9c3b4; --text-3:#8e8878; --grid:#28302a;
+  --accent:#4fbf86; --on-accent:#0f1411; --driving:#4fc3f7; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="fairway"]{
+  --bg:#0b1510; --surface:#13201a; --surface-2:#1c2c24; --border:rgba(238,243,238,0.10);
+  --text:#eef3ee; --text-2:#bfcbc3; --text-3:#85948b; --grid:#22342a;
+  --accent:#3fbf7f; --on-accent:#0b1510; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="rose"]{
+  --bg:#1a0f15; --surface:#24161e; --surface-2:#2f1e28; --border:rgba(247,237,241,0.10);
+  --text:#f7edf1; --text-2:#d6c2cb; --text-3:#a18c96; --grid:#3a2632;
+  --accent:#f07aa8; --on-accent:#1a0f15; --mental:#a98bf0;
+}
+[data-theme="dark"][data-palette="lisible"]{
+  --bg:#000000; --surface:#111114; --surface-2:#222228; --border:rgba(255,255,255,0.22);
+  --text:#ffffff; --text-2:#e6e6ea; --text-3:#b4b4bb; --grid:#2a2a30;
+  --accent:#5aa2ff; --on-accent:#000000;
+}
+[data-theme][data-palette][data-cvd="rg"]{
+  --status-good:#56b4e9; --status-critical:#e69f00;
+  --driving:#56b4e9; --fers:#e69f00; --petitjeu:#009e73; --putting:#f0e442; --mental:#cc79a7; --physique:#bdbdbd;
+}
+[data-theme="light"][data-palette][data-cvd="rg"]{
+  --status-good:#0072b2; --status-critical:#b85000;
+  --driving:#0072b2; --fers:#d55e00; --petitjeu:#007a5a; --putting:#a88f00; --mental:#b0588d; --physique:#6b6b6b;
+}
+[data-theme][data-palette][data-cvd="by"]{
+  --status-good:#3dd6c4; --status-critical:#ff5c8a;
+  --driving:#90caf9; --fers:#ff7043; --petitjeu:#00897b; --putting:#f48fb1; --mental:#ba68c8; --physique:#e0e0e0;
+}
+[data-theme="light"][data-palette][data-cvd="by"]{
+  --status-good:#00796b; --status-critical:#c2185b;
+  --driving:#1e5fa8; --fers:#d84315; --petitjeu:#00695c; --putting:#ad1457; --mental:#7b1fa2; --physique:#616161;
+}
+*{box-sizing:border-box;scrollbar-width:none}
+*::-webkit-scrollbar{display:none}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" data-palette="{{ palette }}" data-cvd="{{ cvd }}" style="width: 390px; height: 844px; background: var(--bg); color: var(--text); display: flex; flex-direction: column; overflow: hidden; position: relative; {{ cvdStyle }}">
+
+  <!-- ===== SETUP ===== -->
+  <sc-if value="{{ isSetup }}" hint-placeholder-val="{{ true }}">
+    <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 12px 20px;">
+      <a href="MainMobile.dc.html" aria-label="Annuler" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); color: var(--text-2); display: flex; align-items: center; justify-content: center;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </a>
+      <h1 style="font-size: 17px; font-weight: 600;">Nouvelle partie</h1>
+      <div style="width: 44px;"></div>
+    </div>
+    <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 8px 20px 24px 20px; display: flex; flex-direction: column; gap: 22px;">
+      <div>
+        <h2 style="font-size: 15px; font-weight: 600; margin-bottom: 10px;">Parcours</h2>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <sc-for list="{{ courses }}" as="c" hint-placeholder-count="3">
+            <button aria-pressed="{{ c.aria }}" onClick="{{ c.pick }}" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; border: 1px solid {{ c.border }}; background: {{ c.bg }}; color: var(--text); text-align: left; cursor: pointer;">
+              <span style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid {{ c.border }}; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><span style="width: 10px; height: 10px; border-radius: 50%; background: {{ c.dot }};"></span></span>
+              <span style="flex-grow: 1;"><span style="display: block; font-size: 14px; font-weight: 600;">{{ c.name }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ c.info }}</span></span>
+              <span style="font-size: 12px; color: var(--text-3);">{{ c.km }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <a href="ParcoursMobile.dc.html" style="display: block; font-size: 13px; color: var(--accent); padding: 12px 4px 0 4px;">Chercher un autre parcours ›</a>
+      </div>
+      <div>
+        <h2 style="font-size: 15px; font-weight: 600; margin-bottom: 10px;">Type de partie</h2>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 4px;">
+          <sc-for list="{{ types }}" as="t" hint-placeholder-count="2">
+            <button aria-pressed="{{ t.aria }}" onClick="{{ t.pick }}" style="height: 40px; border: none; border-radius: 9px; background: {{ t.bg }}; color: {{ t.color }}; font-size: 13px; font-weight: {{ t.weight }}; cursor: pointer;">{{ t.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;"><h2 style="font-size: 15px; font-weight: 600;">Formule de jeu</h2><button onClick="{{ tipOf.formats }}" style="border: none; background: transparent; color: var(--accent); font: inherit; font-size: 13px; font-weight: 600; padding: 0; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px;">{{ tipQ.formats }}</button></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+          <sc-for list="{{ formats }}" as="f" hint-placeholder-count="10">
+            <button aria-pressed="{{ f.aria }}" onClick="{{ f.pick }}" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1px solid {{ f.border }}; background: {{ f.bg }}; color: var(--text); font-size: 13px; font-weight: {{ f.weight }}; display: flex; align-items: center; justify-content: space-between; gap: 6px; cursor: pointer;">
+              <span>{{ f.label }}</span><span style="font-size: 12px; color: var(--text-3);">{{ f.tag }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ hasMoreFmt }}" hint-placeholder-val="{{ true }}"><button onClick="{{ toggleFmt }}" style="margin-top: 8px; width: 100%; height: 40px; border-radius: 12px; border: 1px dashed var(--border); background: transparent; color: var(--accent); font-size: 13px; font-weight: 600; cursor: pointer;">{{ moreFmtLabel }}</button></sc-if>
+        <div style="margin-top: 10px; padding: 12px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border);">
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px;">C’est quoi ?</div>
+          <div style="font-size: 13px; font-weight: 600;">{{ fmtLabel }} <span style="font-weight: 400; color: var(--text-3);">· {{ fmtPlayers }}</span></div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px; line-height: 1.5;">{{ fmtDesc }}</div>
+        </div>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;">
+          <h2 style="font-size: 15px; font-weight: 600;">Joueurs</h2>
+          <span style="font-size: 12px; color: var(--text-3);">{{ playerCount }}</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <span style="height: 40px; padding: 0 14px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 15%, transparent); border: 1px solid var(--accent); font-size: 13px; font-weight: 600; display: flex; align-items: center;">Toi · 14.2</span>
+          <sc-for list="{{ friends }}" as="p" hint-placeholder-count="4">
+            <button aria-pressed="{{ p.aria }}" onClick="{{ p.toggle }}" style="height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid {{ p.border }}; background: {{ p.bg }}; color: var(--text); font-size: 13px; font-weight: {{ p.weight }}; cursor: pointer;">{{ p.mark }} {{ p.label }}</button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ showTeams }}" hint-placeholder-val="{{ false }}">
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 10px;">
+            <sc-for list="{{ teams }}" as="t" hint-placeholder-count="2">
+              <div style="padding: 10px 12px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border);">
+                <div style="font-size: 12px; font-weight: 600; color: {{ t.color }}; text-transform: uppercase; letter-spacing: 0.05em;">{{ t.name }}</div>
+                <div style="font-size: 13px; margin-top: 4px;">{{ t.members }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ missing }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top: 10px; font-size: 12px; color: var(--putting);">{{ missingText }}</div>
+        </sc-if>
+      </div>
+      <div>
+        <h2 style="font-size: 15px; font-weight: 600; margin-bottom: 10px;">Départ</h2>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;">
+          <sc-for list="{{ tees }}" as="t" hint-placeholder-count="4">
+            <button aria-pressed="{{ t.aria }}" onClick="{{ t.pick }}" style="height: 44px; border-radius: 12px; border: 1px solid {{ t.border }}; background: var(--surface); color: var(--text); font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;"><span style="width: 10px; height: 10px; border-radius: 50%; background: {{ t.color }}; border: 1px solid rgba(255,255,255,0.3);"></span>{{ t.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); font-size: 12px; color: var(--text-2);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        Le GPS calcule ta distance au green à chaque trou. La carte du parcours est téléchargée pour jouer hors connexion.
+      </div>
+    </div>
+    <div style="flex-shrink: 0; padding: 12px 20px 28px 20px; border-top: 1px solid var(--border);">
+      <button onClick="{{ start }}" style="width: 100%; height: 52px; border-radius: 14px; border: none; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; cursor: pointer;">Commencer la partie</button>
+    </div>
+  </sc-if>
+
+  <!-- ===== LIVE ===== -->
+  <sc-if value="{{ isLive }}" hint-placeholder-val="{{ false }}">
+    <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 10px 20px;">
+      <button onClick="{{ finish }}" aria-label="Terminer la partie maintenant" style="height: 40px; padding: 0 14px; border-radius: 999px; border: none; background: var(--surface-2); color: var(--text-2); font-size: 13px; cursor: pointer;">Terminer</button>
+      <div style="text-align: center;">
+        <div class="display" style="font-size: 20px; font-weight: 600;">Trou {{ holeNo }} <span style="color: var(--text-3); font-size: 14px;">/ {{ holeCount }}</span></div>
+        <div style="font-size: 12px; color: var(--text-3);">Par {{ par }} · {{ len }} · {{ fmtLabel }}</div>
+      </div>
+      <div style="height: 40px; min-width: 64px; padding: 0 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <span style="font-size: 12px; color: var(--text-3); line-height: 1;">{{ chipLabel }}</span>
+        <span style="font-size: 14px; font-weight: 700; line-height: 1.2;">{{ chipValue }}</span>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 6px 20px 16px 20px; display: flex; flex-direction: column; gap: 14px;">
+      <!-- GPS -->
+      <div style="border-radius: 16px; overflow: hidden; border: 1px solid var(--border); position: relative; background: #121a14;">
+        <svg viewBox="0 0 350 170" style="width: 100%; height: auto; display: block;" aria-hidden="true">
+          <path d="M20 90 C80 70 150 60 230 70 C270 74 300 80 318 86 L318 104 C300 110 270 116 230 118 C150 124 80 118 20 104 Z" fill="#199e70" fill-opacity="0.28"/>
+          <ellipse cx="200" cy="54" rx="16" ry="8" fill="#c98500" fill-opacity="0.45"/>
+          <circle cx="312" cy="94" r="22" fill="#199e70" fill-opacity="0.6"/>
+          <path d="M316 76 V94" stroke="#ffffff" stroke-width="1.5"/><path d="M316 76 L326 80 L316 84 Z" fill="#e66767"/>
+          <circle cx="36" cy="97" r="7" fill="#3987e5" stroke="#ffffff" stroke-width="2"/>
+          <path d="M44 97 L290 94" stroke="#ffffff" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="4 4"/>
+        </svg>
+        <div style="position: absolute; left: 12px; bottom: 10px; font-size: 12px; color: var(--text-2); background: rgba(13,13,13,0.7); padding: 3px 8px; border-radius: 6px;">Ta position · départ</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 8px; text-align: center;">
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 6px;"><div style="font-size: 12px; color: var(--text-3);">Avant</div><div class="display" style="font-size: 20px; font-weight: 600;">{{ front }}</div></div>
+        <div style="background: var(--surface); border: 1px solid var(--accent); border-radius: 12px; padding: 10px 6px;"><div style="font-size: 12px; color: var(--accent);">Centre du green</div><div class="display" style="font-size: 30px; font-weight: 600;">{{ len }}</div></div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 6px;"><div style="font-size: 12px; color: var(--text-3);">Arrière</div><div class="display" style="font-size: 20px; font-weight: 600;">{{ back }}</div></div>
+      </div>
+
+      <!-- Score entry -->
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--border);">
+          <div style="flex-grow: 1;"><div style="font-size: 14px; font-weight: 600;">{{ strokesTitle }}</div><div style="font-size: 12px; color: {{ strokeTagColor }}; margin-top: 2px;">{{ strokeTag }}</div></div>
+          <button aria-label="Un coup de moins" onClick="{{ sDown }}" style="width: 48px; height: 48px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text); font-size: 22px; cursor: pointer;">−</button>
+          <span class="display" style="width: 48px; text-align: center; font-size: 30px; font-weight: 600;">{{ strokes }}</span>
+          <button aria-label="Un coup de plus" onClick="{{ sUp }}" style="width: 48px; height: 48px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text); font-size: 22px; cursor: pointer;">+</button>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--border);">
+          <div style="flex-grow: 1; font-size: 14px; font-weight: 600;">Putts</div>
+          <button aria-label="Un putt de moins" onClick="{{ pDown }}" style="width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text); font-size: 20px; cursor: pointer;">−</button>
+          <span class="display" style="width: 40px; text-align: center; font-size: 22px; font-weight: 600;">{{ putts }}</span>
+          <button aria-label="Un putt de plus" onClick="{{ pUp }}" style="width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text); font-size: 20px; cursor: pointer;">+</button>
+        </div>
+        <div style="padding: 12px 14px;">
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">{{ fwTitle }}</div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px;">
+            <sc-for list="{{ fwOpts }}" as="o" hint-placeholder-count="3">
+              <button aria-pressed="{{ o.aria }}" onClick="{{ o.pick }}" style="height: 40px; border-radius: 10px; border: 1px solid {{ o.border }}; background: {{ o.bg }}; color: var(--text); font-size: 13px; font-weight: {{ o.weight }}; cursor: pointer;">{{ o.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scorecard strip -->
+      <div style="display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px;">
+        <sc-for list="{{ strip }}" as="h" hint-placeholder-count="18">
+          <button onClick="{{ h.go }}" aria-label="Aller au trou {{ h.n }}" style="width: 100%; height: 46px; border-radius: 8px; border: 1px solid {{ h.border }}; background: var(--surface); color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer;">
+            <span style="font-size: 12px; color: var(--text-3);">{{ h.n }}</span>
+            <span style="font-size: 14px; font-weight: 700; color: {{ h.color }};">{{ h.s }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="flex-shrink: 0; display: grid; grid-template-columns: 1fr 2fr; gap: 8px; padding: 12px 20px 10px 20px; border-top: 1px solid var(--border);">
+      <button onClick="{{ prev }}" style="height: 52px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 15px; cursor: pointer;">‹ Précédent</button>
+      <button onClick="{{ next }}" style="height: 52px; border-radius: 14px; border: none; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; cursor: pointer;">{{ nextLabel }}</button>
+    </div>
+    <button onClick="{{ askQuit }}" style="flex-shrink: 0; height: 40px; margin: 0 20px 18px 20px; border: none; background: transparent; color: var(--status-critical); font-size: 14px; font-weight: 600; cursor: pointer;">Abandonner la partie</button>
+  </sc-if>
+
+  <!-- ===== DONE ===== -->
+  <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+    <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 40px 20px 24px 20px; display: flex; flex-direction: column; gap: 16px; align-items: stretch;">
+      <div style="text-align: center;">
+        <div style="font-size: 13px; color: var(--text-3);">Partie terminée</div>
+        <div class="display" style="font-size: 20px; font-weight: 600; margin-top: 4px;">{{ courseName }}</div>
+        <span style="display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; color: {{ typeColor }}; background: {{ typeBg }}; padding: 3px 10px; border-radius: 999px;">{{ typeLabel }}</span>
+      </div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 22px; text-align: center;">
+        <div class="display" style="font-size: 56px; font-weight: 600; line-height: 1;">{{ total }}</div>
+        <div style="font-size: 15px; color: var(--text-2); margin-top: 6px;">{{ totalDiff }} · par {{ parPlayed }} · {{ played }} trous joués</div>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 14px;"><span style="color: var(--text-3);">{{ fmtLabel }} · </span><strong>{{ fmtResult }}</strong></div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;">
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; text-align: center;"><div class="display" style="font-size: 20px; font-weight: 600;">{{ puttsTotal }}</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Putts</div></div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; text-align: center;"><div class="display" style="font-size: 20px; font-weight: 600;">{{ fwHit }}</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Fairways</div></div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; text-align: center;"><div class="display" style="font-size: 20px; font-weight: 600;">{{ birdies }}</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Birdies</div></div>
+      </div>
+    </div>
+    <div style="flex-shrink: 0; padding: 12px 20px 28px 20px; display: flex; flex-direction: column; gap: 8px;">
+      <a href="SeancesMobile.dc.html" onClick="{{ saveGame }}" style="height: 52px; border-radius: 14px; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Enregistrer la partie</a>
+      <button onClick="{{ resume }}" style="height: 48px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 15px; cursor: pointer;">Reprendre la saisie</button>
+      <button onClick="{{ askQuit }}" style="height: 44px; border-radius: 14px; border: none; background: transparent; color: var(--status-critical); font-size: 14px; font-weight: 600; cursor: pointer;">Ne pas enregistrer</button>
+    </div>
+  </sc-if>
+
+  <!-- Confirmation : abandonner / ne pas enregistrer -->
+  <sc-if value="{{ quitOn }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ closeQuit }}" aria-label="Continuer la partie" style="position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); border: none; padding: 0; cursor: pointer;"></button>
+    <div role="alertdialog" aria-label="{{ quitTitle }}" style="position: absolute; left: 20px; right: 20px; top: 50%; transform: translateY(-50%); background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="width: 48px; height: 48px; border-radius: 50%; background: color-mix(in srgb, var(--status-critical) 14%, transparent); color: var(--status-critical); display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4l10 4-10 4"/><path d="M4 21h6"/><path d="M15 15l5 5M20 15l-5 5"/></svg></div>
+      <h2 style="font-size: 19px; font-weight: 600;">{{ quitTitle }}</h2>
+      <div style="font-size: 14px; color: var(--text-2); line-height: 1.45;">{{ quitText }}</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+        <button onClick="{{ closeQuit }}" style="height: 46px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 14px; font-weight: 600; cursor: pointer;">{{ quitKeep }}</button>
+        <a href="MainMobile.dc.html" onClick="{{ closeQuit }}" style="height: 46px; border-radius: 12px; background: var(--status-critical); color: #ffffff; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center;">{{ quitGo }}</a>
+      </div>
+    </div>
+  </sc-if>
+
+
+  <!-- Définition d'un terme (glossaire au bon endroit) -->
+  <sc-if value="{{ tip.on }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ tip.close }}" aria-label="{{ tip.closeLbl }}" style="position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); border: none; padding: 0; cursor: pointer; z-index: 40;"></button>
+    <div role="dialog" aria-label="{{ tip.term }}" style="position: absolute; left: 0; right: 0; bottom: 0; z-index: 41; background: var(--surface); border-top: 1px solid var(--border); border-radius: 24px 24px 0 0; padding: 10px 20px 34px 20px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="width: 36px; height: 4px; border-radius: 2px; background: var(--surface-2); align-self: center;"></div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="width: 32px; height: 32px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; flex-shrink: 0;">?</span>
+        <h2 style="font-size: 20px; font-weight: 600;">{{ tip.term }}</h2>
+      </div>
+      <p style="font-size: 15px; line-height: 1.55; color: var(--text-2);">{{ tip.def }}</p>
+      <div style="display: flex; gap: 10px; margin-top: 4px;">
+        <a href="{{ tip.moreHref }}" onClick="{{ tip.goMore }}" style="flex: 1; height: 48px; border-radius: 12px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: var(--text);">{{ tip.more }}</a>
+        <button onClick="{{ tip.close }}" style="flex: 1; height: 48px; border-radius: 12px; border: none; background: var(--accent); color: var(--on-accent); font-size: 15px; font-weight: 600; cursor: pointer;">{{ tip.ok }}</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  // Couleurs du mode daltonien, posées directement sur l'écran
+  // Taille du texte : l'écran entier est agrandi, en gardant le format du téléphone
+  // Unités de distance choisies dans les Paramètres (mètres ou yards)
+  unitsNow() {
+    let u = 'm';
+    try { u = window.localStorage.getItem('cadence.units') || 'm'; } catch (e) {}
+    return u;
+  }
+  dist(m) {
+    const yd = this.unitsNow() === 'yd';
+    const n = yd ? Math.round(m * 1.0936) : m;
+    return n + (yd ? ' yd' : ' m');
+  }
+  zoomStyle() {
+    let z = 'md';
+    try { z = window.localStorage.getItem('cadence.textSize') || 'md'; } catch (e) {}
+    const f = { sm: 0.9, md: 1, lg: 1.1, xl: 1.2 }[z] || 1;
+    if (f === 1) return '';
+    return ' zoom: ' + f + '; width: ' + (390 / f).toFixed(2) + 'px; height: ' + (844 / f).toFixed(2) + 'px;';
+  }
+  cvdVars() {
+    const c = this.cvdNow();
+    if (c !== 'rg' && c !== 'by') return '';
+    const light = this.themeNow() === 'light';
+    const sets = {
+      rg: light
+        ? ['#0072b2', '#b85000', '#0072b2', '#d55e00', '#007a5a', '#a88f00', '#b0588d', '#6b6b6b']
+        : ['#56b4e9', '#e69f00', '#56b4e9', '#e69f00', '#009e73', '#f0e442', '#cc79a7', '#bdbdbd'],
+      by: light
+        ? ['#00796b', '#c2185b', '#1e5fa8', '#d84315', '#00695c', '#ad1457', '#7b1fa2', '#616161']
+        : ['#3dd6c4', '#ff5c8a', '#90caf9', '#ff7043', '#00897b', '#f48fb1', '#ba68c8', '#e0e0e0']
+    }[c];
+    const names = ['status-good', 'status-critical', 'driving', 'fers', 'petitjeu', 'putting', 'mental', 'physique'];
+    return names.map((n, i) => '--' + n + ': ' + sets[i] + ';').join(' ');
+  }
+  cvdNow() {
+    let c = 'off';
+    try { c = window.localStorage.getItem('cadence.cvd') || 'off'; } catch (e) {}
+    return c;
+  }
+  paletteNow() {
+    let p = 'clubhouse';
+    try { p = window.localStorage.getItem('cadence.palette') || 'clubhouse'; } catch (e) {}
+    return p;
+  }
+  // Thème : sombre par défaut, clair ou automatique (suit le téléphone) selon les Paramètres
+  themeNow() {
+    let t = 'dark';
+    try { t = window.localStorage.getItem('cadence.theme') || 'dark'; } catch (e) {}
+    if (t === 'auto') { try { t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { t = 'dark'; } }
+    return t;
+  }
+  componentDidMount() {
+    // Suit le thème choisi dans les Paramètres, même si l'écran est déjà ouvert
+    this._lastTheme = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle() + this.unitsNow();
+    this._themeTimer = setInterval(() => { const t = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle() + this.unitsNow(); if (t !== this._lastTheme) { this._lastTheme = t; this.forceUpdate(); } }, 400);
+  }
+  componentWillUnmount() {
+    clearInterval(this._themeTimer);
+  }
+  // Définitions des termes de golf : toucher un terme ouvre sa définition (même texte que le glossaire des paramètres)
+  tipCtl() {
+    const fr = 'fr' === 'fr';
+    const s = this.state || {};
+    const G = fr ? {
+      index: ['Index', 'Mesure officielle de ton niveau, de −10 à 54. Plus il est bas, meilleur tu es. Il est calculé avec la moyenne de tes 8 meilleurs différentiels sur tes 20 dernières cartes.'],
+      diff: ['Différentiel', 'Score d’une partie ramené à la difficulté du parcours : (score − SSS) × 113 ÷ slope. C’est lui qui compte pour ton index, pas le score brut.'],
+      sss: ['SSS et slope', 'Le SSS est le score attendu d’un très bon joueur sur ce parcours. Le slope mesure la difficulté pour un joueur moyen (113 = difficulté moyenne).'],
+      formats: ['Formules de jeu', 'Stroke play : on compte tous les coups. Stableford : des points à chaque trou (par = 2 points). Match play : duel trou par trou. Scramble : en équipe, on garde la meilleure balle.'],
+      putts: ['Putts', 'Coups joués avec le putter sur le green. Autour de 32 par tour pour un joueur de ton niveau ; 2 par trou est un bon repère.'],
+      fw: ['Fairway touché', 'Mise en jeu (drive) qui s’arrête sur la partie tondue courte du trou. Compté sur les par 4 et par 5 seulement.'],
+      gir: ['Green en régulation', 'Atteindre le green en « par − 2 » coups (1 sur un par 3, 2 sur un par 4). Donne une chance de birdie.'],
+      carry: ['Carry', 'Distance parcourue en l’air par la balle, avant le premier rebond. C’est la distance à viser pour passer un obstacle.'],
+      total: ['Distance totale', 'Carry plus le roulement après le premier rebond. Elle sert de distance de référence dans ton sac.'],
+      bs: ['Vitesse de balle', 'Vitesse de la balle juste après l’impact. Plus elle est élevée, plus la balle va loin.'],
+      cs: ['Vitesse de club', 'Vitesse de la tête de club au moment de l’impact.'],
+      smash: ['Smash factor', 'Vitesse de balle ÷ vitesse de club : la qualité du contact. Vers 1,45 au driver et 1,33 au fer 7, le coup est bien centré.'],
+      spin: ['Spin', 'Rotation de la balle en tours par minute (rpm). Plus de spin fait monter la balle et l’arrête vite ; trop de spin coûte de la distance.'],
+      launch: ['Angle de lancement', 'Angle de départ de la balle par rapport au sol. Il dépend du club et de la façon de frapper.'],
+      disp: ['Dispersion', 'Écart de tes coups autour de la moyenne, à gauche ou à droite et en longueur. Plus elle est petite, plus tu es régulier.']
+    } : {
+      index: ['Handicap', 'Official measure of your level, from −10 to 54. The lower, the better. It is the average of your 8 best differentials over your last 20 scorecards.'],
+      diff: ['Differential', 'A round’s score adjusted to the course difficulty: (score − course rating) × 113 ÷ slope. This counts for your handicap, not the raw score.'],
+      sss: ['Course rating and slope', 'The course rating is the score expected from a scratch golfer. The slope measures difficulty for an average golfer (113 = average).'],
+      formats: ['Game formats', 'Stroke play: every stroke counts. Stableford: points on each hole (par = 2 points). Match play: a hole-by-hole duel. Scramble: as a team, keep the best ball.'],
+      putts: ['Putts', 'Strokes played with the putter on the green. Around 32 per round at your level; 2 per hole is a good benchmark.'],
+      fw: ['Fairway hit', 'A tee shot that stops on the short-mown part of the hole. Counted on par 4s and par 5s only.'],
+      gir: ['Green in regulation', 'Reaching the green in “par − 2” strokes (1 on a par 3, 2 on a par 4). It gives you a birdie chance.'],
+      carry: ['Carry', 'Distance the ball travels in the air, before the first bounce. Use it to clear a hazard.'],
+      total: ['Total distance', 'Carry plus the roll after the first bounce. It is the reference distance in your bag.'],
+      bs: ['Ball speed', 'Speed of the ball just after impact. The higher it is, the further the ball goes.'],
+      cs: ['Club speed', 'Speed of the club head at impact.'],
+      smash: ['Smash factor', 'Ball speed ÷ club speed: the quality of contact. Around 1.45 with a driver and 1.33 with a 7-iron, the strike is well centred.'],
+      spin: ['Spin rate', 'Ball rotation in revolutions per minute (rpm). More spin launches the ball higher and stops it quickly; too much spin costs distance.'],
+      launch: ['Launch angle', 'Starting angle of the ball relative to the ground. It depends on the club and how you strike it.'],
+      disp: ['Dispersion', 'How far your shots spread around the average, left or right and in length. The smaller, the more consistent you are.']
+    };
+    const k = s.tipK && G[s.tipK] ? s.tipK : null;
+    const of = {}; Object.keys(G).forEach((x) => { of[x] = () => this.setState({ tipK: x }); });
+    return {
+      tipOf: of,
+      tipQ: { diff: fr ? 'Qu’est-ce que le différentiel ?' : 'What is a differential?', index: fr ? 'Qu’est-ce que l’index ?' : 'What is a handicap?', formats: fr ? 'Les formules expliquées' : 'Formats explained', help: fr ? 'Définition' : 'Definition' },
+      tip: {
+        on: !!k, term: k ? G[k][0] : '', def: k ? G[k][1] : '',
+        close: () => this.setState({ tipK: null }), closeLbl: fr ? 'Fermer' : 'Close', ok: fr ? 'Compris' : 'Got it',
+        more: fr ? 'Tout le glossaire' : 'Full glossary', moreHref: 'ParametresMobile.dc.html',
+        goMore: () => { try { window.localStorage.setItem('cadence.pSec', 'aide'); window.localStorage.setItem('cadence.glq', k ? G[k][0] : ''); } catch (e) {} }
+      }
+    };
+  }
+  renderVals() {
+    const s = this.state || {};
+    const pars18 = [4, 4, 3, 5, 4, 4, 3, 4, 5, 4, 3, 5, 4, 4, 4, 3, 5, 4];
+    const courses = [
+      { name: '[Nom du golf]', holes: 18, km: '2 km' },
+      { name: '[Autre golf]', holes: 18, km: '11 km' },
+      { name: '[Golf C]', holes: 9, km: '18 km' }
+    ];
+    const ci = s.course || 0;
+    const course = courses[ci];
+    const pars = pars18.slice(0, course.holes);
+    const n = pars.length;
+    const lenOf = (i) => pars[i] === 3 ? 140 + (i * 13) % 45 : pars[i] === 5 ? 455 + (i * 17) % 50 : 330 + (i * 23) % 70;
+    const phase = s.phase || 'setup';
+    const type = s.type || 'loisir';
+    const tee = s.tee || 'jaunes';
+    const scores = s.scores || {};
+    const hole = Math.min(s.hole || 0, n - 1);
+    const cur = scores[hole] || { strokes: pars[hole], putts: 2, fw: pars[hole] === 3 ? 'green' : 'fairway' };
+    const setCur = (patch) => this.setState({ scores: Object.assign({}, scores, { [hole]: Object.assign({}, cur, patch) }) });
+    const commit = () => Object.assign({}, scores, { [hole]: cur });
+    const played = Object.keys(scores).map(Number);
+    const sumBy = (arr, f) => arr.reduce((a, i) => a + f(i), 0);
+    const diffTxt = (d) => d === 0 ? 'Par' : (d > 0 ? '+' + d : String(d));
+    const runPlayed = played.filter((i) => i !== hole).concat([hole]);
+    const runDiff = sumBy(runPlayed, (i) => (i === hole ? cur.strokes : scores[i].strokes) - pars[i]);
+    const d = cur.strokes - pars[hole];
+    const names = { '-2': 'Eagle', '-1': 'Birdie', '0': 'Par', '1': 'Bogey', '2': 'Double bogey' };
+    const isPar3 = pars[hole] === 3;
+    const fwDefs = isPar3 ? [['gauche', 'Gauche'], ['green', 'Green'], ['droite', 'Droite']] : [['gauche', 'Gauche'], ['fairway', 'Fairway'], ['droite', 'Droite']];
+    const all = played.map((i) => scores[i]);
+    const total = sumBy(played, (i) => scores[i].strokes);
+    const parPlayed = sumBy(played, (i) => pars[i]);
+    const fwHoles = played.filter((i) => pars[i] !== 3);
+
+    // ----- Formules de jeu -----
+    const FMT = [
+      ['stroke', 'Stroke play', 'Chaque coup compte : on additionne tous les coups du parcours. La formule de référence.', 1, false],
+      ['stableford', 'Stableford', 'Des points à chaque trou selon ton score (par = 2 pts, birdie = 3, bogey = 1). Un mauvais trou ne ruine pas la partie.', 1, false],
+      ['match', 'Match play', 'Trou par trou contre un adversaire : on gagne, perd ou partage chaque trou. Le score s’affiche en « UP ».', 2, false],
+      ['scramble', 'Scramble', 'En équipe : tout le monde joue, on garde la meilleure balle, puis tous rejouent depuis cet endroit. Très convivial.', 2, true],
+      ['shamble', 'Shamble', 'En équipe : on garde le meilleur départ, puis chacun termine le trou avec sa propre balle.', 2, true],
+      ['greensome', 'Greensome', 'Par 2 : les deux joueurs partent, on garde la meilleure balle, puis on joue en alternance jusqu’au trou.', 2, true],
+      ['foursome', 'Foursome', 'Par 2, une seule balle : départs alternés d’un trou à l’autre, puis coups en alternance.', 2, true],
+      ['chapman', 'Chapman', 'Par 2 : les deux partent, chacun joue le 2e coup avec la balle de l’autre, puis on garde une balle et on alterne.', 2, true],
+      ['fourball', 'Quatre balles', '2 contre 2 : chacun joue sa balle, le meilleur score de l’équipe compte sur chaque trou.', 4, true],
+      ['skins', 'Skins', 'Chaque trou vaut un « skin », remporté par le meilleur score seul. En cas d’égalité, il est reporté au trou suivant.', 2, false]
+    ];
+    const allowed = type === 'comp' ? FMT.filter((f) => ['stroke', 'stableford', 'match'].includes(f[0])) : FMT;
+    const fmt = allowed.find((f) => f[0] === s.format) || allowed[0];
+    const [fk, fLabel, fDesc, fMin, fTeam] = fmt;
+    const friendsDef = [['thomas', 'Thomas B.'], ['julie', 'Julie M.'], ['marc', 'Marc D.'], ['invite', 'Invité']];
+    const pick = s.players || { thomas: true };
+    const others = friendsDef.filter(([k]) => pick[k]).map(([, l]) => l);
+    const count = 1 + others.length;
+    const missing = count < fMin;
+    const teams = count >= 4 ? [{ name: 'Équipe A', color: 'var(--accent)', members: 'Toi + ' + others[0] }, { name: 'Équipe B', color: 'var(--fers)', members: others.slice(1, 3).join(' + ') }]
+      : [{ name: 'Ton équipe', color: 'var(--accent)', members: ['Toi'].concat(others).join(' + ') }, { name: 'Adversaires', color: 'var(--fers)', members: 'Aucune (partie amicale)' }];
+    const oppDelta = [0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1];
+    const myStrokes = (i) => (i === hole ? cur.strokes : scores[i].strokes);
+    const upTo = runPlayed;
+    const pts = (i) => Math.max(0, 2 + pars[i] - myStrokes(i));
+    const stbl = upTo.reduce((a, i) => a + pts(i), 0);
+    const matchUp = upTo.reduce((a, i) => a + Math.sign(pars[i] + oppDelta[i] - myStrokes(i)), 0);
+    const matchTxt = matchUp === 0 ? 'Égalité' : Math.abs(matchUp) + (matchUp > 0 ? ' UP' : ' DOWN');
+    const skinsWon = upTo.filter((i) => myStrokes(i) < pars[i] + oppDelta[i]).length;
+    const chip = fk === 'stableford' ? ['Points', String(stbl)] : fk === 'match' ? ['Match', matchTxt] : fk === 'skins' ? ['Skins', String(skinsWon)] : ['Score', diffTxt(runDiff)];
+    const fmtResult = fk === 'stableford' ? stbl + ' points' : fk === 'match' ? (matchUp > 0 ? 'Gagné ' + matchTxt : matchUp < 0 ? 'Perdu ' + matchTxt : 'Match nul') : fk === 'skins' ? skinsWon + ' skins gagnés' : fTeam ? 'Score d’équipe ' + total + ' (' + diffTxt(total - parPlayed) + ')' : total + ' (' + diffTxt(total - parPlayed) + ')';
+
+    return {
+      theme: this.themeNow(), ...this.tipCtl(),
+      palette: this.paletteNow(),
+      cvd: this.cvdNow(),
+      cvdStyle: this.cvdVars() + this.zoomStyle(),
+      hasMoreFmt: allowed.length > 3, moreFmtLabel: (s.moreFmt || allowed.findIndex((x) => x[0] === fk) > 2) ? 'Moins de formules ▴' : 'Plus de formules (' + (allowed.length - 3) + ') ▾', toggleFmt: () => this.setState({ moreFmt: !(s.moreFmt || allowed.findIndex((x) => x[0] === fk) > 2) }),
+      formats: allowed.filter((f, i) => i < 3 || (s.moreFmt || allowed.findIndex((x) => x[0] === fk) > 2)).map(([k, l, , min, team]) => ({ label: l, tag: team ? 'Équipe' : min > 1 ? min + ' j.' : 'Solo', aria: k === fk ? 'true' : 'false', border: k === fk ? 'var(--accent)' : 'var(--border)', bg: k === fk ? 'color-mix(in srgb, var(--accent) 10%, transparent)' : 'var(--surface)', weight: k === fk ? '600' : '400', pick: () => this.setState({ format: k }) })),
+      fmtLabel: fLabel, fmtDesc: fDesc,
+      fmtPlayers: fTeam ? (fMin >= 4 ? '4 joueurs, 2 équipes' : 'en équipe, 2 à 4 joueurs') : fMin > 1 ? 'à partir de ' + fMin + ' joueurs' : 'seul ou à plusieurs',
+      friends: friendsDef.map(([k, l]) => ({ label: l, mark: pick[k] ? '✓' : '+', aria: pick[k] ? 'true' : 'false', border: pick[k] ? 'var(--accent)' : 'var(--border)', bg: pick[k] ? 'color-mix(in srgb, var(--accent) 10%, transparent)' : 'var(--surface)', weight: pick[k] ? '600' : '400', toggle: () => this.setState({ players: Object.assign({}, pick, { [k]: !pick[k] }) }) })),
+      playerCount: count + (count > 1 ? ' joueurs' : ' joueur'),
+      showTeams: fTeam, teams: teams,
+      missing: missing, missingText: 'Cette formule demande au moins ' + fMin + ' joueurs : ajoute ' + (fMin - count) + ' partenaire' + (fMin - count > 1 ? 's' : '') + '.',
+      chipLabel: chip[0], chipValue: chip[1],
+      strokesTitle: fTeam ? 'Coups de l’équipe' : 'Coups',
+      fmtResult: fmtResult,
+      isSetup: phase === 'setup', isLive: phase === 'live', isDone: phase === 'done',
+      courses: courses.map((c, i) => ({ name: c.name, info: c.holes + ' trous · par ' + sumBy(pars18.slice(0, c.holes).map((_, k) => k), (k) => pars18[k]), km: c.km, border: i === ci ? 'var(--accent)' : 'var(--border)', bg: i === ci ? 'color-mix(in srgb, var(--accent) 10%, transparent)' : 'var(--surface)', dot: i === ci ? 'var(--accent)' : 'transparent', aria: i === ci ? 'true' : 'false', pick: () => this.setState({ course: i, scores: {}, hole: 0 }) })),
+      types: [['loisir', 'Loisir'], ['comp', 'Compétition']].map(([k, l]) => ({ label: l, bg: k === type ? 'var(--surface-2)' : 'transparent', color: k === type ? 'var(--text)' : 'var(--text-3)', weight: k === type ? '600' : '400', aria: k === type ? 'true' : 'false', pick: () => this.setState({ type: k }) })),
+      tees: [['jaunes', 'Jaunes', '#e8c547'], ['blancs', 'Blancs', '#ffffff'], ['bleus', 'Bleus', '#3987e5'], ['rouges', 'Rouges', '#e66767']].map(([k, l, c]) => ({ label: l, color: c, border: k === tee ? 'var(--accent)' : 'var(--border)', aria: k === tee ? 'true' : 'false', pick: () => this.setState({ tee: k }) })),
+      start: () => this.setState({ phase: 'live', hole: 0 }),
+      holeNo: hole + 1, holeCount: n, par: pars[hole], len: this.dist(lenOf(hole)), front: this.dist(lenOf(hole) - 12), back: this.dist(lenOf(hole) + 14),
+      runDiff: diffTxt(runDiff),
+      strokes: cur.strokes, strokeTag: (fk === 'stableford' ? pts(hole) + ' pts · ' : '') + (names[String(d)] || (d > 0 ? '+' + d : String(d))), strokeTagColor: d < 0 ? 'var(--accent)' : d === 0 ? 'var(--text-3)' : 'var(--text-2)',
+      sDown: () => setCur({ strokes: Math.max(1, cur.strokes - 1) }), sUp: () => setCur({ strokes: cur.strokes + 1 }),
+      putts: cur.putts, pDown: () => setCur({ putts: Math.max(0, cur.putts - 1) }), pUp: () => setCur({ putts: cur.putts + 1 }),
+      fwTitle: isPar3 ? 'Coup de départ' : 'Mise en jeu',
+      fwOpts: fwDefs.map(([k, l]) => ({ label: l, bg: k === cur.fw ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'transparent', border: k === cur.fw ? 'var(--accent)' : 'var(--border)', weight: k === cur.fw ? '600' : '400', aria: k === cur.fw ? 'true' : 'false', pick: () => setCur({ fw: k }) })),
+      strip: pars.map((p, i) => {
+        const sc = i === hole ? cur : scores[i];
+        const dd = sc ? sc.strokes - p : 0;
+        return { n: i + 1, s: sc ? sc.strokes : '–', border: i === hole ? 'var(--accent)' : 'var(--border)', color: !sc ? 'var(--text-3)' : dd < 0 ? 'var(--accent)' : dd > 0 ? 'var(--text-2)' : 'var(--text)', go: () => this.setState({ scores: commit(), hole: i }) };
+      }),
+      prev: () => this.setState({ scores: commit(), hole: Math.max(0, hole - 1) }),
+      next: () => hole < n - 1 ? this.setState({ scores: commit(), hole: hole + 1 }) : this.setState({ scores: commit(), phase: 'done' }),
+      nextLabel: hole < n - 1 ? 'Trou suivant ›' : 'Terminer la partie',
+      finish: () => this.setState({ scores: commit(), phase: 'done' }),
+      courseName: course.name,
+      typeLabel: type === 'comp' ? 'Compétition' : 'Loisir', typeColor: type === 'comp' ? 'var(--accent)' : 'var(--text-2)', typeBg: type === 'comp' ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'var(--surface-2)',
+      total: total, totalDiff: diffTxt(total - parPlayed), parPlayed: parPlayed, played: played.length,
+      puttsTotal: sumBy(played, (i) => scores[i].putts),
+      fwHit: fwHoles.filter((i) => scores[i].fw === 'fairway').length + '/' + fwHoles.length,
+      birdies: played.filter((i) => scores[i].strokes < pars[i]).length,
+      resume: () => this.setState({ phase: 'live' }),
+      saveGame: () => {
+        try {
+          const list = JSON.parse(window.localStorage.getItem('cadence.games') || '[]') || [];
+          const order = played.slice().sort((a, b) => a - b);
+          list.unshift({ pars: order.map((i) => pars[i]), card: order.map((i) => scores[i].strokes), id: 'u' + Date.now(), day: '21', month: 'sept.', title: type === 'comp' ? 'Compétition' : 'Partie loisir', golf: course.name, type: type, holes: played.length, score: total, par: parPlayed, putts: sumBy(played, (i) => scores[i].putts), fw: fwHoles.filter((i) => scores[i].fw === 'fairway').length + '/' + fwHoles.length, birdies: played.filter((i) => scores[i].strokes < pars[i]).length, fmt: fLabel + ' · ' + fmtResult });
+          window.localStorage.setItem('cadence.games', JSON.stringify(list));
+          window.localStorage.setItem('cadence.seances.tab', 'games');
+          window.localStorage.setItem('cadence.gameSaved', JSON.stringify({ id: list[0].id, title: list[0].title, golf: list[0].golf, score: list[0].score, par: list[0].par, holes: list[0].holes }));
+        } catch (e) {}
+      },
+      quitOn: !!s.quit, askQuit: () => this.setState({ quit: true }), closeQuit: () => this.setState({ quit: false }),
+      quitTitle: phase === 'done' ? 'Ne pas enregistrer cette partie ?' : 'Abandonner la partie ?', quitText: phase === 'done' ? 'Elle n’apparaîtra pas dans ton historique.' : 'Tu ne peux pas la finir ? Les scores saisis ne seront pas enregistrés.', quitKeep: phase === 'done' ? 'Continuer la partie' : 'Continuer la partie', quitGo: phase === 'done' ? 'Ne pas enregistrer' : 'Abandonner'
+    };
+  }
+}
+</script>
+</body>
+</html>

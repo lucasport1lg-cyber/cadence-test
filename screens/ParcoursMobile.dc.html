@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Parcours — Golf</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{
+  --on-accent:#0d0d0d;
+  --bg:#0d0d0d;
+  --surface:#1a1a19;
+  --surface-2:#242422;
+  --border:rgba(255,255,255,0.10);
+  --text:#ffffff;
+  --text-2:#c3c2b7;
+  --text-3:#898781;
+  --accent:#3987e5;
+  --status-good:#0ca30c;
+  --status-critical:#e66767;
+  --driving:#3987e5;
+  --fers:#d95926;
+  --petitjeu:#199e70;
+  --putting:#c98500;
+  --mental:#d55181;
+  --physique:#008300;
+}
+[data-theme="light"]{
+  --bg:#f7f3ea;
+  --surface:#fffffd;
+  --surface-2:#ece4d3;
+  --border:rgba(27,29,34,0.12);
+  --text:#1b1d22;
+  --text-2:#45433c;
+  --text-3:#6e6758;
+  --grid:#e4dccb;
+  --accent:#1e5c3f;
+  --on-accent:#ffffff;
+  --status-good:#0a7f0a;
+  --status-critical:#c23a3a;
+  --driving:#2b73cc;
+  --fers:#c24e1f;
+  --petitjeu:#0f7c86;
+  --putting:#9a6700;
+  --mental:#b83d6b;
+  --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="classique"]{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#ebe9e3; --border:rgba(13,13,13,0.12);
+  --text:#141413; --text-2:#44433e; --text-3:#6b6962; --grid:#e2e0d9; --accent:#2b73cc;
+}
+[data-theme="light"][data-palette="fairway"]{
+  --bg:#f2f5f1; --surface:#ffffff; --surface-2:#e2e9e0; --border:rgba(18,32,26,0.12);
+  --text:#12201a; --text-2:#3c4a42; --text-3:#5e6c65; --grid:#dce4da; --accent:#1e7a4f; --petitjeu:#0f7c86; --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="rose"]{
+  --bg:#fbf4f6; --surface:#ffffff; --surface-2:#f3e4ea; --border:rgba(42,22,32,0.12);
+  --text:#2a1620; --text-2:#553f49; --text-3:#7a5e6a; --grid:#eedde4; --accent:#c2477a; --mental:#7a4fc4;
+}
+[data-theme="light"][data-palette="lisible"]{
+  --bg:#ffffff; --surface:#f4f4f6; --surface-2:#e6e6eb; --border:rgba(0,0,0,0.18);
+  --text:#000000; --text-2:#2e2e31; --text-3:#5e5e63; --grid:#dddde2; --accent:#0a5fcc;
+}
+[data-theme="dark"][data-palette="clubhouse"]{
+  --bg:#0f1411; --surface:#171d19; --surface-2:#212923; --border:rgba(242,239,231,0.10);
+  --text:#f2efe7; --text-2:#c9c3b4; --text-3:#8e8878; --grid:#28302a;
+  --accent:#4fbf86; --on-accent:#0f1411; --driving:#4fc3f7; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="fairway"]{
+  --bg:#0b1510; --surface:#13201a; --surface-2:#1c2c24; --border:rgba(238,243,238,0.10);
+  --text:#eef3ee; --text-2:#bfcbc3; --text-3:#85948b; --grid:#22342a;
+  --accent:#3fbf7f; --on-accent:#0b1510; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="rose"]{
+  --bg:#1a0f15; --surface:#24161e; --surface-2:#2f1e28; --border:rgba(247,237,241,0.10);
+  --text:#f7edf1; --text-2:#d6c2cb; --text-3:#a18c96; --grid:#3a2632;
+  --accent:#f07aa8; --on-accent:#1a0f15; --mental:#a98bf0;
+}
+[data-theme="dark"][data-palette="lisible"]{
+  --bg:#000000; --surface:#111114; --surface-2:#222228; --border:rgba(255,255,255,0.22);
+  --text:#ffffff; --text-2:#e6e6ea; --text-3:#b4b4bb; --grid:#2a2a30;
+  --accent:#5aa2ff; --on-accent:#000000;
+}
+[data-theme][data-palette][data-cvd="rg"]{
+  --status-good:#56b4e9; --status-critical:#e69f00;
+  --driving:#56b4e9; --fers:#e69f00; --petitjeu:#009e73; --putting:#f0e442; --mental:#cc79a7; --physique:#bdbdbd;
+}
+[data-theme="light"][data-palette][data-cvd="rg"]{
+  --status-good:#0072b2; --status-critical:#b85000;
+  --driving:#0072b2; --fers:#d55e00; --petitjeu:#007a5a; --putting:#a88f00; --mental:#b0588d; --physique:#6b6b6b;
+}
+[data-theme][data-palette][data-cvd="by"]{
+  --status-good:#3dd6c4; --status-critical:#ff5c8a;
+  --driving:#90caf9; --fers:#ff7043; --petitjeu:#00897b; --putting:#f48fb1; --mental:#ba68c8; --physique:#e0e0e0;
+}
+[data-theme="light"][data-palette][data-cvd="by"]{
+  --status-good:#00796b; --status-critical:#c2185b;
+  --driving:#1e5fa8; --fers:#d84315; --petitjeu:#00695c; --putting:#ad1457; --mental:#7b1fa2; --physique:#616161;
+}
+*{box-sizing:border-box;scrollbar-width:none}
+*::-webkit-scrollbar{display:none}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" data-palette="{{ palette }}" data-cvd="{{ cvd }}" style="width: 390px; height: 844px; background: var(--bg); color: var(--text); display: flex; flex-direction: column; overflow: hidden; position: relative; {{ cvdStyle }}">
+
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 20px 20px 28px 20px; display: flex; flex-direction: column; gap: 16px;">
+
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <a href="MainMobile.dc.html" aria-label="Retour à l'accueil" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); color: var(--text); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+      </a>
+      <div>
+        <h1 style="font-size: 22px; font-weight: 600; line-height: 1.1;">Parcours</h1>
+        <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Golfs près de toi</div>
+      </div>
+    </div>
+
+    <label style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text-3);">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <input type="search" value="{{ q }}" onChange="{{ onQ }}" placeholder="Nom du golf ou ville" aria-label="Rechercher un parcours" style="flex-grow: 1; border: none; outline: none; background: transparent; color: var(--text); font-family: inherit; font-size: 14px;">
+    </label>
+
+    <div style="display: flex; gap: 8px;">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+        <button aria-pressed="{{ t.aria }}" onClick="{{ t.pick }}" style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid {{ t.border }}; background: {{ t.bg }}; color: {{ t.color }}; font-size: 13px; font-weight: {{ t.weight }}; cursor: pointer;">{{ t.label }}</button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <sc-for list="{{ courses }}" as="c" hint-placeholder-count="4">
+        <button onClick="{{ c.open }}" style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--text); text-align: left; cursor: pointer;">
+          <span style="width: 56px; height: 56px; border-radius: 12px; background: #121a14; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#199e70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4l10 4-10 4"/><path d="M4 21h6"/></svg>
+          </span>
+          <span style="flex-grow: 1; min-width: 0;">
+            <span style="display: flex; align-items: center; gap: 6px;"><span style="font-size: 14px; font-weight: 600;">{{ c.name }}</span></span>
+            <span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ c.city }} · {{ c.km }} km</span>
+            <span style="display: block; font-size: 12px; color: var(--text-2); margin-top: 4px;">{{ c.holes }} trous · par {{ c.par }} · {{ c.len }}</span>
+          </span>
+          <span style="font-size: 12px; font-weight: 600; color: {{ c.tagColor }}; background: {{ c.tagBg }}; padding: 3px 8px; border-radius: 999px; flex-shrink: 0;">{{ c.tag }}</span>
+        </button>
+      </sc-for>
+      <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 24px; text-align: center; border-radius: 14px; border: 1px dashed var(--border); font-size: 13px; color: var(--text-3);">Aucun parcours trouvé.</div>
+      </sc-if>
+    </div>
+  </div>
+
+  <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ closeSel }}" aria-label="Fermer la fiche" style="position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); border: none; cursor: pointer;"></button>
+    <div role="dialog" aria-label="{{ sel.name }}" style="position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--border); border-radius: 24px 24px 0 0; padding: 10px 20px 30px 20px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="width: 36px; height: 4px; border-radius: 2px; background: var(--surface-2); align-self: center;"></div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+        <div>
+          <h2 style="font-size: 20px; font-weight: 600;">{{ sel.name }}</h2>
+          <div style="font-size: 13px; color: var(--text-3); margin-top: 2px;">{{ sel.city }} · {{ sel.km }} km</div>
+        </div>
+        <button onClick="{{ toggleFav }}" aria-label="{{ favLabel }}" aria-pressed="{{ favAria }}" style="width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--surface-2); color: {{ favColor }}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="{{ favFill }}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg>
+        </button>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: center;">
+        <div style="background: var(--bg); border-radius: 12px; padding: 10px 4px;"><div class="display" style="font-size: 18px; font-weight: 600;">{{ sel.holes }}</div><div style="font-size: 12px; color: var(--text-3);">Trous</div></div>
+        <div style="background: var(--bg); border-radius: 12px; padding: 10px 4px;"><div class="display" style="font-size: 18px; font-weight: 600;">{{ sel.par }}</div><div style="font-size: 12px; color: var(--text-3);">Par</div></div>
+        <div style="background: var(--bg); border-radius: 12px; padding: 10px 4px;"><div class="display" style="font-size: 18px; font-weight: 600;">{{ sel.len }}</div><div style="font-size: 12px; color: var(--text-3);">Longueur</div></div>
+      </div>
+      <div style="background: var(--bg); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: var(--text-2);">{{ sel.history }}</div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <a href="PartieLiveMobile.dc.html" style="height: 52px; border-radius: 14px; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Jouer ici</a>
+        <button style="height: 48px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font-size: 15px; cursor: pointer;">Voir les trous</button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  // Couleurs du mode daltonien, posées directement sur l'écran
+  // Taille du texte : l'écran entier est agrandi, en gardant le format du téléphone
+  // Unités de distance choisies dans les Paramètres (mètres ou yards)
+  unitsNow() {
+    let u = 'm';
+    try { u = window.localStorage.getItem('cadence.units') || 'm'; } catch (e) {}
+    return u;
+  }
+  dist(m) {
+    const yd = this.unitsNow() === 'yd';
+    const n = yd ? Math.round(m * 1.0936) : m;
+    const txt = n >= 1000 ? Math.floor(n / 1000) + ' ' + String(n % 1000).padStart(3, '0') : String(n);
+    return txt + (yd ? ' yd' : ' m');
+  }
+  distVals() {
+    const out = {};
+    [].forEach((m) => { out['m_' + m] = this.dist(m); });
+    return out;
+  }
+  zoomStyle() {
+    let z = 'md';
+    try { z = window.localStorage.getItem('cadence.textSize') || 'md'; } catch (e) {}
+    const f = { sm: 0.9, md: 1, lg: 1.1, xl: 1.2 }[z] || 1;
+    if (f === 1) return '';
+    return ' zoom: ' + f + '; width: ' + (390 / f).toFixed(2) + 'px; height: ' + (844 / f).toFixed(2) + 'px;';
+  }
+  cvdVars() {
+    const c = this.cvdNow();
+    if (c !== 'rg' && c !== 'by') return '';
+    const light = this.themeNow() === 'light';
+    const sets = {
+      rg: light
+        ? ['#0072b2', '#b85000', '#0072b2', '#d55e00', '#007a5a', '#a88f00', '#b0588d', '#6b6b6b']
+        : ['#56b4e9', '#e69f00', '#56b4e9', '#e69f00', '#009e73', '#f0e442', '#cc79a7', '#bdbdbd'],
+      by: light
+        ? ['#00796b', '#c2185b', '#1e5fa8', '#d84315', '#00695c', '#ad1457', '#7b1fa2', '#616161']
+        : ['#3dd6c4', '#ff5c8a', '#90caf9', '#ff7043', '#00897b', '#f48fb1', '#ba68c8', '#e0e0e0']
+    }[c];
+    const names = ['status-good', 'status-critical', 'driving', 'fers', 'petitjeu', 'putting', 'mental', 'physique'];
+    return names.map((n, i) => '--' + n + ': ' + sets[i] + ';').join(' ');
+  }
+  cvdNow() {
+    let c = 'off';
+    try { c = window.localStorage.getItem('cadence.cvd') || 'off'; } catch (e) {}
+    return c;
+  }
+  paletteNow() {
+    let p = 'clubhouse';
+    try { p = window.localStorage.getItem('cadence.palette') || 'clubhouse'; } catch (e) {}
+    return p;
+  }
+  // Thème : sombre par défaut, clair ou automatique (suit le téléphone) selon les Paramètres
+  themeNow() {
+    let t = 'dark';
+    try { t = window.localStorage.getItem('cadence.theme') || 'dark'; } catch (e) {}
+    if (t === 'auto') { try { t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { t = 'dark'; } }
+    return t;
+  }
+  componentDidMount() {
+    // Suit le thème choisi dans les Paramètres, même si l'écran est déjà ouvert
+    this._lastTheme = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle() + this.unitsNow();
+    this._themeTimer = setInterval(() => { const t = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle() + this.unitsNow(); if (t !== this._lastTheme) { this._lastTheme = t; this.forceUpdate(); } }, 400);
+  }
+  componentWillUnmount() {
+    clearInterval(this._themeTimer);
+  }
+  renderVals() {
+    const s = this.state || {};
+    const favs = s.favs || { '[Nom du golf]': true };
+    const data = [
+      { name: '[Nom du golf]', city: '[Ville]', km: 2, holes: 18, par: 72, len: this.dist(6120), played: 3, best: 76 },
+      { name: '[Autre golf]', city: '[Ville]', km: 11, holes: 18, par: 71, len: this.dist(5890), played: 2, best: 81 },
+      { name: '[Golf C]', city: '[Ville]', km: 18, holes: 9, par: 36, len: this.dist(2950), played: 0 },
+      { name: '[Golf D]', city: '[Ville]', km: 26, holes: 18, par: 72, len: this.dist(6340), played: 0 }
+    ];
+    const q = (s.q || '').toLowerCase();
+    const tab = s.tab || 'near';
+    const list = data.filter((c) => (!q || (c.name + ' ' + c.city).toLowerCase().includes(q)) && (tab === 'near' || (tab === 'fav' && favs[c.name]) || (tab === 'played' && c.played > 0)));
+    const chip = (on) => ({ bg: on ? 'var(--accent)' : 'var(--surface)', color: on ? 'var(--on-accent)' : 'var(--text-2)', border: on ? 'var(--accent)' : 'var(--border)', weight: on ? '600' : '400', aria: on ? 'true' : 'false' });
+    const tagOf = (c) => favs[c.name] ? ['Favori', 'var(--putting)', 'color-mix(in srgb, var(--putting) 18%, transparent)'] : c.played ? [c.played + ' parties', 'var(--text-2)', 'var(--surface-2)'] : ['Nouveau', 'var(--accent)', 'color-mix(in srgb, var(--accent) 15%, transparent)'];
+    const sel = s.sel ? data.find((c) => c.name === s.sel) : null;
+    const isFav = sel && !!favs[sel.name];
+    return {
+      theme: this.themeNow(),
+      palette: this.paletteNow(),
+      cvd: this.cvdNow(),
+      cvdStyle: this.cvdVars() + this.zoomStyle(),
+      ...this.distVals(),
+      q: s.q || '', onQ: (e) => this.setState({ q: e.target.value }),
+      tabs: [['near', 'À proximité'], ['fav', 'Favoris'], ['played', 'Déjà joués']].map(([k, l]) => Object.assign({ label: l, pick: () => this.setState({ tab: k }) }, chip(k === tab))),
+      courses: list.map((c) => { const t = tagOf(c); return Object.assign({}, c, { tag: t[0], tagColor: t[1], tagBg: t[2], open: () => this.setState({ sel: c.name }) }); }),
+      empty: list.length === 0,
+      hasSel: !!sel,
+      sel: sel ? Object.assign({}, sel, { history: sel.played ? 'Tu as joué ' + sel.played + ' parties ici · meilleur score ' + sel.best : 'Tu n’as encore jamais joué ici.' }) : {},
+      favLabel: isFav ? 'Retirer des favoris' : 'Ajouter aux favoris', favAria: isFav ? 'true' : 'false',
+      favColor: isFav ? 'var(--putting)' : 'var(--text-2)', favFill: isFav ? 'currentColor' : 'none',
+      toggleFav: () => this.setState({ favs: Object.assign({}, favs, { [sel.name]: !isFav }) }),
+      closeSel: () => this.setState({ sel: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

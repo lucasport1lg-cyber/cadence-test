@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Accueil mobile — Golf</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Cormorant+Garamond:wght@600&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{
+  --on-accent:#0d0d0d;
+  --bg:#0d0d0d;
+  --surface:#1a1a19;
+  --surface-2:#242422;
+  --border:rgba(255,255,255,0.10);
+  --text:#ffffff;
+  --text-2:#c3c2b7;
+  --text-3:#898781;
+  --accent:#3987e5;
+  --status-good:#0ca30c;
+  --status-critical:#e66767;
+  --driving:#3987e5;
+  --fers:#d95926;
+  --petitjeu:#199e70;
+  --putting:#c98500;
+  --mental:#d55181;
+  --physique:#008300;
+}
+[data-theme="light"]{
+  --bg:#f7f3ea;
+  --surface:#fffffd;
+  --surface-2:#ece4d3;
+  --border:rgba(27,29,34,0.12);
+  --text:#1b1d22;
+  --text-2:#45433c;
+  --text-3:#6e6758;
+  --grid:#e4dccb;
+  --accent:#1e5c3f;
+  --on-accent:#ffffff;
+  --status-good:#0a7f0a;
+  --status-critical:#c23a3a;
+  --driving:#2b73cc;
+  --fers:#c24e1f;
+  --petitjeu:#0f7c86;
+  --putting:#9a6700;
+  --mental:#b83d6b;
+  --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="classique"]{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#ebe9e3; --border:rgba(13,13,13,0.12);
+  --text:#141413; --text-2:#44433e; --text-3:#6b6962; --grid:#e2e0d9; --accent:#2b73cc;
+}
+[data-theme="light"][data-palette="fairway"]{
+  --bg:#f2f5f1; --surface:#ffffff; --surface-2:#e2e9e0; --border:rgba(18,32,26,0.12);
+  --text:#12201a; --text-2:#3c4a42; --text-3:#5e6c65; --grid:#dce4da; --accent:#1e7a4f; --petitjeu:#0f7c86; --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="rose"]{
+  --bg:#fbf4f6; --surface:#ffffff; --surface-2:#f3e4ea; --border:rgba(42,22,32,0.12);
+  --text:#2a1620; --text-2:#553f49; --text-3:#7a5e6a; --grid:#eedde4; --accent:#c2477a; --mental:#7a4fc4;
+}
+[data-theme="light"][data-palette="lisible"]{
+  --bg:#ffffff; --surface:#f4f4f6; --surface-2:#e6e6eb; --border:rgba(0,0,0,0.18);
+  --text:#000000; --text-2:#2e2e31; --text-3:#5e5e63; --grid:#dddde2; --accent:#0a5fcc;
+}
+[data-theme="dark"][data-palette="clubhouse"]{
+  --bg:#0f1411; --surface:#171d19; --surface-2:#212923; --border:rgba(242,239,231,0.10);
+  --text:#f2efe7; --text-2:#c9c3b4; --text-3:#8e8878; --grid:#28302a;
+  --accent:#4fbf86; --on-accent:#0f1411; --driving:#4fc3f7; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="fairway"]{
+  --bg:#0b1510; --surface:#13201a; --surface-2:#1c2c24; --border:rgba(238,243,238,0.10);
+  --text:#eef3ee; --text-2:#bfcbc3; --text-3:#85948b; --grid:#22342a;
+  --accent:#3fbf7f; --on-accent:#0b1510; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="rose"]{
+  --bg:#1a0f15; --surface:#24161e; --surface-2:#2f1e28; --border:rgba(247,237,241,0.10);
+  --text:#f7edf1; --text-2:#d6c2cb; --text-3:#a18c96; --grid:#3a2632;
+  --accent:#f07aa8; --on-accent:#1a0f15; --mental:#a98bf0;
+}
+[data-theme="dark"][data-palette="lisible"]{
+  --bg:#000000; --surface:#111114; --surface-2:#222228; --border:rgba(255,255,255,0.22);
+  --text:#ffffff; --text-2:#e6e6ea; --text-3:#b4b4bb; --grid:#2a2a30;
+  --accent:#5aa2ff; --on-accent:#000000;
+}
+[data-theme][data-palette][data-cvd="rg"]{
+  --status-good:#56b4e9; --status-critical:#e69f00;
+  --driving:#56b4e9; --fers:#e69f00; --petitjeu:#009e73; --putting:#f0e442; --mental:#cc79a7; --physique:#bdbdbd;
+}
+[data-theme="light"][data-palette][data-cvd="rg"]{
+  --status-good:#0072b2; --status-critical:#b85000;
+  --driving:#0072b2; --fers:#d55e00; --petitjeu:#007a5a; --putting:#a88f00; --mental:#b0588d; --physique:#6b6b6b;
+}
+[data-theme][data-palette][data-cvd="by"]{
+  --status-good:#3dd6c4; --status-critical:#ff5c8a;
+  --driving:#90caf9; --fers:#ff7043; --petitjeu:#00897b; --putting:#f48fb1; --mental:#ba68c8; --physique:#e0e0e0;
+}
+[data-theme="light"][data-palette][data-cvd="by"]{
+  --status-good:#00796b; --status-critical:#c2185b;
+  --driving:#1e5fa8; --fers:#d84315; --petitjeu:#00695c; --putting:#ad1457; --mental:#7b1fa2; --physique:#616161;
+}
+*{box-sizing:border-box;scrollbar-width:none}
+*::-webkit-scrollbar{display:none}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" data-palette="{{ palette }}" data-cvd="{{ cvd }}" style="width: 390px; height: 844px; background: var(--bg); color: var(--text); display: flex; flex-direction: column; overflow: hidden; position: relative; {{ cvdStyle }}">
+
+  <!-- Scrollable content -->
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 28px 20px 24px 20px; display: flex; flex-direction: column; gap: 22px;">
+
+    <!-- Header -->
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <svg width="36" height="36" viewBox="0 0 96 96" role="img" aria-label="Cadence" style="flex-shrink: 0;"><rect x="1" y="1" width="94" height="94" rx="22" fill="#f7f3ea" stroke="#d9d2c3" stroke-width="2"/><path d="M20 71 C 26 30, 46 26, 54 71 Q 59 61, 64 71.5 L 70 72" fill="none" stroke="#1e5c3f" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="71" r="6" fill="#1e5c3f"/><ellipse cx="74" cy="72.5" rx="3.6" ry="1.4" fill="#1e5c3f"/><path d="M74 72 V 30" stroke="#1e5c3f" stroke-width="3.6" stroke-linecap="round"/><path d="M74 28 L 88 34 L 74 40 Z" fill="#4fbf86"/></svg>
+        <div>
+          <h1 style="font-family: 'Cormorant Garamond', serif; font-size: 27px; font-weight: 600; line-height: 1; letter-spacing: 0.02em;">Cadence</h1>
+          <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Lundi 21 septembre</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <sc-if value="{{ socialOn }}" hint-placeholder-val="{{ false }}">
+          <a href="SocialMobile.dc.html" aria-label="Social et messages, 2 non lus" style="position: relative; width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); color: var(--text); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg>
+            <span style="position: absolute; top: 0; right: 0; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg);">2</span>
+          </a>
+        </sc-if>
+        <a data-tuto="profil" href="ProfilMobile.dc.html" aria-label="Profil et réglages" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0;">LG</a>
+      </div>
+    </div>
+
+    <!-- Termine ton profil : ce qui a été passé au premier lancement -->
+    <sc-if value="{{ ob.on }}" hint-placeholder-val="{{ false }}">
+      <div style="background: var(--surface); border: 1px solid var(--accent); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="position: relative; width: 48px; height: 48px; flex-shrink: 0;">
+            <div style="position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(var(--accent) {{ ob.deg }}, var(--surface-2) 0);"></div>
+            <div style="position: absolute; inset: 5px; border-radius: 50%; background: var(--surface); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">{{ ob.pct }}</div>
+          </div>
+          <div style="flex-grow: 1; min-width: 0;"><div style="font-size: 15px; font-weight: 600;">{{ ob.title }}</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ ob.sub }}</div></div>
+          <button onClick="{{ ob.hide }}" aria-label="{{ ob.hideLbl }}" style="width: 36px; height: 36px; border-radius: 50%; border: none; background: transparent; color: var(--text-3); cursor: pointer; flex-shrink: 0;">✕</button>
+        </div>
+        <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+          <sc-for list="{{ ob.items }}" as="it" hint-placeholder-count="3">
+            <sc-if value="{{ it.isLink }}" hint-placeholder-val="{{ true }}">
+              <a href="OnboardingMobile.dc.html" onClick="{{ it.go }}" style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-bottom: {{ it.border }};">
+                <span style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0;"></span>
+                <span style="flex-grow: 1; min-width: 0;"><span style="display: block; font-size: 14px; font-weight: 600;">{{ it.label }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ it.sub }}</span></span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+              </a>
+            </sc-if>
+            <sc-if value="{{ it.isTour }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ it.go }}" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 11px 14px; border: none; border-bottom: {{ it.border }}; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer;">
+                <span style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0;"></span>
+                <span style="flex-grow: 1; min-width: 0;"><span style="display: block; font-size: 14px; font-weight: 600;">{{ it.label }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ it.sub }}</span></span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+              </button>
+            </sc-if>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Accueil adapté au profil -->
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span style="font-size: 12px; color: var(--text-3); flex-shrink: 0;">Mon accueil</span>
+      <div style="display: flex; gap: 6px;">
+        <sc-for list="{{ homeProfiles }}" as="h" hint-placeholder-count="3"><button aria-pressed="{{ h.aria }}" onClick="{{ h.pick }}" style="height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid {{ h.border }}; background: {{ h.bg }}; color: {{ h.color }}; font-size: 12px; font-weight: {{ h.weight }}; cursor: pointer;">{{ h.label }}</button></sc-for>
+      </div>
+      <button onClick="{{ hp.open }}" aria-label="{{ hp.openLbl }}" style="margin-left: auto; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text-2); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button>
+    </div>
+
+    <div style="order: {{ hb.index.ord }}; display: {{ hb.index.disp }};">
+    <!-- Index hero -->
+    <a href="ProgressionMobile.dc.html" onClick="{{ goIndex }}" aria-label="Index actuel : voir l’évolution dans Progression" style="display: block; color: inherit; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 18px 14px 18px;">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+        <div>
+          <div style="font-size: 12px; color: var(--text-3);">Index actuel</div>
+          <div class="display" style="font-size: 40px; font-weight: 600; line-height: 1.1; margin-top: 4px; color: var(--accent);">14.2</div>
+          <div style="font-size: 12px; color: var(--status-good); margin-top: 4px;">▼ 4.2 sur 10 semaines</div>
+        </div>
+        <svg width="130" height="56" viewBox="0 0 120 32" style="flex-shrink: 0; margin-top: 10px;">
+          <polyline points="4,4 16.4,6.9 28.9,9.7 41.3,7.4 53.8,12.6 66.2,16 78.7,18.9 91.1,22.9 103.6,25.7" fill="none" stroke="var(--text-3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="103.6,25.7 116,28" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="116" cy="28" r="2.6" fill="var(--accent)" stroke="var(--surface)" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--accent);">Voir l’évolution dans Progression<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></div>
+    </a>
+    </div>
+
+    <div style="order: {{ hb.kpi.ord }}; display: {{ hb.kpi.disp }};">
+    <!-- KPI row -->
+    <sc-if value="{{ showKpi }}" hint-placeholder-val="{{ true }}">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+      <a href="SeancesMobile.dc.html" onClick="{{ goSessions }}" aria-label="Séances de la semaine" style="position: relative; display: block; color: inherit; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: 10px; right: 8px;"><path d="m9 6 6 6-6 6"/></svg>
+        <div style="font-size: 12px; color: var(--text-3);">Séances</div>
+        <div class="display" style="font-size: 22px; font-weight: 600; margin-top: 4px;">{{ kSessions }}</div>
+        <div style="font-size: 12px; color: var(--status-good); margin-top: 2px;">▲ 2 / sem.</div>
+      </a>
+      <a href="SeancesMobile.dc.html" onClick="{{ goTime }}" aria-label="Temps d’entraînement de la semaine" style="position: relative; display: block; color: inherit; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: 10px; right: 8px;"><path d="m9 6 6 6-6 6"/></svg>
+        <div style="font-size: 12px; color: var(--text-3);">Temps</div>
+        <div class="display" style="font-size: 22px; font-weight: 600; margin-top: 4px;">{{ kTime }}</div>
+        <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">cette sem.</div>
+      </a>
+      <a href="PartieDetail.dc.html" onClick="{{ goBest }}" aria-label="Ta meilleure carte" style="position: relative; display: block; color: inherit; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; top: 10px; right: 8px;"><path d="m9 6 6 6-6 6"/></svg>
+        <div style="font-size: 12px; color: var(--text-3);">Meilleur</div>
+        <div style="margin-top: 4px;"><span class="display" style="font-size: 22px; font-weight: 600;">{{ kBest }}</span><span style="font-size: 12px; color: var(--text-3);"> /{{ kBestPar }}</span></div>
+        <div style="font-size: 12px; color: var(--status-good); margin-top: 2px;">{{ kBestNote }}</div>
+      </a>
+    </div>
+    </sc-if>
+    </div>
+
+    <div style="order: {{ hb.prio.ord }}; display: {{ hb.prio.disp }};">
+    <!-- Priorité de la semaine (recommandation de séance) -->
+    <div style="background: var(--surface); border: 1px solid var(--accent); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: {{ pr_kickerColor }};">{{ pr_kicker }}</div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 46px; height: 46px; border-radius: 12px; background: color-mix(in srgb, var(--petitjeu) 16%, transparent); color: var(--petitjeu); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg>
+        </div>
+        <div style="flex-grow: 1; min-width: 0;">
+          <div style="font-size: 17px; font-weight: 600;">{{ pr_title }}</div>
+          <div style="font-size: 13px; color: var(--text-2); margin-top: 2px; line-height: 1.4;">{{ pr_why }}</div>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <sc-for list="{{ pr_facts }}" as="f" hint-placeholder-count="3"><span style="font-size: 12px; font-weight: 600; color: var(--petitjeu); background: color-mix(in srgb, var(--petitjeu) 12%, transparent); padding: 3px 9px; border-radius: 999px;">{{ f }}</span></sc-for>
+      </div>
+      <a href="SeanceGuideeMobile.dc.html" onClick="{{ pr_start }}" style="height: 48px; border-radius: 12px; background: var(--accent); color: var(--on-accent); font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>{{ pr_cta }}
+      </a>
+    </div>
+    </div>
+
+    <div style="order: {{ hb.comp.ord }}; display: {{ hb.comp.disp }};">
+    <sc-if value="{{ showComp }}" hint-placeholder-val="{{ false }}">
+    <!-- Compétitions (module activé) -->
+    <div>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+        <h2 style="font-size: 16px; font-weight: 600;">Compétitions près de toi</h2>
+        <a href="CompetitionsMobile.dc.html" style="font-size: 13px; color: var(--text-3); padding: 12px 0 12px 12px;">Voir tout</a>
+      </div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <a href="CompetitionsMobile.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border);">
+          <div style="width: 44px; height: 48px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span class="display" style="font-size: 17px; font-weight: 700; line-height: 1;">4</span>
+            <span style="font-size: 12px; font-weight: 600; text-transform: uppercase; margin-top: 2px;">oct.</span>
+          </div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 13px; font-weight: 600;">Coupe d'automne</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">[Nom du golf] · 12 km</div>
+            <div style="display: inline-block; font-size: 12px; color: var(--text-2); background: var(--surface-2); padding: 2px 8px; border-radius: 999px; margin-top: 6px;">Stroke play · index max 24</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <a href="CompetitionsMobile.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px;">
+          <div style="width: 44px; height: 48px; border-radius: 10px; background: var(--surface-2); color: var(--text); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span class="display" style="font-size: 17px; font-weight: 700; line-height: 1;">12</span>
+            <span style="font-size: 12px; font-weight: 600; text-transform: uppercase; margin-top: 2px; color: var(--text-3);">oct.</span>
+          </div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 13px; font-weight: 600;">Grand Prix du club</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">[Nom du golf] · 34 km</div>
+            <div style="display: inline-block; font-size: 12px; color: var(--text-2); background: var(--surface-2); padding: 2px 8px; border-radius: 999px; margin-top: 6px;">Stableford · ouvert à tous</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    </sc-if>
+    </div>
+
+    <div style="order: {{ hb.dom.ord }}; display: {{ hb.dom.disp }};">
+    <!-- Domains -->
+    <div>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+        <h2 style="font-size: 16px; font-weight: 600;">Domaines — cette semaine</h2>
+        <a href="ProgressionMobile.dc.html" style="font-size: 13px; color: var(--text-3); padding: 12px 0 12px 12px;">Voir tout</a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+
+        <a href="ProgressionMobile.dc.html" onClick="{{ openDom_driving }}" style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: block;">
+          <div style="width: 28px; height: 28px; border-radius: 8px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--driving); display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 20 4"/><path d="M8 4h12v12"/></svg>
+          </div>
+          <div style="font-size: 13px; font-weight: 600;">Driving</div>
+          <div style="font-size: 12px; color: var(--status-good); margin-top: 4px;">{{ m_218 }} ▲</div>
+        </a>
+
+        <a href="ProgressionMobile.dc.html" onClick="{{ openDom_fers }}" style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: block;">
+          <div style="width: 28px; height: 28px; border-radius: 8px; background: color-mix(in srgb, var(--fers) 15%, transparent); color: var(--fers); display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v13"/><path d="M7 16c0 2.2 4.5 2.2 4.5 0"/><path d="M7 3l7 2.2L7 7.4"/></svg>
+          </div>
+          <div style="font-size: 13px; font-weight: 600;">Fers</div>
+          <div style="font-size: 12px; color: var(--status-good); margin-top: 4px;">58% ▲</div>
+        </a>
+
+        <a href="ProgressionMobile.dc.html" onClick="{{ openDom_petitjeu }}" style="background: var(--surface); border: 1px solid var(--accent); border-radius: 12px; padding: 12px; display: block;">
+          <div style="width: 28px; height: 28px; border-radius: 8px; background: color-mix(in srgb, var(--petitjeu) 15%, transparent); color: var(--petitjeu); display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c4-9 12-9 16 0"/><circle cx="19.2" cy="6.6" r="1.3" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div style="font-size: 13px; font-weight: 600;">Petit jeu</div>
+          <div style="font-size: 12px; color: var(--status-good); margin-top: 4px;">71% ▲</div>
+        </a>
+
+        <a href="ProgressionMobile.dc.html" onClick="{{ openDom_putting }}" style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: block;">
+          <div style="width: 28px; height: 28px; border-radius: 8px; background: color-mix(in srgb, var(--putting) 18%, transparent); color: var(--putting); display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4l10 4-10 4"/><path d="M4 21h6"/></svg>
+          </div>
+          <div style="font-size: 13px; font-weight: 600;">Putting</div>
+          <div style="font-size: 12px; color: var(--status-good); margin-top: 4px;">32.1 putts ▼</div>
+        </a>
+
+        <a href="ProgressionMobile.dc.html" onClick="{{ openDom_mental }}" style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: block;">
+          <div style="width: 28px; height: 28px; border-radius: 8px; background: color-mix(in srgb, var(--mental) 15%, transparent); color: var(--mental); display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M9 11.5c0-1.8 1.3-2.8 3-2.8s3 1 3 2.8c0 1.4-1.5 1.8-1.5 3.2"/><circle cx="13.5" cy="16.8" r="0.7" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div style="font-size: 13px; font-weight: 600;">Mental</div>
+          <div style="font-size: 12px; color: var(--status-good); margin-top: 4px;">7.2/10 ▲</div>
+        </a>
+
+        <a href="ProgressionMobile.dc.html" onClick="{{ openDom_physique }}" style="background: var(--surface); border: 1px dashed var(--border); border-radius: 12px; padding: 12px; display: block;">
+          <div style="width: 28px; height: 28px; border-radius: 8px; background: color-mix(in srgb, var(--physique) 15%, transparent); color: var(--physique); display: flex; align-items: center; justify-content: center; margin-bottom: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/><rect x="2" y="9" width="4" height="6" rx="1"/><rect x="18" y="9" width="4" height="6" rx="1"/></svg>
+          </div>
+          <div style="font-size: 13px; font-weight: 600;">Physique</div>
+          <div style="font-size: 12px; color: var(--status-critical); margin-top: 4px;">En retard ▼</div>
+        </a>
+
+      </div>
+    </div>
+    </div>
+
+    <div style="order: {{ hb.recent.ord }}; display: {{ hb.recent.disp }};">
+    <!-- Recent activity -->
+    <div>
+      <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 10px;">Activité récente</h2>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border);">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--putting); flex-shrink: 0;"></div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 13px; font-weight: 500;">Putting</div>
+            <div style="font-size: 12px; color: var(--text-2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Routine de mise en jeu — putts &lt; {{ m_2 }}</div>
+          </div>
+          <div style="text-align: right; flex-shrink: 0;">
+            <div style="font-size: 12px; color: var(--text-3);">35 min</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Aujourd'hui</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border);">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--mental); flex-shrink: 0;"></div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 13px; font-weight: 500;">Mental</div>
+            <div style="font-size: 12px; color: var(--text-2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Visualisation et routine pré-coup</div>
+          </div>
+          <div style="text-align: right; flex-shrink: 0;">
+            <div style="font-size: 12px; color: var(--text-3);">25 min</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Aujourd'hui</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border);">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--petitjeu); flex-shrink: 0;"></div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 13px; font-weight: 500;">Petit jeu</div>
+            <div style="font-size: 12px; color: var(--text-2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Approches lobées — cibles {{ m_20 }} et {{ m_40 }}</div>
+          </div>
+          <div style="text-align: right; flex-shrink: 0;">
+            <div style="font-size: 12px; color: var(--text-3);">45 min</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Hier</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--fers); flex-shrink: 0;"></div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 13px; font-weight: 500;">Fers</div>
+            <div style="font-size: 12px; color: var(--text-2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Précision fer 7 — cibles {{ m_120 }} à {{ m_140 }}</div>
+          </div>
+          <div style="text-align: right; flex-shrink: 0;">
+            <div style="font-size: 12px; color: var(--text-3);">50 min</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Hier</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom tab bar -->
+  <nav style="flex-shrink: 0; height: 84px; background: var(--surface); border-top: 1px solid var(--border); display: grid; grid-template-columns: repeat(5, 1fr); align-items: flex-start; padding: 8px 8px 0 8px;">
+    <a href="MainMobile.dc.html" style="height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--accent); font-size: 12px; font-weight: 600;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>
+      Accueil
+    </a>
+    <a data-tuto="seances" href="SeancesMobile.dc.html" style="height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-3); font-size: 12px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+      Séances
+    </a>
+    <div style="display: flex; justify-content: center;">
+      <button data-tuto="plus" onClick="{{ openMenu }}" aria-label="Nouvelle activité" style="border: none; cursor: pointer; width: 52px; height: 52px; border-radius: 16px; background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </div>
+    <a data-tuto="progression" href="ProgressionMobile.dc.html" style="height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-3); font-size: 12px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+      Progression
+    </a>
+    <a data-tuto="objectifs" href="ObjectifsMobile.dc.html" style="height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-3); font-size: 12px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 5h13l-3 3.5L18 12H5"/></svg>
+      Objectifs
+    </a>
+  </nav>
+
+
+  <!-- Menu + (Nouvelle activité) : s'ouvre par-dessus la page en cours -->
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ closeMenu }}" aria-label="Fermer le menu" style="position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); border: none; padding: 0; cursor: pointer;"></button>
+
+    <div role="dialog" aria-label="Nouvelle activité" style="position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--border); border-radius: 24px 24px 0 0; padding: 10px 20px 34px 20px; display: flex; flex-direction: column; gap: 18px;">
+
+      <div style="width: 36px; height: 4px; border-radius: 2px; background: var(--surface-2); align-self: center;"></div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 20px; font-weight: 600;">Nouvelle activité</h2>
+          <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Que veux-tu faire ?</div>
+        </div>
+        <button onClick="{{ closeMenu }}" aria-label="Fermer" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); color: var(--text-2); border: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+
+        <a href="EntrainementMobile.dc.html" onClick="{{ closeMenu }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--accent);">
+          <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>
+          </div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600;">Entraînement</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 3px; line-height: 1.4;">Enregistrer une séance : putting, fers, petit jeu, mental…</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+
+        <a href="PartieLiveMobile.dc.html" onClick="{{ closeMenu }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--border);">
+          <div style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4l10 4-10 4"/><path d="M4 21h6"/></svg>
+          </div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600;">Créer une partie</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 3px; line-height: 1.4;">Choisir un parcours et noter ton score trou par trou</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+
+        <a href="ParcoursMobile.dc.html" onClick="{{ closeMenu }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--border);">
+          <div style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          </div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600;">Parcourir les parcours</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 3px; line-height: 1.4;">Trouver un golf près de toi et découvrir ses trous</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+
+        <a href="TrackmanMobile.dc.html" onClick="{{ tmMenu }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--border);">
+          <div style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in srgb, var(--driving) 16%, transparent); color: var(--driving); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M6 19c2-8 6-13 13-14"/><circle cx="19" cy="5" r="1.6" fill="currentColor"/></svg></div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600;">Importer depuis TrackMan</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 3px; line-height: 1.4;">Séances de practice ou de simulateur, avec toutes les données</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+
+        <sc-if value="{{ compOn }}" hint-placeholder-val="{{ false }}">
+          <a href="CompetitionsMobile.dc.html" onClick="{{ closeMenu }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--border);">
+            <div style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 6h3v2a3 3 0 0 1-3 3M7 6H4v2a3 3 0 0 0 3 3"/></svg>
+            </div>
+            <div style="flex-grow: 1; min-width: 0;">
+              <div style="font-size: 15px; font-weight: 600;">Trouver une compétition</div>
+              <div style="font-size: 12px; color: var(--text-3); margin-top: 3px; line-height: 1.4;">Les compétitions près de toi, filtrées selon ton index</div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+          </a>
+        </sc-if>
+
+      </div>
+    </div>
+  </sc-if>
+  <!-- Personnaliser l'accueil -->
+  <sc-if value="{{ hp.on }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ hp.close }}" aria-label="{{ hp.closeLbl }}" style="position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); border: none; padding: 0; cursor: pointer;"></button>
+    <div role="dialog" aria-label="{{ hp.title }}" style="position: absolute; left: 0; right: 0; bottom: 0; max-height: 90%; overflow-y: auto; background: var(--surface); border-top: 1px solid var(--border); border-radius: 24px 24px 0 0; padding: 10px 20px 30px 20px; display: flex; flex-direction: column; gap: 14px;">
+      <div style="width: 36px; height: 4px; border-radius: 2px; background: var(--surface-2); align-self: center; flex-shrink: 0;"></div>
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+        <div><h2 style="font-size: 20px; font-weight: 600;">{{ hp.title }}</h2><div style="font-size: 13px; color: var(--text-3); margin-top: 3px;">{{ hp.sub }}</div></div>
+        <button onClick="{{ hp.close }}" aria-label="{{ hp.closeLbl }}" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); color: var(--text-2); border: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div style="border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <sc-for list="{{ hp.rows }}" as="r" hint-placeholder-count="6">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: {{ r.border }};">
+            <div style="display: flex; flex-direction: column; gap: 4px; flex-shrink: 0;">
+              <button onClick="{{ r.up }}" aria-label="{{ r.upLbl }}" style="width: 36px; height: 26px; border: none; border-radius: 8px; background: var(--surface-2); color: var(--text); opacity: {{ r.upOp }}; cursor: pointer; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg></button>
+              <button onClick="{{ r.down }}" aria-label="{{ r.downLbl }}" style="width: 36px; height: 26px; border: none; border-radius: 8px; background: var(--surface-2); color: var(--text); opacity: {{ r.downOp }}; cursor: pointer; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+            </div>
+            <div style="flex-grow: 1; min-width: 0; opacity: {{ r.nameOp }};"><div style="font-size: 14px; font-weight: 600;">{{ r.name }}</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ r.sub }}</div></div>
+            <button role="switch" aria-checked="{{ r.aria }}" aria-label="{{ r.name }}" onClick="{{ r.toggle }}" style="width: 50px; height: 30px; border-radius: 999px; border: none; background: {{ r.swBg }}; display: flex; justify-content: {{ r.swJ }}; align-items: center; padding: 3px; cursor: pointer; flex-shrink: 0;"><span style="width: 24px; height: 24px; border-radius: 50%; background: #ffffff;"></span></button>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size: 12px; color: var(--text-3);">{{ hp.count }}</div>
+      <div style="display: flex; gap: 10px;">
+        <button onClick="{{ hp.reset }}" style="flex: 1; height: 50px; border-radius: 12px; border: 1px solid var(--border); background: transparent; color: var(--text); font-size: 14px; font-weight: 600; cursor: pointer;">{{ hp.resetLbl }}</button>
+        <button onClick="{{ hp.close }}" style="flex: 1; height: 50px; border-radius: 12px; border: none; background: var(--accent); color: var(--on-accent); font-size: 15px; font-weight: 600; cursor: pointer;">{{ hp.done }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- Tutoriel du premier lancement : met en lumière les zones clés, étape par étape -->
+  <sc-if value="{{ tuOn }}" hint-placeholder-val="{{ false }}">
+    <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(0,0,0,{{ tu.dim }});"></div>
+    <sc-if value="{{ tu.hasRing }}" hint-placeholder-val="{{ false }}">
+      <div aria-hidden="true" style="position: absolute; left: {{ tu.rx }}px; top: {{ tu.ry }}px; width: {{ tu.rw }}px; height: {{ tu.rh }}px; border-radius: {{ tu.rr }}px; box-shadow: 0 0 0 1600px rgba(0,0,0,0.66); border: 2px solid var(--accent); transition: all 0.35s ease;"></div>
+    </sc-if>
+    <div role="dialog" aria-label="{{ tu.title }}" style="position: absolute; left: 20px; right: 20px; top: {{ tu.top }}; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: top 0.35s ease;">
+      <sc-if value="{{ tu.isFirst }}" hint-placeholder-val="{{ true }}">
+        <svg width="52" height="52" viewBox="0 0 96 96" aria-hidden="true"><rect x="1" y="1" width="94" height="94" rx="22" fill="#f7f3ea" stroke="#d9d2c3" stroke-width="2"/><path d="M14 72 H 84" stroke="#1e5c3f" stroke-width="1.6" stroke-linecap="round" opacity="0.35"/><path d="M20 71 C 26 30, 46 26, 54 71 Q 59 61, 64 71.5 L 70 72" fill="none" stroke="#1e5c3f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="71" r="4.6" fill="#1e5c3f"/><ellipse cx="74" cy="72.5" rx="3.6" ry="1.4" fill="#1e5c3f"/><path d="M74 72 V 30" stroke="#1e5c3f" stroke-width="2.6" stroke-linecap="round"/><path d="M74 30 L 86 34.5 L 74 39 Z" fill="#4fbf86"/></svg>
+      </sc-if>
+      <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent);">{{ tu.step }}</div>
+      <h2 style="font-size: 20px; font-weight: 600;">{{ tu.title }}</h2>
+      <div style="font-size: 14px; line-height: 1.5; color: var(--text-2);">{{ tu.text }}</div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 6px;">
+        <div style="display: flex; gap: 5px; flex-grow: 1;">
+          <sc-for list="{{ tu.dots }}" as="o" hint-placeholder-count="6"><span style="width: {{ o.w }}; height: 6px; border-radius: 3px; background: {{ o.bg }}; transition: width 0.3s ease;"></span></sc-for>
+        </div>
+        <sc-if value="{{ tu.notLast }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ tuSkip }}" style="height: 40px; padding: 0 12px; border: none; background: transparent; color: var(--text-3); font-size: 14px; cursor: pointer;">{{ tu.skip }}</button>
+        </sc-if>
+        <button onClick="{{ tuNext }}" style="height: 40px; padding: 0 18px; border-radius: 999px; border: none; background: var(--accent); color: var(--on-accent); font-size: 14px; font-weight: 600; cursor: pointer;">{{ tu.next }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  // Couleurs du mode daltonien, posées directement sur l'écran
+  // Taille du texte : l'écran entier est agrandi, en gardant le format du téléphone
+  // Unités de distance choisies dans les Paramètres (mètres ou yards)
+  unitsNow() {
+    let u = 'm';
+    try { u = window.localStorage.getItem('cadence.units') || 'm'; } catch (e) {}
+    return u;
+  }
+  dist(m) {
+    const yd = this.unitsNow() === 'yd';
+    const n = yd ? Math.round(m * 1.0936) : m;
+    const txt = n >= 1000 ? Math.floor(n / 1000) + ' ' + String(n % 1000).padStart(3, '0') : String(n);
+    return txt + (yd ? ' yd' : ' m');
+  }
+  distVals() {
+    const out = {};
+    [2, 20, 40, 120, 140, 218].forEach((m) => { out['m_' + m] = this.dist(m); });
+    return out;
+  }
+  zoomStyle() {
+    let z = 'md';
+    try { z = window.localStorage.getItem('cadence.textSize') || 'md'; } catch (e) {}
+    const f = { sm: 0.9, md: 1, lg: 1.1, xl: 1.2 }[z] || 1;
+    if (f === 1) return '';
+    return ' zoom: ' + f + '; width: ' + (390 / f).toFixed(2) + 'px; height: ' + (844 / f).toFixed(2) + 'px;';
+  }
+  cvdVars() {
+    const c = this.cvdNow();
+    if (c !== 'rg' && c !== 'by') return '';
+    const light = this.themeNow() === 'light';
+    const sets = {
+      rg: light
+        ? ['#0072b2', '#b85000', '#0072b2', '#d55e00', '#007a5a', '#a88f00', '#b0588d', '#6b6b6b']
+        : ['#56b4e9', '#e69f00', '#56b4e9', '#e69f00', '#009e73', '#f0e442', '#cc79a7', '#bdbdbd'],
+      by: light
+        ? ['#00796b', '#c2185b', '#1e5fa8', '#d84315', '#00695c', '#ad1457', '#7b1fa2', '#616161']
+        : ['#3dd6c4', '#ff5c8a', '#90caf9', '#ff7043', '#00897b', '#f48fb1', '#ba68c8', '#e0e0e0']
+    }[c];
+    const names = ['status-good', 'status-critical', 'driving', 'fers', 'petitjeu', 'putting', 'mental', 'physique'];
+    return names.map((n, i) => '--' + n + ': ' + sets[i] + ';').join(' ');
+  }
+  cvdNow() {
+    let c = 'off';
+    try { c = window.localStorage.getItem('cadence.cvd') || 'off'; } catch (e) {}
+    return c;
+  }
+  paletteNow() {
+    let p = 'clubhouse';
+    try { p = window.localStorage.getItem('cadence.palette') || 'clubhouse'; } catch (e) {}
+    return p;
+  }
+  // Thème : sombre par défaut, clair ou automatique (suit le téléphone) selon les Paramètres
+  themeNow() {
+    let t = 'dark';
+    try { t = window.localStorage.getItem('cadence.theme') || 'dark'; } catch (e) {}
+    if (t === 'auto') { try { t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { t = 'dark'; } }
+    return t;
+  }
+  // Module Compétitions : réglage partagé entre les écrans (Paramètres l'écrit, les autres le lisent)
+  componentDidMount() {
+    // Suit le thème choisi dans les Paramètres, même si l'écran est déjà ouvert
+    this._lastTheme = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle() + this.unitsNow();
+    this._themeTimer = setInterval(() => { const t = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle() + this.unitsNow(); if (t !== this._lastTheme) { this._lastTheme = t; this.forceUpdate(); } }, 400);
+    this._syncComp = () => {
+      let on = false;
+      try { on = window.localStorage.getItem('cadence.mod.competitions') !== '0'; } catch (e) {}
+      let social = false;
+      try { social = window.localStorage.getItem('cadence.mod.social') !== '0'; } catch (e) {}
+      const cur = this.state || {};
+      if (on !== !!cur.comp || social !== !!cur.social) this.setState({ comp: on, social: social });
+    };
+    this._syncComp();
+    try { window.addEventListener('storage', this._syncComp); window.addEventListener('focus', this._syncComp); } catch (e) {}
+  }
+  componentWillUnmount() {
+    clearInterval(this._themeTimer);
+    try { window.removeEventListener('storage', this._syncComp); window.removeEventListener('focus', this._syncComp); } catch (e) {}
+  }
+  // Tutoriel : affiché tant qu'il n'a pas été terminé ou passé (relançable depuis les Paramètres)
+  tutoCtl() {
+    const fr = 'fr' === 'fr';
+    const s = this.state || {};
+    let done = false;
+    try { done = window.localStorage.getItem('cadence.tutoDone') === '1'; } catch (e) {}
+    const on = s.tuStep !== undefined ? s.tuStep >= 0 : !done;
+    const step = s.tuStep !== undefined && s.tuStep >= 0 ? s.tuStep : 0;
+    const finish = () => { try { window.localStorage.setItem('cadence.tutoDone', '1'); } catch (e) {} this.setState({ tuStep: -1 }); };
+    // Zones mises en lumière (écran de 390 × 844)
+    const tab = (i) => ({ rx: Math.round(8 + 74.8 * (i + 0.5) - 36), ry: 766, rw: 72, rh: 56, rr: 14 });
+    const S = fr ? [
+      [null, 'Bienvenue dans Cadence', 'En 30 secondes, voici où trouver l’essentiel. Tu pourras revoir ce tutoriel depuis les Paramètres.', '34%'],
+      [{ rx: 163, ry: 762, rw: 64, rh: 64, rr: 20 }, 'Le bouton +', 'Enregistre une séance d’entraînement, crée une partie ou trouve un parcours près de toi.', '470px'],
+      [tab(1), 'Séances', 'Tout ton historique : entraînements et parties. Touche une ligne pour voir le détail ou la supprimer.', '470px'],
+      [tab(3), 'Progression', 'Ton index et chaque domaine dans le temps, pour voir ton évolution.', '470px'],
+      [tab(4), 'Objectifs', 'Fixe ton cap (par exemple passer sous 12 d’index) et suis tes objectifs de la semaine.', '470px'],
+      [{ rx: 322, ry: 20, rw: 58, rh: 58, rr: 29 }, 'Ton profil', 'Ton sac, tes réglages, le thème, les palettes et les modules à activer.', '104px']
+    ] : [
+      [null, 'Welcome to Cadence', 'In 30 seconds, here’s where to find the essentials. You can replay this tour from Settings.', '34%'],
+      [{ rx: 163, ry: 762, rw: 64, rh: 64, rr: 20 }, 'The + button', 'Log a practice session, create a round or find a course near you.', '470px'],
+      [tab(1), 'Sessions', 'Your whole history: practice and rounds. Tap a row to see details or delete it.', '470px'],
+      [tab(3), 'Progress', 'Your handicap and each area over time, to see how you progress.', '470px'],
+      [tab(4), 'Goals', 'Set your target (for example getting under 12) and follow your weekly goals.', '470px'],
+      [{ rx: 322, ry: 20, rw: 58, rh: 58, rr: 29 }, 'Your profile', 'Your bag, your settings, theme, palettes and the modules to turn on.', '104px']
+    ];
+    const keys = [null, 'plus', 'seances', 'progression', 'objectifs', 'profil'];
+    let real = null;
+    try {
+      const el = keys[step] ? document.querySelector('[data-tuto="' + keys[step] + '"]') : null;
+      const root = el ? el.closest('[data-theme]') : null;
+      if (el && root) {
+        const a = el.getBoundingClientRect(), b = root.getBoundingClientRect();
+        const z = root.offsetWidth ? b.width / root.offsetWidth : 1;
+        const pad = 6;
+        real = { rx: Math.round((a.left - b.left) / z - pad), ry: Math.round((a.top - b.top) / z - pad), rw: Math.round(a.width / z + pad * 2), rh: Math.round(a.height / z + pad * 2), rr: 16 };
+        if (!real.rw || !real.rh) real = null;
+      }
+    } catch (e) { real = null; }
+    const cur = S[step];
+    const last = step === S.length - 1;
+    const ring = real || cur[0] || { rx: 0, ry: 0, rw: 0, rh: 0, rr: 0 };
+    return {
+      tuOn: on,
+      tu: {
+        hasRing: !!cur[0], dim: cur[0] ? '0' : '0.66', rx: ring.rx, ry: ring.ry, rw: ring.rw, rh: ring.rh, rr: ring.rr,
+        top: cur[3], isFirst: step === 0, notLast: !last,
+        step: (fr ? 'Étape ' : 'Step ') + (step + 1) + (fr ? ' sur ' : ' of ') + S.length,
+        title: cur[1], text: cur[2],
+        skip: fr ? 'Passer' : 'Skip', next: last ? (fr ? 'C’est parti' : 'Let’s go') : (fr ? 'Suivant' : 'Next'),
+        dots: S.map((_, i) => ({ w: i === step ? '18px' : '6px', bg: i <= step ? 'var(--accent)' : 'var(--surface-2)' }))
+      },
+      tuNext: () => { if (last) { try { window.localStorage.setItem('cadence.tourSeen', '1'); } catch (e) {} finish(); } else { this.setState({ tuStep: step + 1 }); setTimeout(() => this.forceUpdate(), 50); } },
+      tuSkip: finish
+    };
+  }
+  // Semaine en cours calculée à partir des séances réelles (exemples + ajouts − suppressions)
+  weekStats() {
+    const fr = 'fr' === 'fr';
+    const read = (k) => { try { return JSON.parse(window.localStorage.getItem('cadence.' + k) || '[]') || []; } catch (e) { return []; } };
+    const del = read('deleted');
+    const base = [['t1', 35, 'putting', 6], ['t2', 25, 'mental', 6], ['t3', 45, 'petitjeu', 5], ['t4', 50, 'fers', 5], ['t5', 70, 'putting', 4], ['t6', 40, 'driving', 3], ['t7', 35, 'petitjeu', 2]];
+    const items = base.map(([id, mins, dom, day]) => ({ id: id, mins: mins, dom: dom, day: day })).concat(read('trainings').map((u) => ({ id: u.id, mins: u.mins || 0, dom: u.dom, day: ({ hier: 5, sam: 4, ven: 3, jeu: 2 })[u.day] !== undefined ? ({ hier: 5, sam: 4, ven: 3, jeu: 2 })[u.day] : 6, isNew: true }))).filter((x) => del.indexOf(x.id) < 0);
+    const days = [0, 0, 0, 0, 0, 0, 0];
+    items.forEach((x) => { days[x.day] += x.mins; });
+    const total = days.reduce((a, b) => a + b, 0);
+    const hm = (m) => Math.floor(m / 60) + 'h' + String(m % 60).padStart(2, '0');
+    const last = 230;
+    const diff = total - last;
+    const max = Math.max(...days, 1);
+    const byDom = {};
+    items.forEach((x) => { byDom[x.dom] = (byDom[x.dom] || 0) + x.mins; });
+    return {
+      total: total, totalLabel: hm(total), count: items.length, added: items.filter((x) => x.isNew).length,
+      countLabel: fr ? ' · ' + items.length + ' séance' + (items.length > 1 ? 's' : '') : ' · ' + items.length + ' session' + (items.length > 1 ? 's' : ''),
+      delta: (diff >= 0 ? '▲ ' : '▼ ') + hm(Math.abs(diff)) + (fr ? ' vs sem. passée' : ' vs last week'), deltaColor: diff >= 0 ? 'var(--status-good)' : 'var(--status-critical)',
+      bars: days.map((m, i) => ({ h: Math.max(2, Math.round((m / max) * 64)) + 'px', bg: i === 6 ? 'var(--accent)' : 'var(--surface-2)', r: m ? '4px' : '2px' })),
+      byDom: byDom
+    };
+  }
+  // Accueil : chiffres de la semaine, priorité recommandée, accès direct au détail des domaines
+  homeCtl() {
+    const fr = 'fr' === 'fr';
+    const w = this.weekStats();
+    let done = '';
+    try { done = window.localStorage.getItem('cadence.guideDone') || ''; } catch (e) {}
+    const prio = 'petitjeu';
+    const did = done === prio;
+    const L = fr
+      ? { kicker: 'Ta priorité de la semaine', kickerDone: 'Priorité de la semaine · faite aujourd’hui ✓', title: 'Petit jeu autour du green', why: 'Tu perds environ 2,1 coups par partie autour du green. C’est là que tu gagneras le plus vite.', facts: ['38 % de up & down', 'objectif 50 %', '−2,1 coups / partie'], cta: 'Commencer la séance guidée · 30 min', ctaDone: 'Refaire la séance', other: 'Autre domaine' }
+      : { kicker: 'Your priority this week', kickerDone: 'Priority this week · done today ✓', title: 'Short game around the green', why: 'You lose about 2.1 strokes per round around the green. That’s where you’ll improve fastest.', facts: ['38% up & down', 'goal 50%', '−2.1 strokes / round'], cta: 'Start the guided session · 30 min', ctaDone: 'Do the session again', other: 'Another area' };
+    const out = {
+      kSessions: String(w.count), kTime: w.totalLabel,
+      pr_kicker: did ? L.kickerDone : L.kicker, pr_kickerColor: did ? 'var(--status-good)' : 'var(--accent)',
+      pr_title: L.title, pr_why: L.why, pr_facts: L.facts, pr_cta: did ? L.ctaDone : L.cta, pr_other: L.other,
+      pr_start: () => { try { window.localStorage.setItem('cadence.guideDom', prio); } catch (e) {} }
+    };
+    ['driving', 'fers', 'petitjeu', 'putting', 'mental', 'physique'].forEach((k) => { out['openDom_' + k] = () => { try { window.localStorage.setItem('cadence.openDom', k); } catch (e) {} }; });
+    return out;
+  }
+  // Accueil adapté au profil choisi au premier lancement (modifiable ici)
+  profileCtl() {
+    const s = this.state || {};
+    let p = s.homeProfile;
+    if (!p) { try { p = window.localStorage.getItem('cadence.homeProfile') || 'comp'; } catch (e) { p = 'comp'; } }
+    const set = (k) => { try { window.localStorage.setItem('cadence.homeProfile', k); } catch (e) {} this.setState({ homeProfile: k }); };
+    return {
+      homeProfiles: [['loisir', 'Loisir'], ['comp', 'Compétition'], ['forme', 'Forme']].map(([k, l]) => ({ label: l, aria: k === p ? 'true' : 'false', bg: k === p ? 'var(--accent)' : 'var(--surface)', color: k === p ? 'var(--on-accent)' : 'var(--text-2)', border: k === p ? 'var(--accent)' : 'var(--border)', weight: k === p ? '600' : '400', pick: () => set(k) })),
+      showKpi: p !== 'loisir',
+      showComp: !!s.comp && p === 'comp',
+      ...this.homeCustom(p !== 'loisir', !!s.comp && p === 'comp')
+    };
+  }
+  // Accueil : chaque case mène à son détail (historique, progression, meilleure carte)
+  navCtl() {
+    const fr = 'fr' === 'fr';
+    const go = (k, v) => () => { try { window.localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)); } catch (e) {} };
+    let deleted = [], user = [];
+    try { deleted = JSON.parse(window.localStorage.getItem('cadence.deleted') || '[]'); user = JSON.parse(window.localStorage.getItem('cadence.games') || '[]'); } catch (e) {}
+    const games = [{ id: 'g1', score: 76, par: 72, holes: 18 }, { id: 'g2', score: 79, par: 72, holes: 18 }, { id: 'g3', score: 81, par: 72, holes: 18 }, { id: 'g5', score: 82, par: 72, holes: 18 }]
+      .concat(Array.isArray(user) ? user : []).filter((g) => g && g.holes === 18 && g.score > 0 && deleted.indexOf(g.id) < 0);
+    const best = games.reduce((b, g) => (!b || g.score - g.par < b.score - b.par ? g : b), null);
+    const avg = games.length ? games.reduce((a, g) => a + g.score, 0) / games.length : 0;
+    const gap = best ? Math.round(avg - best.score) : 0;
+    const out = {
+      goIndex: go('cadence.progFocus', 'index'),
+      goSessions: go('cadence.seancesGo', { tab: 'train', focus: 'list' }),
+      goTime: go('cadence.seancesGo', { tab: 'train', focus: 'week' }),
+      goBest: go('cadence.game', best ? best.id : 'g1'),
+      kBest: best ? String(best.score) : '—', kBestPar: best ? String(best.par) : '72',
+      kBestNote: !best ? '' : gap > 0 ? '▼ ' + gap + (fr ? ' vs moy.' : ' vs avg') : (fr ? 'ta seule carte' : 'your only card')
+    };
+    ['driving', 'fers', 'petitjeu', 'putting', 'mental', 'physique'].forEach((k) => { out['histDom_' + k] = go('cadence.seancesGo', { tab: 'train', dom: k, focus: 'list' }); });
+    return out;
+  }
+  // Carte « Termine ton profil » : étapes passées au premier lancement, à reprendre quand on veut
+  obCardCtl() {
+    const fr = 'fr' === 'fr';
+    const s = this.state || {};
+    const ls = (k, d) => { try { const v = window.localStorage.getItem('cadence.' + k); return v === null ? d : v; } catch (e) { return d; } };
+    const off = { on: false, deg: '0deg', pct: '', title: '', sub: '', hide: () => {}, hideLbl: '', items: [] };
+    if (ls('obDone', '0') !== '1' || ls('obCardHidden', '0') === '1' || s.obHidden) return { ob: off };
+    let prof = {}; try { prof = JSON.parse(ls('profile', '{}')) || {}; } catch (e) {}
+    const ITEMS = [
+      ['account', fr ? 'Crée ton compte' : 'Create your account', fr ? 'Pour sauvegarder tes séances' : 'To back up your sessions', !!ls('account', '')],
+      ['bag', fr ? 'Renseigne ton sac' : 'Fill in your bag', fr ? 'Ta distance avec chaque club' : 'Your distance with each club', ls('bag', null) !== null],
+      ['golf', fr ? 'Ajoute ton golf' : 'Add your course', fr ? 'Club et parcours favori' : 'Club and home course', ls('favCourse', null) !== null || !!(prof.club || '').trim()],
+      ['connex', fr ? 'Connecte tes services' : 'Connect your services', 'ffgolf, TrackMan, ' + (fr ? 'montre' : 'watch'), ['ffgolf', 'trackman', 'watch'].some((k) => ls('conn.' + k, '0') === '1')],
+      ['tour', fr ? 'Fais la visite guidée' : 'Take the guided tour', fr ? '30 secondes pour tout repérer' : '30 seconds to find your way', ls('tourSeen', '0') === '1']
+    ];
+    const todo = ITEMS.filter((x) => !x[3]);
+    if (!todo.length) return { ob: off };
+    const pct = Math.round((4 + ITEMS.length - todo.length) / (4 + ITEMS.length) * 100);
+    return { ob: {
+      on: true, deg: Math.round(pct * 3.6) + 'deg', pct: pct + '%',
+      title: fr ? 'Termine ton profil' : 'Finish your profile',
+      sub: todo.length + (fr ? (todo.length > 1 ? ' étapes passées · quand tu veux' : ' étape passée · quand tu veux') : (todo.length > 1 ? ' skipped steps · whenever you like' : ' skipped step · whenever you like')),
+      hide: () => { try { window.localStorage.setItem('cadence.obCardHidden', '1'); } catch (e) {} this.setState({ obHidden: true }); },
+      hideLbl: fr ? 'Masquer cette carte' : 'Hide this card',
+      items: todo.map(([id, label, sub], i) => ({
+        label: label, sub: sub, isTour: id === 'tour', isLink: id !== 'tour', border: i < todo.length - 1 ? '1px solid var(--border)' : 'none',
+        go: id === 'tour' ? () => this.setState({ tuStep: 0 }) : () => { try { window.localStorage.setItem('cadence.obResume', id); window.localStorage.setItem('cadence.obFrom', 'MainMobile.dc.html'); } catch (e) {} }
+      }))
+    } };
+  }
+  // Accueil personnalisable : afficher ou masquer les blocs et changer leur ordre
+  homeCustom(kpiOn, compOn) {
+    const fr = 'fr' === 'fr';
+    const s = this.state || {};
+    const DEF = ['index', 'kpi', 'prio', 'comp', 'dom', 'recent'];
+    const N = fr
+      ? { index: ['Index', 'Ton index et son évolution'], kpi: ['Chiffres de la semaine', 'Séances, temps, meilleur score'], prio: ['Priorité de la semaine', 'La séance conseillée'], comp: ['Compétitions', 'Les prochaines près de toi'], dom: ['Domaines', 'Tes progrès par domaine'], recent: ['Activité récente', 'Dernières séances et parties'] }
+      : { index: ['Handicap', 'Your handicap and its trend'], kpi: ['This week’s figures', 'Sessions, time, best score'], prio: ['Weekly priority', 'The recommended session'], comp: ['Competitions', 'The next ones near you'], dom: ['Areas', 'Your progress by area'], recent: ['Recent activity', 'Latest sessions and rounds'] };
+    let lay = s.hl;
+    if (!lay) { try { lay = JSON.parse(window.localStorage.getItem('cadence.homeLayout') || 'null'); } catch (e) {} }
+    if (!Array.isArray(lay)) lay = DEF.map((k) => ({ k: k, on: true }));
+    lay = lay.filter((x) => DEF.indexOf(x.k) >= 0);
+    DEF.forEach((k) => { if (!lay.some((x) => x.k === k)) lay.push({ k: k, on: true }); });
+    const save = (next) => { try { window.localStorage.setItem('cadence.homeLayout', JSON.stringify(next)); } catch (e) {} this.setState({ hl: next }); };
+    const avail = { kpi: kpiOn, comp: compOn };
+    const hb = {}; lay.forEach((x, i) => { hb[x.k] = { ord: String(i + 1), disp: x.on && avail[x.k] !== false ? 'block' : 'none' }; });
+    const move = (i, d) => () => { const j = i + d; if (j < 0 || j >= lay.length) return; const n = lay.slice(); const t = n[i]; n[i] = n[j]; n[j] = t; save(n); };
+    const hidden = lay.filter((x) => !x.on).length;
+    return {
+      hb: hb,
+      hp: {
+        on: !!s.hpOn, open: () => this.setState({ hpOn: true }), close: () => this.setState({ hpOn: false }),
+        openLbl: fr ? 'Personnaliser l’accueil' : 'Customise home', title: fr ? 'Personnaliser l’accueil' : 'Customise home',
+        sub: fr ? 'Affiche les blocs utiles et range-les dans ton ordre.' : 'Show the blocks you need, in your own order.',
+        count: fr ? (lay.length - hidden) + ' blocs affichés sur ' + lay.length : (lay.length - hidden) + ' of ' + lay.length + ' blocks shown',
+        reset: () => save(DEF.map((k) => ({ k: k, on: true }))), resetLbl: fr ? 'Ordre par défaut' : 'Default order', done: fr ? 'Terminé' : 'Done', closeLbl: fr ? 'Fermer' : 'Close',
+        rows: lay.map((x, i) => ({
+          name: N[x.k][0],
+          sub: x.k === 'comp' && !compOn ? (fr ? 'Visible avec le profil Compétition' : 'Shown with the Competition profile') : x.k === 'kpi' && !kpiOn ? (fr ? 'Masqué par le profil Loisir' : 'Hidden by the Leisure profile') : N[x.k][1],
+          aria: x.on ? 'true' : 'false', swBg: x.on ? 'var(--accent)' : 'var(--surface-2)', swJ: x.on ? 'flex-end' : 'flex-start', nameOp: x.on ? '1' : '0.55',
+          toggle: () => save(lay.map((y, j) => (j === i ? { k: y.k, on: !y.on } : y))),
+          up: move(i, -1), down: move(i, 1), upOp: i === 0 ? '0.3' : '1', downOp: i === lay.length - 1 ? '0.3' : '1',
+          upLbl: (fr ? 'Monter : ' : 'Move up: ') + N[x.k][0], downLbl: (fr ? 'Descendre : ' : 'Move down: ') + N[x.k][0],
+          border: i < lay.length - 1 ? '1px solid var(--border)' : 'none'
+        }))
+      }
+    };
+  }
+  renderVals() {
+    const s = this.state || {};
+    return {
+      theme: this.themeNow(),
+      palette: this.paletteNow(),
+      cvd: this.cvdNow(),
+      cvdStyle: this.cvdVars() + this.zoomStyle(),
+      ...this.tutoCtl(),
+      ...this.obCardCtl(),
+      ...this.homeCtl(),
+      ...this.profileCtl(),
+      ...this.navCtl(),
+      ...this.distVals(),
+      menuOpen: !!s.menuOpen,
+      openMenu: () => this.setState({ menuOpen: true }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      tmMenu: () => { try { window.localStorage.setItem('cadence.tmFrom', 'home'); } catch (e) {} this.setState({ menuOpen: false }); },
+      compOn: !!s.comp,
+      socialOn: !!s.social
+    };
+  }
+}
+</script>
+</body>
+</html>

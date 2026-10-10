@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Premier lancement</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{
+  --on-accent:#0d0d0d;
+  --bg:#0d0d0d;
+  --surface:#1a1a19;
+  --surface-2:#242422;
+  --border:rgba(255,255,255,0.10);
+  --text:#ffffff;
+  --text-2:#c3c2b7;
+  --text-3:#898781;
+  --accent:#3987e5;
+  --status-good:#0ca30c;
+  --status-critical:#e66767;
+  --driving:#3987e5;
+  --fers:#d95926;
+  --petitjeu:#199e70;
+  --putting:#c98500;
+  --mental:#d55181;
+  --physique:#008300;
+}
+[data-theme="light"]{
+  --bg:#f7f3ea;
+  --surface:#fffffd;
+  --surface-2:#ece4d3;
+  --border:rgba(27,29,34,0.12);
+  --text:#1b1d22;
+  --text-2:#45433c;
+  --text-3:#6e6758;
+  --grid:#e4dccb;
+  --accent:#1e5c3f;
+  --on-accent:#ffffff;
+  --status-good:#0a7f0a;
+  --status-critical:#c23a3a;
+  --driving:#2b73cc;
+  --fers:#c24e1f;
+  --petitjeu:#0f7c86;
+  --putting:#9a6700;
+  --mental:#b83d6b;
+  --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="classique"]{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#ebe9e3; --border:rgba(13,13,13,0.12);
+  --text:#141413; --text-2:#44433e; --text-3:#6b6962; --grid:#e2e0d9; --accent:#2b73cc;
+}
+[data-theme="light"][data-palette="fairway"]{
+  --bg:#f2f5f1; --surface:#ffffff; --surface-2:#e2e9e0; --border:rgba(18,32,26,0.12);
+  --text:#12201a; --text-2:#3c4a42; --text-3:#5e6c65; --grid:#dce4da; --accent:#1e7a4f; --petitjeu:#0f7c86; --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="rose"]{
+  --bg:#fbf4f6; --surface:#ffffff; --surface-2:#f3e4ea; --border:rgba(42,22,32,0.12);
+  --text:#2a1620; --text-2:#553f49; --text-3:#7a5e6a; --grid:#eedde4; --accent:#c2477a; --mental:#7a4fc4;
+}
+[data-theme="light"][data-palette="lisible"]{
+  --bg:#ffffff; --surface:#f4f4f6; --surface-2:#e6e6eb; --border:rgba(0,0,0,0.18);
+  --text:#000000; --text-2:#2e2e31; --text-3:#5e5e63; --grid:#dddde2; --accent:#0a5fcc;
+}
+[data-theme="dark"][data-palette="clubhouse"]{
+  --bg:#0f1411; --surface:#171d19; --surface-2:#212923; --border:rgba(242,239,231,0.10);
+  --text:#f2efe7; --text-2:#c9c3b4; --text-3:#8e8878; --grid:#28302a;
+  --accent:#4fbf86; --on-accent:#0f1411; --driving:#4fc3f7; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="fairway"]{
+  --bg:#0b1510; --surface:#13201a; --surface-2:#1c2c24; --border:rgba(238,243,238,0.10);
+  --text:#eef3ee; --text-2:#bfcbc3; --text-3:#85948b; --grid:#22342a;
+  --accent:#3fbf7f; --on-accent:#0b1510; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="rose"]{
+  --bg:#1a0f15; --surface:#24161e; --surface-2:#2f1e28; --border:rgba(247,237,241,0.10);
+  --text:#f7edf1; --text-2:#d6c2cb; --text-3:#a18c96; --grid:#3a2632;
+  --accent:#f07aa8; --on-accent:#1a0f15; --mental:#a98bf0;
+}
+[data-theme="dark"][data-palette="lisible"]{
+  --bg:#000000; --surface:#111114; --surface-2:#222228; --border:rgba(255,255,255,0.22);
+  --text:#ffffff; --text-2:#e6e6ea; --text-3:#b4b4bb; --grid:#2a2a30;
+  --accent:#5aa2ff; --on-accent:#000000;
+}
+[data-theme][data-palette][data-cvd="rg"]{
+  --status-good:#56b4e9; --status-critical:#e69f00;
+  --driving:#56b4e9; --fers:#e69f00; --petitjeu:#009e73; --putting:#f0e442; --mental:#cc79a7; --physique:#bdbdbd;
+}
+[data-theme="light"][data-palette][data-cvd="rg"]{
+  --status-good:#0072b2; --status-critical:#b85000;
+  --driving:#0072b2; --fers:#d55e00; --petitjeu:#007a5a; --putting:#a88f00; --mental:#b0588d; --physique:#6b6b6b;
+}
+[data-theme][data-palette][data-cvd="by"]{
+  --status-good:#3dd6c4; --status-critical:#ff5c8a;
+  --driving:#90caf9; --fers:#ff7043; --petitjeu:#00897b; --putting:#f48fb1; --mental:#ba68c8; --physique:#e0e0e0;
+}
+[data-theme="light"][data-palette][data-cvd="by"]{
+  --status-good:#00796b; --status-critical:#c2185b;
+  --driving:#1e5fa8; --fers:#d84315; --petitjeu:#00695c; --putting:#ad1457; --mental:#7b1fa2; --physique:#616161;
+}
+*{box-sizing:border-box;scrollbar-width:none}
+*::-webkit-scrollbar{display:none}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" data-palette="{{ palette }}" data-cvd="{{ cvd }}" style="width: 390px; height: 844px; background: var(--bg); color: var(--text); display: flex; flex-direction: column; overflow: hidden; position: relative; {{ cvdStyle }}">
+
+  <!-- En-tête : retour, temps du parcours, avancement, « Passer » -->
+  <sc-if value="{{ showTop }}" hint-placeholder-val="{{ false }}">
+    <div style="flex-shrink: 0; display: flex; align-items: center; gap: 12px; padding: 16px 20px 6px 20px;">
+      <sc-if value="{{ notResume }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ back }}" aria-label="Étape précédente" style="width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--surface-2); color: var(--text); display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+        </button>
+      </sc-if>
+      <sc-if value="{{ isResume }}" hint-placeholder-val="{{ false }}">
+        <a href="{{ resumeHref }}" aria-label="Fermer" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); color: var(--text); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </a>
+      </sc-if>
+      <div style="flex-grow: 1; min-width: 0;">
+        <div style="font-size: 12px; font-weight: 600; color: var(--text-3); margin-bottom: 6px;">{{ phaseLabel }}</div>
+        <div style="display: grid; grid-template-columns: repeat({{ nBars }}, minmax(0, 1fr)); gap: 4px;" role="progressbar" aria-label="{{ stepAria }}">
+          <sc-for list="{{ bars }}" as="b" hint-placeholder-count="9"><span style="height: 4px; border-radius: 2px; background: {{ b.bg }}; margin-left: {{ b.gap }};"></span></sc-for>
+        </div>
+      </div>
+      <sc-if value="{{ canSkip }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ skip }}" style="height: 40px; padding: 0 4px 0 8px; border: none; background: transparent; color: var(--text-2); font-size: 14px; font-weight: 600; cursor: pointer; flex-shrink: 0;">Passer</button>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <!-- 0 · Bienvenue -->
+  <sc-if value="{{ sWelcome }}" hint-placeholder-val="{{ true }}">
+    <button onClick="{{ cycleSize }}" aria-label="{{ sizeAria }}" style="position: absolute; top: 18px; right: 20px; height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer;">Aa <span style="font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--text-3);">{{ sizeLabel }}</span></button>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 32px; gap: 18px;">
+      <svg width="96" height="96" viewBox="0 0 96 96" role="img" aria-label="Cadence"><rect x="0.5" y="0.5" width="95" height="95" rx="22" fill="#f7f3ea" stroke="#d9d2c3"/><path d="M14 72 H 84" stroke="#1e5c3f" stroke-width="1.2" stroke-linecap="round" opacity="0.35"/><path d="M20 71 C 26 30, 46 26, 54 71 Q 59 61, 64 71.5 L 70 72" fill="none" stroke="#1e5c3f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="71" r="3.6" fill="#1e5c3f"/><ellipse cx="74" cy="72.5" rx="3.6" ry="1.4" fill="#1e5c3f"/><path d="M74 72 V 30" stroke="#1e5c3f" stroke-width="1.8" stroke-linecap="round"/><path d="M74 30 L 86 34.5 L 74 39 Z" fill="#4fbf86"/></svg>
+      <h1 style="font-size: 30px; font-weight: 600; line-height: 1.15;">Bienvenue sur Cadence</h1>
+      <p style="margin: 0; font-size: 15px; color: var(--text-2); line-height: 1.5;">Suis tes entraînements, tes parties et ton index. Et sache enfin quoi travailler pour progresser.</p>
+      <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--text-3);">
+        <span>1 · L'essentiel · moins d'une minute</span>
+        <span>2 · Ton profil · facultatif</span>
+        <span>3 · C'est parti · comme tu veux</span>
+      </div>
+    </div>
+    <div style="flex-shrink: 0; padding: 12px 20px 28px 20px; display: flex; flex-direction: column; gap: 8px;">
+      <button onClick="{{ next }}" style="height: 52px; border-radius: 14px; border: none; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; cursor: pointer;">Commencer</button>
+      <a href="MainMobile.dc.html" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--text-2);">J'ai déjà un compte</a>
+    </div>
+  </sc-if>
+
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 10px 20px 16px 20px; display: {{ bodyDisplay }}; flex-direction: column; gap: 18px;">
+
+    <!-- 1 · Rôle -->
+    <sc-if value="{{ sRole }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 600;">Comment vas-tu utiliser Cadence ?</h1>
+        <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">Tu peux choisir les deux. Tu passeras de l'un à l'autre en un geste.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <sc-for list="{{ roleOpts }}" as="r" hint-placeholder-count="2">
+          <button aria-pressed="{{ r.aria }}" onClick="{{ r.toggle }}" style="display: flex; align-items: flex-start; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid {{ r.border }}; background: {{ r.bg }}; color: var(--text); text-align: left; cursor: pointer;">
+            <span style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in srgb, var(--{{ r.color }}) 16%, transparent); color: var(--{{ r.color }}); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700;">{{ r.icon }}</span>
+            <span style="flex-grow: 1;"><span style="display: block; font-size: 16px; font-weight: 600;">{{ r.title }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 4px; line-height: 1.4;">{{ r.sub }}</span></span>
+            <span style="width: 24px; height: 24px; border-radius: 7px; border: 2px solid {{ r.border }}; background: {{ r.check }}; color: var(--on-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; font-weight: 700;">{{ r.mark }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- 2 · Ton jeu : prénom, main, niveau -->
+    <sc-if value="{{ sJeu }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 600;">{{ jeuTitle }}</h1>
+        <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">{{ jeuSub }}</p>
+      </div>
+      <label style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 14px; font-weight: 600;">Ton prénom</span>
+        <input type="text" value="{{ first }}" onChange="{{ onFirst }}" placeholder="Ex. Lucas" autocomplete="given-name" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: inherit; font-size: 16px; outline: none;">
+      </label>
+      <div>
+        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Tu joues…</div>
+        <div role="radiogroup" aria-label="Main" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <sc-for list="{{ hands }}" as="h" hint-placeholder-count="2">
+            <button role="radio" aria-checked="{{ h.aria }}" onClick="{{ h.pick }}" style="height: 56px; border-radius: 12px; border: 1px solid {{ h.border }}; background: {{ h.bg }}; color: var(--text); font-size: 15px; font-weight: {{ h.weight }}; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">{{ h.label }}<span style="font-size: 11px; font-weight: 400; color: var(--text-3);">{{ h.sub }}</span></button>
+          </sc-for>
+        </div>
+        <div style="font-size: 12px; color: var(--text-3); margin-top: 6px;">Sert à orienter les conseils et les schémas.</div>
+      </div>
+      <sc-if value="{{ playerSel }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-size: 14px; font-weight: 600;">Ton niveau</div>
+          <button onClick="{{ connectFf }}" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; border: 1px solid {{ ffBorder }}; background: var(--surface); color: var(--text); text-align: left; cursor: pointer;">
+            <span style="width: 36px; height: 36px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0;">ff</span>
+            <span style="flex-grow: 1;"><span style="display: block; font-size: 14px; font-weight: 600;">{{ ffTitle }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ ffSub }}</span></span>
+          </button>
+          <sc-if value="{{ showIdxInput }}" hint-placeholder-val="{{ true }}">
+            <input type="text" inputmode="decimal" value="{{ index }}" onChange="{{ onIndex }}" aria-label="Index" placeholder="Ou saisis ton index, ex. 18.4" style="height: 50px; padding: 0 16px; border-radius: 12px; border: 1px solid {{ idxBorder }}; background: var(--surface); color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; outline: none;">
+          </sc-if>
+          <button role="checkbox" aria-checked="{{ noIdxAria }}" onClick="{{ toggleNoIdx }}" style="display: flex; align-items: center; gap: 10px; border: none; background: transparent; color: var(--text); font: inherit; font-size: 14px; padding: 2px 0; cursor: pointer; text-align: left;"><span style="width: 22px; height: 22px; border-radius: 6px; border: 2px solid {{ noIdxBorder }}; background: {{ noIdxBg }}; color: var(--on-accent); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;">{{ noIdxMark }}</span>Je n'ai pas encore d'index (débutant)</button>
+          <button onClick="{{ toggleIdxHelp }}" style="align-self: flex-start; border: none; background: transparent; padding: 0; color: var(--accent); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;">Qu'est-ce que l'index ?</button>
+          <sc-if value="{{ idxHelp }}" hint-placeholder-val="{{ false }}"><div style="padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 10%, transparent); font-size: 13px; line-height: 1.45; color: var(--text-2);">C'est la mesure officielle de ton niveau, de −10 à 54 : plus il est bas, meilleur tu es. Il est calculé à partir de tes cartes de score.</div></sc-if>
+        </div>
+      </sc-if>
+    </sc-if>
+
+    <!-- 3 · Ce que tu veux en faire -->
+    <sc-if value="{{ sGoal }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 600;">Qu'attends-tu de Cadence ?</h1>
+        <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">Choisis tout ce qui te correspond : ton accueil et tes modules s'adaptent.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <sc-for list="{{ profiles }}" as="p" hint-placeholder-count="5">
+          <button aria-pressed="{{ p.aria }}" onClick="{{ p.toggle }}" style="display: flex; align-items: center; gap: 14px; padding: 14px; border-radius: 14px; border: 1px solid {{ p.border }}; background: {{ p.bg }}; color: var(--text); text-align: left; cursor: pointer;">
+            <span style="flex-grow: 1;"><span style="display: block; font-size: 15px; font-weight: 600;">{{ p.title }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ p.sub }}</span></span>
+            <span style="width: 24px; height: 24px; border-radius: 7px; border: 2px solid {{ p.border }}; background: {{ p.check }}; color: var(--on-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; font-weight: 700;">{{ p.mark }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- 4 · Compte -->
+    <sc-if value="{{ sAccount }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 600;">Sauvegarde ton profil</h1>
+        <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">Retrouve tes séances sur un autre téléphone et partage-les avec ton coach. Sans compte, tout reste sur ce téléphone.</p>
+      </div>
+      <sc-if value="{{ hasAccount }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 14px; border: 1px solid var(--status-good); background: color-mix(in srgb, var(--status-good) 10%, transparent);">
+          <span style="width: 32px; height: 32px; border-radius: 50%; background: var(--status-good); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">✓</span>
+          <div style="flex-grow: 1;"><div style="font-size: 15px; font-weight: 600;">{{ accountTitle }}</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ accountSub }}</div></div>
+          <button onClick="{{ resetAccount }}" style="border: none; background: transparent; color: var(--text-3); font: inherit; font-size: 13px; text-decoration: underline; cursor: pointer;">Changer</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noAccount }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button onClick="{{ useApple }}" style="height: 52px; border-radius: 14px; border: none; background: var(--text); color: var(--bg); font-size: 15px; font-weight: 600; cursor: pointer;">Continuer avec Apple</button>
+          <button onClick="{{ useGoogle }}" style="height: 52px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 15px; font-weight: 600; cursor: pointer;">Continuer avec Google</button>
+          <button onClick="{{ useEmail }}" style="height: 52px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 15px; font-weight: 600; cursor: pointer;">Continuer avec un e-mail</button>
+          <sc-if value="{{ emailMode }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border);">
+              <label style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 13px; font-weight: 600;">Ton adresse e-mail</span>
+                <input type="email" inputmode="email" autocomplete="email" value="{{ email }}" onChange="{{ onEmail }}" placeholder="prenom@exemple.fr" style="height: 46px; padding: 0 14px; border-radius: 10px; border: 1px solid {{ emailBorder }}; background: var(--bg); color: var(--text); font-family: inherit; font-size: 15px; outline: none;">
+              </label>
+              <div style="font-size: 12px; color: var(--text-3);">Pas de mot de passe : on t'envoie un lien de connexion.</div>
+              <button onClick="{{ sendLink }}" style="height: 44px; border-radius: 12px; border: none; background: var(--accent); color: var(--on-accent); font-size: 14px; font-weight: 600; cursor: pointer;">Recevoir le lien</button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+      <div style="font-size: 12px; color: var(--text-3); line-height: 1.45;">Tu peux aussi le faire plus tard : un rappel restera sur ton accueil.</div>
+    </sc-if>
+
+    <!-- 5 · Ton sac -->
+    <sc-if value="{{ sBag }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 600;">Ton sac</h1>
+        <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">{{ bagSub }}</p>
+      </div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <sc-for list="{{ bagRows }}" as="c" hint-placeholder-count="5">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: {{ c.border }};">
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: var(--{{ c.color }}); flex-shrink: 0;"></span>
+            <span style="flex-grow: 1; font-size: 15px;">{{ c.name }}</span>
+            <input type="text" inputmode="numeric" value="{{ c.v }}" onChange="{{ c.on }}" aria-label="{{ c.aria }}" class="display" style="width: 64px; text-align: right; font-size: 17px; font-weight: 600; border: none; border-bottom: 2px dashed {{ c.line }}; border-radius: 0; background: transparent; color: var(--text); outline: none; padding: 2px 0;">
+            <span style="font-size: 13px; color: var(--text-3); width: 22px;">{{ unit }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size: 12px; color: var(--text-3); line-height: 1.45;">Touche une distance pour la corriger. Tu as TrackMan ? Tes distances réelles pourront remplacer ces valeurs (étape Connexions).</div>
+    </sc-if>
+
+    <!-- 6 · Ton golf -->
+    <sc-if value="{{ sGolf }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 600;">Ton golf</h1>
+        <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">Pour créer une partie plus vite et voir les compétitions près de chez toi.</p>
+      </div>
+      <label style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 14px; font-weight: 600;">Ton club</span>
+        <input type="text" value="{{ club }}" onChange="{{ onClub }}" placeholder="Nom de ton club (facultatif)" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: inherit; font-size: 15px; outline: none;">
+      </label>
+      <div>
+        <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Parcours favori</div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+          <sc-for list="{{ courses }}" as="o" hint-placeholder-count="4">
+            <button role="radio" aria-checked="{{ o.aria }}" onClick="{{ o.pick }}" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: none; border-bottom: {{ o.border }}; background: transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer;">
+              <span style="flex-grow: 1;"><span style="display: block; font-size: 14px; font-weight: {{ o.weight }};">{{ o.label }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ o.sub }}</span></span>
+              <span style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid {{ o.ring }}; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><span style="width: 10px; height: 10px; border-radius: 50%; background: {{ o.dot }};"></span></span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="font-size: 12px; color: var(--text-3); line-height: 1.45;">Ta position ne sera demandée qu'à l'ouverture des Compétitions, pour trouver celles autour de toi.</div>
+    </sc-if>
+
+    <!-- 7 · Connexions -->
+    <sc-if value="{{ sConnex }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 600;">Connecte tes services</h1>
+        <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">Aucun n'est obligatoire. Tu pourras les ajouter ou les retirer dans Paramètres › Connexions.</p>
+      </div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <sc-for list="{{ connRows }}" as="c" hint-placeholder-count="3">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 14px; border-bottom: {{ c.border }};">
+            <span style="width: 40px; height: 40px; border-radius: 10px; background: color-mix(in srgb, var(--{{ c.color }}) 15%, transparent); color: var(--{{ c.color }}); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0;">{{ c.icon }}</span>
+            <div style="flex-grow: 1; min-width: 0;"><div style="font-size: 15px; font-weight: 600;">{{ c.title }}</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px; line-height: 1.35;">{{ c.sub }}</div></div>
+            <button onClick="{{ c.toggle }}" aria-pressed="{{ c.aria }}" style="height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid {{ c.btnBorder }}; background: {{ c.btnBg }}; color: {{ c.btnColor }}; font-size: 13px; font-weight: 600; cursor: pointer; flex-shrink: 0;">{{ c.btn }}</button>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- Espace enseignant : statut et carte pro -->
+    <sc-if value="{{ sCoach }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 600;">Ton activité d'enseignant</h1>
+        <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">Pour ouvrir ton espace Pro. La carte professionnelle peut attendre : ton compte reste « en vérification ».</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <sc-for list="{{ statusOpts }}" as="o" hint-placeholder-count="4">
+          <button role="radio" aria-checked="{{ o.aria }}" onClick="{{ o.pick }}" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; border: 1px solid {{ o.border }}; background: var(--surface); color: var(--text); text-align: left; cursor: pointer;">
+            <span style="flex-grow: 1;"><span style="display: block; font-size: 14px; font-weight: {{ o.weight }};">{{ o.label }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ o.sub }}</span></span>
+            <span style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid {{ o.border }}; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><span style="width: 10px; height: 10px; border-radius: 50%; background: {{ o.dot }};"></span></span>
+          </button>
+        </sc-for>
+      </div>
+      <label style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 14px; font-weight: 600;">Où enseignes-tu ?</span>
+        <input type="text" value="{{ place }}" onChange="{{ onPlace }}" placeholder="Ex. un golf, une académie, en indépendant" style="height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: inherit; font-size: 15px; outline: none;">
+      </label>
+      <button onClick="{{ addCard }}" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 14px; border: 1px {{ cardBorderStyle }} {{ cardBorder }}; background: var(--surface); color: var(--text); text-align: left; cursor: pointer;">
+        <span style="width: 40px; height: 40px; border-radius: 10px; background: color-mix(in srgb, {{ cardBorder }} 15%, transparent); color: {{ cardBorder }}; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px;">{{ cardIcon }}</span>
+        <span style="flex-grow: 1;"><span style="display: block; font-size: 15px; font-weight: 600;">{{ cardTitle }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ cardSub }}</span></span>
+      </button>
+    </sc-if>
+
+    <!-- 8 · Récapitulatif modifiable -->
+    <sc-if value="{{ sRecap }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 600;">Ton accueil est prêt</h1>
+        <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">Touche une ligne pour la modifier. Tout restera modifiable dans ton Profil et les Paramètres.</p>
+      </div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <sc-for list="{{ recapRows }}" as="r" hint-placeholder-count="7">
+          <button onClick="{{ r.edit }}" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: none; border-bottom: {{ r.border }}; background: transparent; color: var(--text); font: inherit; text-align: left; cursor: pointer;">
+            <span style="width: 96px; font-size: 13px; color: var(--text-3); flex-shrink: 0;">{{ r.label }}</span>
+            <span style="flex-grow: 1; min-width: 0; font-size: 14px; font-weight: 600; color: {{ r.color }}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ r.value }}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+          </button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ coachSel }}" hint-placeholder-val="{{ false }}">
+        <div style="background: var(--surface); border: 1px solid var(--accent); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 15px; font-weight: 600;">Espace enseignant</span><span style="font-size: 12px; font-weight: 700; color: var(--on-accent); background: var(--accent); padding: 3px 7px; border-radius: 999px;">PRO</span></div>
+          <div style="font-size: 12px; color: var(--text-3); line-height: 1.45;">{{ coachRecap }}</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ playerSel }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Modules activés</div>
+          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+            <sc-for list="{{ mods }}" as="m" hint-placeholder-count="6">
+              <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: {{ m.border }};">
+                <div style="flex-grow: 1;"><div style="font-size: 14px;">{{ m.title }}</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ m.why }}</div></div>
+                <button role="switch" aria-checked="{{ m.aria }}" aria-label="{{ m.title }}" onClick="{{ m.toggle }}" style="width: 51px; height: 31px; border-radius: 999px; border: none; background: {{ m.bg }}; padding: 2px; display: flex; justify-content: {{ m.justify }}; flex-shrink: 0; cursor: pointer;"><span style="width: 27px; height: 27px; border-radius: 50%; background: #ffffff;"></span></button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <div style="font-size: 12px; color: var(--text-3); line-height: 1.45;">Les notifications te seront proposées quand tu fixeras ton premier objectif.</div>
+    </sc-if>
+
+    <!-- 9 · Comment commencer -->
+    <sc-if value="{{ sStart }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 600;">{{ startTitle }}</h1>
+        <p style="margin: 6px 0 0 0; font-size: 14px; color: var(--text-3);">Choisis ta façon de découvrir l'app. La visite guidée reste disponible dans les Paramètres.</p>
+      </div>
+      <sc-if value="{{ playerSel }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="AccueilVideMobile.dc.html" onClick="{{ startTour }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent);">
+            <span style="width: 44px; height: 44px; border-radius: 12px; background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z" fill="currentColor"/></svg></span>
+            <span style="flex-grow: 1;"><span style="display: block; font-size: 16px; font-weight: 600;">Visite guidée · 30 s</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 3px;">Les 6 endroits à connaître, sur ton vrai accueil</span></span>
+          </a>
+          <a href="SeanceGuideeMobile.dc.html" onClick="{{ startGuide }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface);">
+            <span style="width: 44px; height: 44px; border-radius: 12px; background: color-mix(in srgb, var(--petitjeu) 18%, transparent); color: var(--petitjeu); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c4-9 12-9 16 0"/><circle cx="19.2" cy="6.6" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+            <span style="flex-grow: 1;"><span style="display: block; font-size: 16px; font-weight: 600;">Ma première séance guidée</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 3px;">Apprendre en faisant : exercices pas à pas, 25 minutes</span></span>
+          </a>
+          <a href="AccueilVideMobile.dc.html" onClick="{{ startExplore }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface);">
+            <span style="width: 44px; height: 44px; border-radius: 12px; background: var(--surface-2); color: var(--text-2); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></span>
+            <span style="flex-grow: 1;"><span style="display: block; font-size: 16px; font-weight: 600;">J'explore seul</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 3px;">Directement sur ton accueil</span></span>
+          </a>
+          <sc-if value="{{ bothSel }}" hint-placeholder-val="{{ false }}">
+            <a href="CoachMobile.dc.html" onClick="{{ startCoach }}" style="height: 44px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: var(--mental);">Ou ouvrir d'abord mon espace enseignant</a>
+          </sc-if>
+        </div>
+      </sc-if>
+      <sc-if value="{{ coachOnly }}" hint-placeholder-val="{{ false }}">
+        <a href="CoachMobile.dc.html" onClick="{{ startCoach }}" style="height: 52px; border-radius: 14px; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Ouvrir mon espace enseignant</a>
+      </sc-if>
+    </sc-if>
+
+    <sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="font-size: 13px; color: var(--status-critical);">{{ err }}</div></sc-if>
+  </div>
+
+  <!-- Bas de page commun -->
+  <sc-if value="{{ showFoot }}" hint-placeholder-val="{{ false }}">
+    <div style="flex-shrink: 0; padding: 12px 20px 28px 20px; border-top: 1px solid var(--border); background: var(--bg);">
+      <sc-if value="{{ footNext }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ next }}" style="width: 100%; height: 52px; border-radius: 14px; border: {{ nextBorder }}; background: {{ nextBg }}; color: {{ nextColor }}; font-size: 16px; font-weight: 600; cursor: pointer;">{{ nextLabel }}</button>
+      </sc-if>
+      <sc-if value="{{ footSave }}" hint-placeholder-val="{{ false }}">
+        <a href="{{ resumeHref }}" onClick="{{ saveResume }}" style="height: 52px; border-radius: 14px; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center;">Enregistrer</a>
+      </sc-if>
+      <sc-if value="{{ footCheck }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ check }}" style="width: 100%; height: 52px; border-radius: 14px; border: none; background: var(--accent); color: var(--on-accent); font-size: 16px; font-weight: 600; cursor: pointer;">Enregistrer</button>
+      </sc-if>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  // Couleurs du mode daltonien, posées directement sur l'écran
+  // Taille du texte : l'écran entier est agrandi, en gardant le format du téléphone
+  zoomStyle() {
+    let z = 'md';
+    try { z = window.localStorage.getItem('cadence.textSize') || 'md'; } catch (e) {}
+    const f = { sm: 0.9, md: 1, lg: 1.1, xl: 1.2 }[z] || 1;
+    if (f === 1) return '';
+    return ' zoom: ' + f + '; width: ' + (390 / f).toFixed(2) + 'px; height: ' + (844 / f).toFixed(2) + 'px;';
+  }
+  cvdVars() {
+    const c = this.cvdNow();
+    if (c !== 'rg' && c !== 'by') return '';
+    const light = this.themeNow() === 'light';
+    const sets = {
+      rg: light
+        ? ['#0072b2', '#b85000', '#0072b2', '#d55e00', '#007a5a', '#a88f00', '#b0588d', '#6b6b6b']
+        : ['#56b4e9', '#e69f00', '#56b4e9', '#e69f00', '#009e73', '#f0e442', '#cc79a7', '#bdbdbd'],
+      by: light
+        ? ['#00796b', '#c2185b', '#1e5fa8', '#d84315', '#00695c', '#ad1457', '#7b1fa2', '#616161']
+        : ['#3dd6c4', '#ff5c8a', '#90caf9', '#ff7043', '#00897b', '#f48fb1', '#ba68c8', '#e0e0e0']
+    }[c];
+    const names = ['status-good', 'status-critical', 'driving', 'fers', 'petitjeu', 'putting', 'mental', 'physique'];
+    return names.map((n, i) => '--' + n + ': ' + sets[i] + ';').join(' ');
+  }
+  cvdNow() {
+    let c = 'off';
+    try { c = window.localStorage.getItem('cadence.cvd') || 'off'; } catch (e) {}
+    return c;
+  }
+  paletteNow() {
+    let p = 'clubhouse';
+    try { p = window.localStorage.getItem('cadence.palette') || 'clubhouse'; } catch (e) {}
+    return p;
+  }
+  // Thème : sombre par défaut, clair ou automatique (suit le téléphone) selon les Paramètres
+  themeNow() {
+    let t = 'dark';
+    try { t = window.localStorage.getItem('cadence.theme') || 'dark'; } catch (e) {}
+    if (t === 'auto') { try { t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { t = 'dark'; } }
+    return t;
+  }
+  componentDidMount() {
+    this._lastTheme = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle();
+    this._themeTimer = setInterval(() => { const t = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle(); if (t !== this._lastTheme) { this._lastTheme = t; this.forceUpdate(); } }, 400);
+    // Reprise d'une étape passée (depuis la carte « Termine ton profil » de l'accueil)
+    try {
+      const id = window.localStorage.getItem('cadence.obResume');
+      if (id) {
+        window.localStorage.removeItem('cadence.obResume');
+        const ls = (k, d) => { const v = window.localStorage.getItem('cadence.' + k); return v === null ? d : v; };
+        let prof = {}; try { prof = JSON.parse(ls('profile', '{}')) || {}; } catch (e) {}
+        let bag = null; try { bag = JSON.parse(ls('bag', 'null')); } catch (e) {}
+        const roles = ls('roles', 'player').split(',');
+        this.setState({
+          resume: id, resumeHref: ls('obFrom', 'AccueilVideMobile.dc.html'),
+          roles: { player: roles.indexOf('player') >= 0, coach: roles.indexOf('coach') >= 0 },
+          level: ls('level', 'inter'), club: prof.club || '', fav: ls('favCourse', 'a'),
+          bag: bag ? Object.keys(bag).reduce((o, k) => Object.assign(o, { [k]: String(bag[k]) }), {}) : null,
+          conn: { ffgolf: ls('conn.ffgolf', '0') === '1', trackman: ls('conn.trackman', '0') === '1', watch: ls('conn.watch', '0') === '1' }
+        });
+      }
+    } catch (e) {}
+  }
+  componentWillUnmount() { clearInterval(this._themeTimer); }
+  // Premier lancement en 3 temps : l'essentiel, ton profil (facultatif), puis le choix de démarrage
+  onbCtl() {
+    const fr = 'fr' === 'fr';
+    const s = this.state || {};
+    const ls = (k, d) => { try { const v = window.localStorage.getItem('cadence.' + k); return v === null ? d : v; } catch (e) { return d; } };
+    const roles = s.roles || { player: true };
+    const player = !!roles.player, coach = !!roles.coach;
+    const seq = ['welcome', 'role', 'jeu'].concat(player ? ['goal'] : []).concat(['account']).concat(player ? ['bag', 'golf', 'connex'] : []).concat(coach ? ['coach'] : []).concat(['recap', 'start']);
+    const resume = s.resume && seq.indexOf(s.resume) >= 0 ? s.resume : null;
+    const step = resume ? seq.indexOf(resume) : Math.min(s.step || 0, seq.length - 1);
+    const cur = seq[step];
+    const PHASE = { role: 1, jeu: 1, goal: 1, account: 2, bag: 2, golf: 2, connex: 2, coach: 2, recap: 3, start: 3 };
+    const SKIP = ['account', 'bag', 'golf', 'connex'];
+    const skipped = s.skipped || {};
+    const yd = ls('units', 'm') === 'yd';
+    const unit = yd ? 'yd' : 'm';
+
+    // Niveau : à partir de l'index (ou débutant sans index)
+    const idxTxt = s.ff ? '14.2' : (s.index || '');
+    const idxNum = Number(String(idxTxt).replace(',', '.').replace('−', '-').trim());
+    const idxOk = !String(idxTxt).trim() || (isFinite(idxNum) && idxNum >= -10 && idxNum <= 54);
+    const level = s.noIdx ? 'debutant' : String(idxTxt).trim() && idxOk ? (idxNum < 5 ? 'expert' : idxNum < 12 ? 'confirme' : idxNum < 36 ? 'inter' : 'debutant') : (s.level || 'inter');
+    // Sac pré-rempli selon le niveau
+    const PRESET = { debutant: [170, 150, 140, 110, 80], inter: [200, 180, 165, 130, 95], confirme: [225, 205, 185, 145, 110], expert: [245, 225, 205, 160, 120] };
+    const CLUBS = fr ? [['driver', 'Driver', 'driving'], ['wood3', 'Bois 3', 'driving'], ['hybrid', 'Hybride', 'fers'], ['iron7', 'Fer 7', 'fers'], ['pw', 'PW', 'petitjeu']] : [['driver', 'Driver', 'driving'], ['wood3', '3-wood', 'driving'], ['hybrid', 'Hybrid', 'fers'], ['iron7', '7-iron', 'fers'], ['pw', 'PW', 'petitjeu']];
+    const toU = (m) => String(yd ? Math.round(m * 1.0936) : m);
+    const bag = s.bag || CLUBS.reduce((o, c, i) => Object.assign(o, { [c[0]]: toU(PRESET[level][i]) }), {});
+    const bagOk = (v) => /^\d{2,3}$/.test(String(v).trim()) && +v >= 30 && +v <= (yd ? 440 : 400);
+    const bagBad = CLUBS.find((c) => !bagOk(bag[c[0]]));
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(s.email || '').trim());
+    const picks = s.picks || { loisir: true };
+    const conn = Object.assign({ ffgolf: false, trackman: false, watch: false }, s.conn || {}, s.ff ? { ffgolf: true } : {});
+    const COURSES = fr ? [['a', '[Nom du golf]', '18 trous · par 72'], ['b', '[Autre golf]', '18 trous · par 71'], ['c', '[Golf C]', '9 trous · par 36'], ['d', '[Golf D]', '18 trous · par 72']] : [['a', '[Course name]', '18 holes · par 72'], ['b', '[Other course]', '18 holes · par 71'], ['c', '[Golf C]', '9 holes · par 36'], ['d', '[Golf D]', '18 holes · par 72']];
+    const fav = s.fav || 'a';
+    const status = s.status || 'pga';
+
+    // Validation de l'étape en cours
+    const errOf = (id) => {
+      if (id === 'role' && !player && !coach) return fr ? 'Choisis au moins une option.' : 'Pick at least one option.';
+      if (id === 'jeu' && player && !s.noIdx && !idxOk) return fr ? 'L’index est un nombre entre −10 et 54 (ex. 18.4).' : 'The handicap is a number from −10 to 54 (e.g. 18.4).';
+      if (id === 'bag' && bagBad) return (fr ? 'Vérifie la distance du ' : 'Check the distance for ') + bagBad[1] + (fr ? ' : un nombre entre 30 et ' : ': a number from 30 to ') + (yd ? 440 : 400) + ' ' + unit + '.';
+      return '';
+    };
+    const recapAt = seq.indexOf('recap');
+    const go = (i) => this.setState({ step: i, err: '' });
+    const afterStep = () => (s.fromRecap ? recapAt : Math.min(seq.length - 1, step + 1));
+    const next = () => {
+      if (cur === 'account' && !s.account) return skip();
+      const e = errOf(cur); if (e) return this.setState({ err: e });
+      this.setState({ step: afterStep(), err: '', skipped: Object.assign({}, skipped, { [cur]: false }), fromRecap: false });
+    };
+    const skip = () => this.setState({ step: afterStep(), err: '', skipped: Object.assign({}, skipped, { [cur]: true }), fromRecap: false });
+    const isSkipped = (id) => skipped[id] === true;
+
+    // Enregistrement (fin du parcours ou reprise d'une étape)
+    const put = (k, v) => { try { window.localStorage.setItem('cadence.' + k, v); } catch (e) {} };
+    const saveProfile = (extra) => { let p = {}; try { p = JSON.parse(ls('profile', '{}')) || {}; } catch (e) {} put('profile', JSON.stringify(Object.assign(p, extra))); };
+    const bagMeters = () => CLUBS.reduce((o, c) => Object.assign(o, { [c[0]]: yd ? Math.round(+bag[c[0]] / 1.0936) : +bag[c[0]] }), {});
+    const saveStep = (id) => {
+      if (id === 'account' && s.account) { put('account', s.account); if (s.account === 'email') saveProfile({ email: String(s.email || '').trim() }); }
+      if (id === 'bag') put('bag', JSON.stringify(bagMeters()));
+      if (id === 'golf') { put('favCourse', fav); saveProfile({ club: String(s.club || '').trim() }); }
+      if (id === 'connex') ['ffgolf', 'trackman', 'watch'].forEach((k) => put('conn.' + k, conn[k] ? '1' : '0'));
+    };
+    const autoMods = { competitions: !!picks.comp, stats: !!picks.comp, coach: !!picks.coach, social: !!picks.amis || !!picks.coach, physique: !!picks.forme, badges: !!picks.loisir || !!picks.amis };
+    const mods = Object.assign({}, autoMods, s.over || {});
+    const finish = (mode) => () => {
+      put('mod.competitions', mods.competitions ? '1' : '0'); put('mod.coach', mods.coach ? '1' : '0'); put('mod.social', mods.social ? '1' : '0');
+      put('index', s.noIdx ? '' : String(idxTxt).trim()); put('level', level); put('hand', s.hand || 'right');
+      saveProfile({ first: String(s.first || '').trim() });
+      put('homeProfile', picks.comp ? 'comp' : picks.forme ? 'forme' : 'loisir');
+      put('roles', ['player', 'coach'].filter((k) => roles[k]).join(',')); put('role', mode === 'coach' || !player ? 'coach' : 'player');
+      if (coach) put('coachStatus', 'pending');
+      SKIP.forEach((id) => { if (!isSkipped(id) && seq.indexOf(id) >= 0 && (id !== 'account' || s.account)) saveStep(id); });
+      if (s.ff) put('conn.ffgolf', '1');
+      put('obSkipped', JSON.stringify(SKIP.filter((id) => isSkipped(id) || (id === 'account' && !s.account))));
+      put('obDone', '1'); put('obCardHidden', '0'); put('tourSeen', '0');
+      put('tutoDone', mode === 'tour' ? '0' : '1');
+    };
+    const saveResume = () => { saveStep(cur); let sk = []; try { sk = JSON.parse(ls('obSkipped', '[]')) || []; } catch (e) {} put('obSkipped', JSON.stringify(sk.filter((x) => x !== cur))); };
+
+    // Libellés des choix
+    const nameOf = (list, k) => (list.find((x) => x[0] === k) || list[0])[1];
+    const HANDS = fr ? [['right', 'Droitier', 'club à droite'], ['left', 'Gaucher', 'club à gauche']] : [['right', 'Right-handed', 'club on the right'], ['left', 'Left-handed', 'club on the left']];
+    const PROFILES = fr ? [['loisir', 'Je joue pour le plaisir', 'Suivi simple, sans prise de tête'], ['comp', 'Je fais des compétitions', 'Compétitions près de chez toi, stats détaillées'], ['forme', 'Je veux rester en forme', 'Physique, mobilité, bien-être'], ['coach', 'Je suis suivi par un coach', 'Partage avec ton entraîneur'], ['amis', 'Je joue avec des amis', 'Partage et messages']]
+      : [['loisir', 'I play for fun', 'Simple tracking, no fuss'], ['comp', 'I play tournaments', 'Tournaments near you, detailed stats'], ['forme', 'I want to stay fit', 'Fitness, mobility, well-being'], ['coach', 'I have a coach', 'Share with your coach'], ['amis', 'I play with friends', 'Sharing and messages']];
+    const LEVELS = fr ? { debutant: 'Débutant', inter: 'Intermédiaire', confirme: 'Confirmé', expert: 'Expert' } : { debutant: 'Beginner', inter: 'Intermediate', confirme: 'Advanced', expert: 'Expert' };
+    const STATUS = fr ? [['pga', 'Professionnel PGA', 'Membre de la PGA France'], ['de', 'Moniteur diplômé d’État', 'DE JEPS ou BPJEPS golf'], ['asba', 'Animateur ou ASBC', 'Assistant sportif bénévole de club'], ['other', 'Autre', 'Coach mental, préparateur physique…']]
+      : [['pga', 'PGA professional', 'PGA member'], ['de', 'State-certified instructor', 'National coaching diploma'], ['asba', 'Club volunteer coach', 'Volunteer club assistant'], ['other', 'Other', 'Mental coach, fitness coach…']];
+    const sel = (on) => ({ aria: on ? 'true' : 'false', border: on ? 'var(--accent)' : 'var(--border)', bg: on ? 'color-mix(in srgb, var(--accent) 10%, transparent)' : 'var(--surface)', check: on ? 'var(--accent)' : 'transparent', mark: on ? '✓' : '', weight: on ? '600' : '400' });
+    const later = fr ? 'Plus tard' : 'Later';
+    const editRow = (id) => () => this.setState({ step: seq.indexOf(id), fromRecap: true, err: '' });
+    const SIZES = ['md', 'lg', 'xl'];
+    const size = ls('textSize', 'md');
+
+    // En-tête : temps, avancement
+    const inPhase = seq.filter((id) => PHASE[id] === PHASE[cur]);
+    const PH = fr ? ['', '1 · L’essentiel', '2 · Ton profil', '3 · C’est parti'] : ['', '1 · The essentials', '2 · Your profile', '3 · Let’s go'];
+    const flow = seq.slice(1);
+    const errNow = s.err || '';
+    const stepValid = !errOf(cur) && !(cur === 'account' && !s.account);
+
+    const accName = { apple: 'Apple', google: 'Google', email: fr ? 'e-mail' : 'email' }[s.account] || '';
+    const recapRows = [
+      ['jeu', fr ? 'Toi' : 'You', (String(s.first || '').trim() || (fr ? 'Sans prénom' : 'No name')) + ' · ' + nameOf(HANDS, s.hand || 'right'), false]
+    ].concat(player ? [
+      ['jeu', fr ? 'Niveau' : 'Level', s.noIdx ? (fr ? 'Débutant · pas encore d’index' : 'Beginner · no handicap yet') : String(idxTxt).trim() ? (fr ? 'Index ' : 'Handicap ') + String(idxTxt).trim() + (s.ff ? ' (ffgolf)' : '') + ' · ' + LEVELS[level] : LEVELS[level], false],
+      ['goal', fr ? 'Objectif' : 'Goal', PROFILES.filter((p) => picks[p[0]]).map((p) => p[1]).join(', ') || '—', false]
+    ] : []).concat([
+      ['account', fr ? 'Compte' : 'Account', s.account ? accName : later, !s.account]
+    ]).concat(player ? [
+      ['bag', fr ? 'Sac' : 'Bag', isSkipped('bag') ? later : CLUBS.map((c) => c[1] + ' ' + bag[c[0]]).slice(0, 2).join(' · ') + ' ' + unit + '…', isSkipped('bag')],
+      ['golf', 'Golf', isSkipped('golf') ? later : (String(s.club || '').trim() || nameOf(COURSES, fav)), isSkipped('golf')],
+      ['connex', fr ? 'Connexions' : 'Connections', isSkipped('connex') ? later : (['ffgolf', 'trackman', 'watch'].filter((k) => conn[k]).map((k) => ({ ffgolf: 'ffgolf', trackman: 'TrackMan', watch: fr ? 'montre' : 'watch' })[k]).join(', ') || (fr ? 'Aucune' : 'None')), isSkipped('connex')]
+    ] : []);
+
+    return {
+      showTop: cur !== 'welcome', notResume: !resume, isResume: !!resume, resumeHref: s.resumeHref || 'AccueilVideMobile.dc.html',
+      phaseLabel: resume ? (fr ? 'Compléter ton profil' : 'Complete your profile') : PH[PHASE[cur] || 1] + (fr ? ' · étape ' : ' · step ') + (inPhase.indexOf(cur) + 1) + (fr ? ' sur ' : ' of ') + inPhase.length,
+      nBars: resume ? 1 : flow.length, stepAria: (fr ? 'Étape ' : 'Step ') + step + (fr ? ' sur ' : ' of ') + flow.length,
+      bars: (resume ? [cur] : flow).map((id, i) => ({ bg: resume || seq.indexOf(id) <= step ? 'var(--accent)' : 'var(--surface-2)', gap: i > 0 && PHASE[id] !== PHASE[flow[i - 1]] ? '6px' : '0' })),
+      canSkip: !resume && SKIP.indexOf(cur) >= 0, skip: skip, next: next, back: () => this.setState({ step: s.fromRecap ? recapAt : Math.max(0, step - 1), err: '', fromRecap: false }),
+      bodyDisplay: cur === 'welcome' ? 'none' : 'flex',
+      sWelcome: cur === 'welcome', sRole: cur === 'role', sJeu: cur === 'jeu', sGoal: cur === 'goal', sAccount: cur === 'account', sBag: cur === 'bag', sGolf: cur === 'golf', sConnex: cur === 'connex', sCoach: cur === 'coach', sRecap: cur === 'recap', sStart: cur === 'start',
+      playerSel: player, coachSel: coach, bothSel: player && coach, coachOnly: coach && !player,
+      hasErr: !!errNow, err: errNow,
+      // Bas de page
+      showFoot: cur !== 'welcome' && cur !== 'start',
+      footNext: !resume, footSave: !!resume && stepValid, footCheck: !!resume && !stepValid,
+      check: () => this.setState({ err: errOf(cur) || (fr ? 'Choisis une option avant d’enregistrer.' : 'Pick an option before saving.') }),
+      saveResume: saveResume,
+      nextLabel: cur === 'account' && !s.account ? later : cur === 'recap' ? (fr ? 'Terminer' : 'Finish') : (fr ? 'Continuer' : 'Continue'),
+      nextBg: cur === 'account' && !s.account ? 'transparent' : 'var(--accent)', nextColor: cur === 'account' && !s.account ? 'var(--text)' : 'var(--on-accent)', nextBorder: cur === 'account' && !s.account ? '1px solid var(--border)' : 'none',
+      // Bienvenue : taille du texte
+      cycleSize: () => { put('textSize', SIZES[(SIZES.indexOf(size) + 1) % SIZES.length]); this.forceUpdate(); },
+      sizeLabel: { sm: fr ? 'petit' : 'small', md: fr ? 'normal' : 'normal', lg: fr ? 'grand' : 'large', xl: fr ? 'très grand' : 'extra large' }[size] || '',
+      sizeAria: fr ? 'Taille du texte : toucher pour agrandir' : 'Text size: tap to enlarge',
+      // Rôle
+      roleOpts: (fr ? [['player', 'Je joue', 'Séances, parties, index, objectifs : je suis ma progression.', 'driving', '⛳'], ['coach', 'J’enseigne le golf', 'Je suis mes élèves, je crée des programmes et je gère mes cours.', 'mental', 'PRO']]
+        : [['player', 'I play', 'Sessions, rounds, handicap, goals: I track my progress.', 'driving', '⛳'], ['coach', 'I teach golf', 'I follow my students, build programs and manage lessons.', 'mental', 'PRO']])
+        .map(([k, title, sub, color, icon]) => Object.assign(sel(!!roles[k]), { title: title, sub: sub, color: color, icon: icon, toggle: () => this.setState({ roles: Object.assign({}, roles, { [k]: !roles[k] }), err: '' }) })),
+      // Ton jeu
+      jeuTitle: player ? (fr ? 'Ton jeu en 3 questions' : 'Your game in 3 questions') : (fr ? 'Faisons connaissance' : 'Let’s get to know you'),
+      jeuSub: fr ? 'Pour adapter les conseils, les objectifs et les séances proposées.' : 'To tailor tips, goals and suggested sessions.',
+      first: s.first || '', onFirst: (e) => this.setState({ first: e.target.value }),
+      hands: HANDS.map(([k, label, sub]) => Object.assign(sel(k === (s.hand || 'right')), { label: label, sub: sub, pick: () => this.setState({ hand: k }) })),
+      ffTitle: s.ff ? (fr ? 'Compte ffgolf connecté' : 'ffgolf account connected') : (fr ? 'Importer mon index ffgolf' : 'Import my ffgolf handicap'),
+      ffSub: s.ff ? (fr ? 'Index officiel importé : 14.2' : 'Official handicap imported: 14.2') : (fr ? 'Ton index officiel, sans le saisir' : 'Your official handicap, no typing'),
+      ffBorder: s.ff ? 'var(--status-good)' : 'var(--border)',
+      connectFf: () => this.setState({ ff: !s.ff, noIdx: false, err: '' }),
+      showIdxInput: !s.ff && !s.noIdx, index: s.index || '', onIndex: (e) => this.setState({ index: e.target.value, err: '' }),
+      idxBorder: !idxOk && !s.noIdx ? 'var(--status-critical)' : 'var(--border)',
+      noIdxAria: s.noIdx ? 'true' : 'false', noIdxMark: s.noIdx ? '✓' : '', noIdxBg: s.noIdx ? 'var(--accent)' : 'transparent', noIdxBorder: s.noIdx ? 'var(--accent)' : 'var(--border)',
+      toggleNoIdx: () => this.setState({ noIdx: !s.noIdx, ff: false, err: '' }),
+      idxHelp: !!s.idxHelp, toggleIdxHelp: () => this.setState({ idxHelp: !s.idxHelp }),
+      // Objectif
+      profiles: PROFILES.map(([k, title, sub]) => Object.assign(sel(!!picks[k]), { title: title, sub: sub, toggle: () => this.setState({ picks: Object.assign({}, picks, { [k]: !picks[k] }), over: {} }) })),
+      // Compte
+      hasAccount: !!s.account, noAccount: !s.account, emailMode: !!s.emailMode,
+      accountTitle: (fr ? 'Compte créé avec ' : 'Account created with ') + accName, accountSub: s.account === 'email' ? (fr ? 'Lien de connexion envoyé à ' : 'Sign-in link sent to ') + String(s.email || '').trim() : (fr ? 'Tes données seront sauvegardées' : 'Your data will be backed up'),
+      useApple: () => this.setState({ account: 'apple', emailMode: false, err: '' }), useGoogle: () => this.setState({ account: 'google', emailMode: false, err: '' }),
+      useEmail: () => this.setState({ emailMode: true, err: '' }), resetAccount: () => this.setState({ account: null }),
+      email: s.email || '', onEmail: (e) => this.setState({ email: e.target.value, err: '' }), emailBorder: s.email && !emailOk ? 'var(--status-critical)' : 'var(--border)',
+      sendLink: () => (emailOk ? this.setState({ account: 'email', err: '' }) : this.setState({ err: fr ? 'Saisis une adresse e-mail valide.' : 'Enter a valid email address.' })),
+      // Sac
+      bagSub: (fr ? 'Distances moyennes pré-remplies pour un joueur ' : 'Average distances pre-filled for ') + (fr ? LEVELS[level].toLowerCase() : (level === 'expert' ? 'an expert' : 'an ' + LEVELS[level].toLowerCase()) + ' player') + (fr ? ', à ajuster.' : ', adjust them.'),
+      unit: unit,
+      bagRows: CLUBS.map(([k, name, color], i) => ({ name: name, color: color, v: bag[k], aria: name + (fr ? ', distance en ' : ', distance in ') + unit, line: bagOk(bag[k]) ? 'var(--border)' : 'var(--status-critical)', border: i < CLUBS.length - 1 ? '1px solid var(--border)' : 'none', on: (e) => this.setState({ bag: Object.assign({}, bag, { [k]: e.target.value }), err: '' }) })),
+      // Golf
+      club: s.club || '', onClub: (e) => this.setState({ club: e.target.value }),
+      courses: COURSES.map(([k, label, sub], i) => ({ label: label, sub: sub, aria: k === fav ? 'true' : 'false', weight: k === fav ? '600' : '400', ring: k === fav ? 'var(--accent)' : 'var(--text-3)', dot: k === fav ? 'var(--accent)' : 'transparent', border: i < COURSES.length - 1 ? '1px solid var(--border)' : 'none', pick: () => this.setState({ fav: k }) })),
+      // Connexions
+      connRows: [['ffgolf', 'ff', 'accent', 'ffgolf', fr ? 'Ton index officiel et tes scores de compétition' : 'Your official handicap and tournament scores'], ['trackman', 'TM', 'driving', 'TrackMan', fr ? 'Distances et dispersion par club, depuis le practice ou le simulateur' : 'Distances and dispersion by club, from the range or simulator'], ['watch', '⌚', 'physique', fr ? 'Montre / appli santé' : 'Watch / health app', fr ? 'Pas, fréquence cardiaque et séances physiques' : 'Steps, heart rate and fitness sessions']]
+        .map(([k, icon, color, title, sub], i, all) => ({ icon: icon, color: color, title: title, sub: sub, aria: conn[k] ? 'true' : 'false', btn: conn[k] ? (fr ? 'Connecté ✓' : 'Connected ✓') : (fr ? 'Connecter' : 'Connect'), btnBg: conn[k] ? 'color-mix(in srgb, var(--status-good) 14%, transparent)' : 'transparent', btnColor: conn[k] ? 'var(--status-good)' : 'var(--accent)', btnBorder: conn[k] ? 'var(--status-good)' : 'var(--accent)', border: i < all.length - 1 ? '1px solid var(--border)' : 'none', toggle: () => this.setState(k === 'ffgolf' && s.ff ? { ff: false, conn: Object.assign({}, conn, { ffgolf: false }) } : { conn: Object.assign({}, conn, { [k]: !conn[k] }) }) })),
+      // Enseignant
+      statusOpts: STATUS.map(([k, label, sub]) => Object.assign(sel(k === status), { label: label, sub: sub, dot: k === status ? 'var(--accent)' : 'transparent', pick: () => this.setState({ status: k }) })),
+      place: s.place || '', onPlace: (e) => this.setState({ place: e.target.value }),
+      addCard: () => this.setState({ card: !s.card }),
+      cardTitle: s.card ? (fr ? 'Carte professionnelle ajoutée' : 'Professional card added') : (fr ? 'Ajouter ma carte professionnelle' : 'Add my professional card'),
+      cardSub: s.card ? (fr ? 'En cours de vérification · essai Pro activé' : 'Being verified · Pro trial on') : (fr ? 'Photo ou PDF · ou plus tard depuis les Réglages' : 'Photo or PDF · or later from Settings'),
+      cardIcon: s.card ? '✓' : '+', cardBorder: s.card ? 'var(--status-good)' : 'var(--accent)', cardBorderStyle: s.card ? 'solid' : 'dashed',
+      coachRecap: (fr ? nameOf(STATUS, status) + ' · ' + (s.card ? 'carte en vérification' : 'carte à ajouter plus tard') + ' · essai de 30 jours' : nameOf(STATUS, status) + ' · ' + (s.card ? 'card being verified' : 'card to add later') + ' · 30-day trial'),
+      // Récapitulatif
+      recapRows: recapRows.map(([id, label, value, isLater], i) => ({ label: label, value: value, color: isLater ? 'var(--text-3)' : 'var(--text)', border: i < recapRows.length - 1 ? '1px solid var(--border)' : 'none', edit: editRow(id) })),
+      mods: (fr ? [['competitions', 'Compétitions', 'Parce que tu fais des compétitions'], ['stats', 'Stats avancées', 'Pour les joueurs qui aiment les chiffres'], ['coach', 'Coach', 'Pour partager avec ton entraîneur'], ['social', 'Social et messages', 'Pour jouer et échanger avec tes amis'], ['physique', 'Physique et bien-être', 'Pour rester en forme'], ['badges', 'Badges et défis', 'Pour garder la motivation']]
+        : [['competitions', 'Tournaments', 'Because you play tournaments'], ['stats', 'Advanced stats', 'For players who love numbers'], ['coach', 'Coach', 'To share with your coach'], ['social', 'Social and messages', 'To play and chat with friends'], ['physique', 'Fitness and well-being', 'To stay fit'], ['badges', 'Badges and challenges', 'To stay motivated']])
+        .map(([k, t, why], i, all) => ({ title: t, why: mods[k] ? why : (fr ? 'Désactivé' : 'Off'), aria: mods[k] ? 'true' : 'false', bg: mods[k] ? 'var(--accent)' : 'var(--surface-2)', justify: mods[k] ? 'flex-end' : 'flex-start', border: i < all.length - 1 ? '1px solid var(--border)' : 'none', toggle: () => this.setState({ over: Object.assign({}, s.over || {}, { [k]: !mods[k] }) }) })),
+      // Démarrage
+      startTitle: (fr ? 'Comment veux-tu commencer' : 'How do you want to start') + (String(s.first || '').trim() ? ', ' + String(s.first).trim() : '') + (fr ? ' ?' : '?'),
+      startTour: finish('tour'), startGuide: finish('guide'), startExplore: finish('explore'), startCoach: finish('coach')
+    };
+  }
+  renderVals() {
+    return Object.assign({ theme: this.themeNow(), palette: this.paletteNow(), cvd: this.cvdNow(), cvdStyle: this.cvdVars() + this.zoomStyle() }, this.onbCtl());
+  }
+}
+</script>
+</body>
+</html>

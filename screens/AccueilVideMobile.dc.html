@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Premier lancement — Golf</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{
+  --on-accent:#0d0d0d;
+  --bg:#0d0d0d;
+  --surface:#1a1a19;
+  --surface-2:#242422;
+  --border:rgba(255,255,255,0.10);
+  --text:#ffffff;
+  --text-2:#c3c2b7;
+  --text-3:#898781;
+  --accent:#3987e5;
+  --status-good:#0ca30c;
+  --status-critical:#e66767;
+  --driving:#3987e5;
+  --fers:#d95926;
+  --petitjeu:#199e70;
+  --putting:#c98500;
+  --mental:#d55181;
+  --physique:#008300;
+}
+[data-theme="light"]{
+  --bg:#f7f3ea;
+  --surface:#fffffd;
+  --surface-2:#ece4d3;
+  --border:rgba(27,29,34,0.12);
+  --text:#1b1d22;
+  --text-2:#45433c;
+  --text-3:#6e6758;
+  --grid:#e4dccb;
+  --accent:#1e5c3f;
+  --on-accent:#ffffff;
+  --status-good:#0a7f0a;
+  --status-critical:#c23a3a;
+  --driving:#2b73cc;
+  --fers:#c24e1f;
+  --petitjeu:#0f7c86;
+  --putting:#9a6700;
+  --mental:#b83d6b;
+  --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="classique"]{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#ebe9e3; --border:rgba(13,13,13,0.12);
+  --text:#141413; --text-2:#44433e; --text-3:#6b6962; --grid:#e2e0d9; --accent:#2b73cc;
+}
+[data-theme="light"][data-palette="fairway"]{
+  --bg:#f2f5f1; --surface:#ffffff; --surface-2:#e2e9e0; --border:rgba(18,32,26,0.12);
+  --text:#12201a; --text-2:#3c4a42; --text-3:#5e6c65; --grid:#dce4da; --accent:#1e7a4f; --petitjeu:#0f7c86; --physique:#6a4bb8;
+}
+[data-theme="light"][data-palette="rose"]{
+  --bg:#fbf4f6; --surface:#ffffff; --surface-2:#f3e4ea; --border:rgba(42,22,32,0.12);
+  --text:#2a1620; --text-2:#553f49; --text-3:#7a5e6a; --grid:#eedde4; --accent:#c2477a; --mental:#7a4fc4;
+}
+[data-theme="light"][data-palette="lisible"]{
+  --bg:#ffffff; --surface:#f4f4f6; --surface-2:#e6e6eb; --border:rgba(0,0,0,0.18);
+  --text:#000000; --text-2:#2e2e31; --text-3:#5e5e63; --grid:#dddde2; --accent:#0a5fcc;
+}
+[data-theme="dark"][data-palette="clubhouse"]{
+  --bg:#0f1411; --surface:#171d19; --surface-2:#212923; --border:rgba(242,239,231,0.10);
+  --text:#f2efe7; --text-2:#c9c3b4; --text-3:#8e8878; --grid:#28302a;
+  --accent:#4fbf86; --on-accent:#0f1411; --driving:#4fc3f7; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="fairway"]{
+  --bg:#0b1510; --surface:#13201a; --surface-2:#1c2c24; --border:rgba(238,243,238,0.10);
+  --text:#eef3ee; --text-2:#bfcbc3; --text-3:#85948b; --grid:#22342a;
+  --accent:#3fbf7f; --on-accent:#0b1510; --petitjeu:#2bb3c0; --physique:#9b7be0;
+}
+[data-theme="dark"][data-palette="rose"]{
+  --bg:#1a0f15; --surface:#24161e; --surface-2:#2f1e28; --border:rgba(247,237,241,0.10);
+  --text:#f7edf1; --text-2:#d6c2cb; --text-3:#a18c96; --grid:#3a2632;
+  --accent:#f07aa8; --on-accent:#1a0f15; --mental:#a98bf0;
+}
+[data-theme="dark"][data-palette="lisible"]{
+  --bg:#000000; --surface:#111114; --surface-2:#222228; --border:rgba(255,255,255,0.22);
+  --text:#ffffff; --text-2:#e6e6ea; --text-3:#b4b4bb; --grid:#2a2a30;
+  --accent:#5aa2ff; --on-accent:#000000;
+}
+[data-theme][data-palette][data-cvd="rg"]{
+  --status-good:#56b4e9; --status-critical:#e69f00;
+  --driving:#56b4e9; --fers:#e69f00; --petitjeu:#009e73; --putting:#f0e442; --mental:#cc79a7; --physique:#bdbdbd;
+}
+[data-theme="light"][data-palette][data-cvd="rg"]{
+  --status-good:#0072b2; --status-critical:#b85000;
+  --driving:#0072b2; --fers:#d55e00; --petitjeu:#007a5a; --putting:#a88f00; --mental:#b0588d; --physique:#6b6b6b;
+}
+[data-theme][data-palette][data-cvd="by"]{
+  --status-good:#3dd6c4; --status-critical:#ff5c8a;
+  --driving:#90caf9; --fers:#ff7043; --petitjeu:#00897b; --putting:#f48fb1; --mental:#ba68c8; --physique:#e0e0e0;
+}
+[data-theme="light"][data-palette][data-cvd="by"]{
+  --status-good:#00796b; --status-critical:#c2185b;
+  --driving:#1e5fa8; --fers:#d84315; --petitjeu:#00695c; --putting:#ad1457; --mental:#7b1fa2; --physique:#616161;
+}
+*{box-sizing:border-box;scrollbar-width:none}
+*::-webkit-scrollbar{display:none}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" data-palette="{{ palette }}" data-cvd="{{ cvd }}" style="width: 390px; height: 844px; background: var(--bg); color: var(--text); display: flex; flex-direction: column; overflow: hidden; position: relative; {{ cvdStyle }}">
+
+  <!-- Scrollable content -->
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; padding: 28px 20px 24px 20px; display: flex; flex-direction: column; gap: 22px;">
+
+    <!-- Header -->
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 36px; height: 36px; border-radius: 10px; background: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--on-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4l10 4-10 4"/><path d="M4 21h6"/></svg>
+        </div>
+        <div>
+          <h1 style="font-size: 22px; font-weight: 600; line-height: 1.1;">{{ hello }}</h1>
+          <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Ton espace est prêt</div>
+        </div>
+      </div>
+      <a data-tuto="profil" href="ProfilMobile.dc.html" aria-label="Profil et réglages" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0;">{{ initials }}</a>
+    </div>
+
+    <!-- Index -->
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+      <div>
+        <div style="font-size: 12px; color: var(--text-3);">Index de départ</div>
+        <div class="display" style="font-size: 36px; font-weight: 600; line-height: 1.1; margin-top: 4px; color: var(--accent);">{{ indexLabel }}</div>
+        <div style="font-size: 12px; color: var(--text-3); margin-top: 4px;">{{ indexSub }}</div>
+      </div>
+      <svg width="120" height="48" viewBox="0 0 120 48" aria-hidden="true"><path d="M4 40 H116" stroke="#2c2c2a" stroke-width="2" stroke-dasharray="4 5"/><circle cx="8" cy="40" r="4" fill="var(--accent)"/></svg>
+    </div>
+
+    <!-- Termine ton profil : ce qui a été passé au premier lancement -->
+    <sc-if value="{{ ob.on }}" hint-placeholder-val="{{ false }}">
+      <div style="background: var(--surface); border: 1px solid var(--accent); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="position: relative; width: 48px; height: 48px; flex-shrink: 0;">
+            <div style="position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(var(--accent) {{ ob.deg }}, var(--surface-2) 0);"></div>
+            <div style="position: absolute; inset: 5px; border-radius: 50%; background: var(--surface); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">{{ ob.pct }}</div>
+          </div>
+          <div style="flex-grow: 1; min-width: 0;"><div style="font-size: 15px; font-weight: 600;">{{ ob.title }}</div><div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ ob.sub }}</div></div>
+          <button onClick="{{ ob.hide }}" aria-label="{{ ob.hideLbl }}" style="width: 36px; height: 36px; border-radius: 50%; border: none; background: transparent; color: var(--text-3); cursor: pointer; flex-shrink: 0;">✕</button>
+        </div>
+        <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+          <sc-for list="{{ ob.items }}" as="it" hint-placeholder-count="3">
+            <sc-if value="{{ it.isLink }}" hint-placeholder-val="{{ true }}">
+              <a href="OnboardingMobile.dc.html" onClick="{{ it.go }}" style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-bottom: {{ it.border }};">
+                <span style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0;"></span>
+                <span style="flex-grow: 1; min-width: 0;"><span style="display: block; font-size: 14px; font-weight: 600;">{{ it.label }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ it.sub }}</span></span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+              </a>
+            </sc-if>
+            <sc-if value="{{ it.isTour }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ it.go }}" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 11px 14px; border: none; border-bottom: {{ it.border }}; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer;">
+                <span style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0;"></span>
+                <span style="flex-grow: 1; min-width: 0;"><span style="display: block; font-size: 14px; font-weight: 600;">{{ it.label }}</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">{{ it.sub }}</span></span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+              </button>
+            </sc-if>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Checklist -->
+    <div>
+      <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px;">
+        <h2 style="font-size: 16px; font-weight: 600;">Pour bien démarrer</h2>
+        <span style="font-size: 12px; color: var(--text-3);">0 sur 4</span>
+      </div>
+      <div style="height: 6px; border-radius: 3px; background: var(--surface-2); margin-bottom: 12px;"></div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
+        <a href="EntrainementMobile.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-bottom: 1px solid var(--border);">
+          <span style="width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--accent); color: var(--accent); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</span>
+          <span style="flex-grow: 1;"><span style="display: block; font-size: 14px; font-weight: 600;">Enregistre ta première séance</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">1 minute : domaine, durée, ressenti</span></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <a href="PartieLiveMobile.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-bottom: 1px solid var(--border);">
+          <span style="width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); color: var(--text-3); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</span>
+          <span style="flex-grow: 1;"><span style="display: block; font-size: 14px; font-weight: 600;">Joue ou saisis une partie</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">Carte de score et GPS trou par trou</span></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <a href="ObjectifsMobile.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 14px; border-bottom: {{ lastBorder }};">
+          <span style="width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); color: var(--text-3); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</span>
+          <span style="flex-grow: 1;"><span style="display: block; font-size: 14px; font-weight: 600;">Fixe ton premier objectif</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">Un index cible et une échéance</span></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <sc-if value="{{ socialOn }}" hint-placeholder-val="{{ false }}">
+          <a href="SocialMobile.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 14px;">
+            <span style="width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); color: var(--text-3); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</span>
+            <span style="flex-grow: 1;"><span style="display: block; font-size: 14px; font-weight: 600;">Invite un ami</span><span style="display: block; font-size: 12px; color: var(--text-3); margin-top: 2px;">Partagez vos parties et vos progrès</span></span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+          </a>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- Empty domains -->
+    <div>
+      <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 10px;">Domaines — cette semaine</h2>
+      <div style="background: var(--surface); border: 1px dashed var(--border); border-radius: 12px; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <div style="display: flex; gap: 8px;">
+          <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--driving); opacity: 0.5;"></span>
+          <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--fers); opacity: 0.5;"></span>
+          <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--petitjeu); opacity: 0.5;"></span>
+          <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--putting); opacity: 0.5;"></span>
+          <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--mental); opacity: 0.5;"></span>
+          <span style="width: 12px; height: 12px; border-radius: 50%; background: var(--physique); opacity: 0.5;"></span>
+        </div>
+        <div style="font-size: 13px; color: var(--text-2); line-height: 1.5;">Aucune séance pour l'instant.<br>Tes 6 domaines d'entraînement apparaîtront ici.</div>
+        <a href="EntrainementMobile.dc.html" style="height: 40px; padding: 0 16px; border-radius: 999px; background: var(--surface-2); font-size: 13px; font-weight: 600; display: flex; align-items: center;">Ajouter une séance</a>
+      </div>
+    </div>
+
+    <!-- Empty progression -->
+    <div>
+      <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 10px;">Ta progression</h2>
+      <div style="background: var(--surface); border: 1px dashed var(--border); border-radius: 12px; padding: 20px; text-align: center; font-size: 13px; color: var(--text-2); line-height: 1.5;">Ta courbe d'index apparaîtra après tes 2 premières parties.</div>
+    </div>
+
+  </div>
+
+  <!-- Bottom tab bar -->
+  <nav style="flex-shrink: 0; height: 84px; background: var(--surface); border-top: 1px solid var(--border); display: grid; grid-template-columns: repeat(5, 1fr); align-items: flex-start; padding: 8px 8px 0 8px;">
+    <a href="MainMobile.dc.html" style="height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--accent); font-size: 12px; font-weight: 600;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>
+      Accueil
+    </a>
+    <a data-tuto="seances" href="SeancesMobile.dc.html" style="height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-3); font-size: 12px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+      Séances
+    </a>
+    <div style="display: flex; justify-content: center;">
+      <button data-tuto="plus" onClick="{{ openMenu }}" aria-label="Nouvelle activité" style="border: none; cursor: pointer; width: 52px; height: 52px; border-radius: 16px; background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </div>
+    <a data-tuto="progression" href="ProgressionMobile.dc.html" style="height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-3); font-size: 12px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+      Progression
+    </a>
+    <a data-tuto="objectifs" href="ObjectifsMobile.dc.html" style="height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--text-3); font-size: 12px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 5h13l-3 3.5L18 12H5"/></svg>
+      Objectifs
+    </a>
+  </nav>
+
+
+  <!-- Menu + (Nouvelle activité) : s'ouvre par-dessus la page en cours -->
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ closeMenu }}" aria-label="Fermer le menu" style="position: absolute; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); border: none; padding: 0; cursor: pointer;"></button>
+
+    <div role="dialog" aria-label="Nouvelle activité" style="position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--border); border-radius: 24px 24px 0 0; padding: 10px 20px 34px 20px; display: flex; flex-direction: column; gap: 18px;">
+
+      <div style="width: 36px; height: 4px; border-radius: 2px; background: var(--surface-2); align-self: center;"></div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 20px; font-weight: 600;">Nouvelle activité</h2>
+          <div style="font-size: 12px; color: var(--text-3); margin-top: 2px;">Que veux-tu faire ?</div>
+        </div>
+        <button onClick="{{ closeMenu }}" aria-label="Fermer" style="width: 44px; height: 44px; border-radius: 50%; background: var(--surface-2); color: var(--text-2); border: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+
+        <a href="EntrainementMobile.dc.html" onClick="{{ closeMenu }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--accent);">
+          <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--accent); color: var(--on-accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>
+          </div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600;">Entraînement</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 3px; line-height: 1.4;">Enregistrer une séance : putting, fers, petit jeu, mental…</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+
+        <a href="PartieLiveMobile.dc.html" onClick="{{ closeMenu }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--border);">
+          <div style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4l10 4-10 4"/><path d="M4 21h6"/></svg>
+          </div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600;">Créer une partie</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 3px; line-height: 1.4;">Choisir un parcours et noter ton score trou par trou</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+
+        <a href="ParcoursMobile.dc.html" onClick="{{ closeMenu }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--border);">
+          <div style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          </div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600;">Parcourir les parcours</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 3px; line-height: 1.4;">Trouver un golf près de toi et découvrir ses trous</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+
+        <a href="TrackmanMobile.dc.html" onClick="{{ tmMenu }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--border);">
+          <div style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in srgb, var(--driving) 16%, transparent); color: var(--driving); display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M6 19c2-8 6-13 13-14"/><circle cx="19" cy="5" r="1.6" fill="currentColor"/></svg></div>
+          <div style="flex-grow: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600;">Importer depuis TrackMan</div>
+            <div style="font-size: 12px; color: var(--text-3); margin-top: 3px; line-height: 1.4;">Séances de practice ou de simulateur, avec toutes les données</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+
+        <sc-if value="{{ compOn }}" hint-placeholder-val="{{ false }}">
+          <a href="CompetitionsMobile.dc.html" onClick="{{ closeMenu }}" style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--border);">
+            <div style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 6h3v2a3 3 0 0 1-3 3M7 6H4v2a3 3 0 0 0 3 3"/></svg>
+            </div>
+            <div style="flex-grow: 1; min-width: 0;">
+              <div style="font-size: 15px; font-weight: 600;">Trouver une compétition</div>
+              <div style="font-size: 12px; color: var(--text-3); margin-top: 3px; line-height: 1.4;">Les compétitions près de toi, filtrées selon ton index</div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="m9 6 6 6-6 6"/></svg>
+          </a>
+        </sc-if>
+
+      </div>
+    </div>
+  </sc-if>
+  <!-- Tutoriel du premier lancement : met en lumière les zones clés, étape par étape -->
+  <sc-if value="{{ tuOn }}" hint-placeholder-val="{{ false }}">
+    <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(0,0,0,{{ tu.dim }});"></div>
+    <sc-if value="{{ tu.hasRing }}" hint-placeholder-val="{{ false }}">
+      <div aria-hidden="true" style="position: absolute; left: {{ tu.rx }}px; top: {{ tu.ry }}px; width: {{ tu.rw }}px; height: {{ tu.rh }}px; border-radius: {{ tu.rr }}px; box-shadow: 0 0 0 1600px rgba(0,0,0,0.66); border: 2px solid var(--accent); transition: all 0.35s ease;"></div>
+    </sc-if>
+    <div role="dialog" aria-label="{{ tu.title }}" style="position: absolute; left: 20px; right: 20px; top: {{ tu.top }}; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: top 0.35s ease;">
+      <sc-if value="{{ tu.isFirst }}" hint-placeholder-val="{{ true }}">
+        <svg width="52" height="52" viewBox="0 0 96 96" aria-hidden="true"><rect x="1" y="1" width="94" height="94" rx="22" fill="#f7f3ea" stroke="#d9d2c3" stroke-width="2"/><path d="M14 72 H 84" stroke="#1e5c3f" stroke-width="1.6" stroke-linecap="round" opacity="0.35"/><path d="M20 71 C 26 30, 46 26, 54 71 Q 59 61, 64 71.5 L 70 72" fill="none" stroke="#1e5c3f" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="71" r="4.6" fill="#1e5c3f"/><ellipse cx="74" cy="72.5" rx="3.6" ry="1.4" fill="#1e5c3f"/><path d="M74 72 V 30" stroke="#1e5c3f" stroke-width="2.6" stroke-linecap="round"/><path d="M74 30 L 86 34.5 L 74 39 Z" fill="#4fbf86"/></svg>
+      </sc-if>
+      <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent);">{{ tu.step }}</div>
+      <h2 style="font-size: 20px; font-weight: 600;">{{ tu.title }}</h2>
+      <div style="font-size: 14px; line-height: 1.5; color: var(--text-2);">{{ tu.text }}</div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 6px;">
+        <div style="display: flex; gap: 5px; flex-grow: 1;">
+          <sc-for list="{{ tu.dots }}" as="o" hint-placeholder-count="6"><span style="width: {{ o.w }}; height: 6px; border-radius: 3px; background: {{ o.bg }}; transition: width 0.3s ease;"></span></sc-for>
+        </div>
+        <sc-if value="{{ tu.notLast }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ tuSkip }}" style="height: 40px; padding: 0 12px; border: none; background: transparent; color: var(--text-3); font-size: 14px; cursor: pointer;">{{ tu.skip }}</button>
+        </sc-if>
+        <button onClick="{{ tuNext }}" style="height: 40px; padding: 0 18px; border-radius: 999px; border: none; background: var(--accent); color: var(--on-accent); font-size: 14px; font-weight: 600; cursor: pointer;">{{ tu.next }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  // Couleurs du mode daltonien, posées directement sur l'écran
+  // Taille du texte : l'écran entier est agrandi, en gardant le format du téléphone
+  zoomStyle() {
+    let z = 'md';
+    try { z = window.localStorage.getItem('cadence.textSize') || 'md'; } catch (e) {}
+    const f = { sm: 0.9, md: 1, lg: 1.1, xl: 1.2 }[z] || 1;
+    if (f === 1) return '';
+    return ' zoom: ' + f + '; width: ' + (390 / f).toFixed(2) + 'px; height: ' + (844 / f).toFixed(2) + 'px;';
+  }
+  cvdVars() {
+    const c = this.cvdNow();
+    if (c !== 'rg' && c !== 'by') return '';
+    const light = this.themeNow() === 'light';
+    const sets = {
+      rg: light
+        ? ['#0072b2', '#b85000', '#0072b2', '#d55e00', '#007a5a', '#a88f00', '#b0588d', '#6b6b6b']
+        : ['#56b4e9', '#e69f00', '#56b4e9', '#e69f00', '#009e73', '#f0e442', '#cc79a7', '#bdbdbd'],
+      by: light
+        ? ['#00796b', '#c2185b', '#1e5fa8', '#d84315', '#00695c', '#ad1457', '#7b1fa2', '#616161']
+        : ['#3dd6c4', '#ff5c8a', '#90caf9', '#ff7043', '#00897b', '#f48fb1', '#ba68c8', '#e0e0e0']
+    }[c];
+    const names = ['status-good', 'status-critical', 'driving', 'fers', 'petitjeu', 'putting', 'mental', 'physique'];
+    return names.map((n, i) => '--' + n + ': ' + sets[i] + ';').join(' ');
+  }
+  cvdNow() {
+    let c = 'off';
+    try { c = window.localStorage.getItem('cadence.cvd') || 'off'; } catch (e) {}
+    return c;
+  }
+  paletteNow() {
+    let p = 'clubhouse';
+    try { p = window.localStorage.getItem('cadence.palette') || 'clubhouse'; } catch (e) {}
+    return p;
+  }
+  // Thème : sombre par défaut, clair ou automatique (suit le téléphone) selon les Paramètres
+  themeNow() {
+    let t = 'dark';
+    try { t = window.localStorage.getItem('cadence.theme') || 'dark'; } catch (e) {}
+    if (t === 'auto') { try { t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { t = 'dark'; } }
+    return t;
+  }
+  // Module Compétitions : réglage partagé entre les écrans (Paramètres l'écrit, les autres le lisent)
+  componentDidMount() {
+    // Suit le thème choisi dans les Paramètres, même si l'écran est déjà ouvert
+    this._lastTheme = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle();
+    this._themeTimer = setInterval(() => { const t = this.themeNow() + this.paletteNow() + this.cvdNow() + this.zoomStyle(); if (t !== this._lastTheme) { this._lastTheme = t; this.forceUpdate(); } }, 400);
+    this._syncComp = () => {
+      let on = false;
+      try { on = window.localStorage.getItem('cadence.mod.competitions') !== '0'; } catch (e) {}
+      let social = false;
+      try { social = window.localStorage.getItem('cadence.mod.social') !== '0'; } catch (e) {}
+      const cur = this.state || {};
+      if (on !== !!cur.comp || social !== !!cur.social) this.setState({ comp: on, social: social });
+    };
+    this._syncComp();
+    try { window.addEventListener('storage', this._syncComp); window.addEventListener('focus', this._syncComp); } catch (e) {}
+  }
+  componentWillUnmount() {
+    clearInterval(this._themeTimer);
+    try { window.removeEventListener('storage', this._syncComp); window.removeEventListener('focus', this._syncComp); } catch (e) {}
+  }
+  // Tutoriel : affiché tant qu'il n'a pas été terminé ou passé (relançable depuis les Paramètres)
+  tutoCtl() {
+    const fr = 'fr' === 'fr';
+    const s = this.state || {};
+    let done = false;
+    try { done = window.localStorage.getItem('cadence.tutoDone') === '1'; } catch (e) {}
+    const on = s.tuStep !== undefined ? s.tuStep >= 0 : !done;
+    const step = s.tuStep !== undefined && s.tuStep >= 0 ? s.tuStep : 0;
+    const finish = () => { try { window.localStorage.setItem('cadence.tutoDone', '1'); } catch (e) {} this.setState({ tuStep: -1 }); };
+    // Zones mises en lumière (écran de 390 × 844)
+    const tab = (i) => ({ rx: Math.round(8 + 74.8 * (i + 0.5) - 36), ry: 766, rw: 72, rh: 56, rr: 14 });
+    const S = fr ? [
+      [null, 'Bienvenue dans Cadence', 'En 30 secondes, voici où trouver l’essentiel. Tu pourras revoir ce tutoriel depuis les Paramètres.', '34%'],
+      [{ rx: 163, ry: 762, rw: 64, rh: 64, rr: 20 }, 'Le bouton +', 'Enregistre une séance d’entraînement, crée une partie ou trouve un parcours près de toi.', '470px'],
+      [tab(1), 'Séances', 'Tout ton historique : entraînements et parties. Touche une ligne pour voir le détail ou la supprimer.', '470px'],
+      [tab(3), 'Progression', 'Ton index et chaque domaine dans le temps, pour voir ton évolution.', '470px'],
+      [tab(4), 'Objectifs', 'Fixe ton cap (par exemple passer sous 12 d’index) et suis tes objectifs de la semaine.', '470px'],
+      [{ rx: 322, ry: 20, rw: 58, rh: 58, rr: 29 }, 'Ton profil', 'Ton sac, tes réglages, le thème, les palettes et les modules à activer.', '104px']
+    ] : [
+      [null, 'Welcome to Cadence', 'In 30 seconds, here’s where to find the essentials. You can replay this tour from Settings.', '34%'],
+      [{ rx: 163, ry: 762, rw: 64, rh: 64, rr: 20 }, 'The + button', 'Log a practice session, create a round or find a course near you.', '470px'],
+      [tab(1), 'Sessions', 'Your whole history: practice and rounds. Tap a row to see details or delete it.', '470px'],
+      [tab(3), 'Progress', 'Your handicap and each area over time, to see how you progress.', '470px'],
+      [tab(4), 'Goals', 'Set your target (for example getting under 12) and follow your weekly goals.', '470px'],
+      [{ rx: 322, ry: 20, rw: 58, rh: 58, rr: 29 }, 'Your profile', 'Your bag, your settings, theme, palettes and the modules to turn on.', '104px']
+    ];
+    const keys = [null, 'plus', 'seances', 'progression', 'objectifs', 'profil'];
+    let real = null;
+    try {
+      const el = keys[step] ? document.querySelector('[data-tuto="' + keys[step] + '"]') : null;
+      const root = el ? el.closest('[data-theme]') : null;
+      if (el && root) {
+        const a = el.getBoundingClientRect(), b = root.getBoundingClientRect();
+        const z = root.offsetWidth ? b.width / root.offsetWidth : 1;
+        const pad = 6;
+        real = { rx: Math.round((a.left - b.left) / z - pad), ry: Math.round((a.top - b.top) / z - pad), rw: Math.round(a.width / z + pad * 2), rh: Math.round(a.height / z + pad * 2), rr: 16 };
+        if (!real.rw || !real.rh) real = null;
+      }
+    } catch (e) { real = null; }
+    const cur = S[step];
+    const last = step === S.length - 1;
+    const ring = real || cur[0] || { rx: 0, ry: 0, rw: 0, rh: 0, rr: 0 };
+    return {
+      tuOn: on,
+      tu: {
+        hasRing: !!cur[0], dim: cur[0] ? '0' : '0.66', rx: ring.rx, ry: ring.ry, rw: ring.rw, rh: ring.rh, rr: ring.rr,
+        top: cur[3], isFirst: step === 0, notLast: !last,
+        step: (fr ? 'Étape ' : 'Step ') + (step + 1) + (fr ? ' sur ' : ' of ') + S.length,
+        title: cur[1], text: cur[2],
+        skip: fr ? 'Passer' : 'Skip', next: last ? (fr ? 'C’est parti' : 'Let’s go') : (fr ? 'Suivant' : 'Next'),
+        dots: S.map((_, i) => ({ w: i === step ? '18px' : '6px', bg: i <= step ? 'var(--accent)' : 'var(--surface-2)' }))
+      },
+      tuNext: () => { if (last) { try { window.localStorage.setItem('cadence.tourSeen', '1'); } catch (e) {} finish(); } else { this.setState({ tuStep: step + 1 }); setTimeout(() => this.forceUpdate(), 50); } },
+      tuSkip: finish
+    };
+  }
+  // Carte « Termine ton profil » : étapes passées au premier lancement, à reprendre quand on veut
+  obCardCtl() {
+    const fr = 'fr' === 'fr';
+    const s = this.state || {};
+    const ls = (k, d) => { try { const v = window.localStorage.getItem('cadence.' + k); return v === null ? d : v; } catch (e) { return d; } };
+    const off = { on: false, deg: '0deg', pct: '', title: '', sub: '', hide: () => {}, hideLbl: '', items: [] };
+    if (ls('obDone', '0') !== '1' || ls('obCardHidden', '0') === '1' || s.obHidden) return { ob: off };
+    let prof = {}; try { prof = JSON.parse(ls('profile', '{}')) || {}; } catch (e) {}
+    const ITEMS = [
+      ['account', fr ? 'Crée ton compte' : 'Create your account', fr ? 'Pour sauvegarder tes séances' : 'To back up your sessions', !!ls('account', '')],
+      ['bag', fr ? 'Renseigne ton sac' : 'Fill in your bag', fr ? 'Ta distance avec chaque club' : 'Your distance with each club', ls('bag', null) !== null],
+      ['golf', fr ? 'Ajoute ton golf' : 'Add your course', fr ? 'Club et parcours favori' : 'Club and home course', ls('favCourse', null) !== null || !!(prof.club || '').trim()],
+      ['connex', fr ? 'Connecte tes services' : 'Connect your services', 'ffgolf, TrackMan, ' + (fr ? 'montre' : 'watch'), ['ffgolf', 'trackman', 'watch'].some((k) => ls('conn.' + k, '0') === '1')],
+      ['tour', fr ? 'Fais la visite guidée' : 'Take the guided tour', fr ? '30 secondes pour tout repérer' : '30 seconds to find your way', ls('tourSeen', '0') === '1']
+    ];
+    const todo = ITEMS.filter((x) => !x[3]);
+    if (!todo.length) return { ob: off };
+    const pct = Math.round((4 + ITEMS.length - todo.length) / (4 + ITEMS.length) * 100);
+    return { ob: {
+      on: true, deg: Math.round(pct * 3.6) + 'deg', pct: pct + '%',
+      title: fr ? 'Termine ton profil' : 'Finish your profile',
+      sub: todo.length + (fr ? (todo.length > 1 ? ' étapes passées · quand tu veux' : ' étape passée · quand tu veux') : (todo.length > 1 ? ' skipped steps · whenever you like' : ' skipped step · whenever you like')),
+      hide: () => { try { window.localStorage.setItem('cadence.obCardHidden', '1'); } catch (e) {} this.setState({ obHidden: true }); },
+      hideLbl: fr ? 'Masquer cette carte' : 'Hide this card',
+      items: todo.map(([id, label, sub], i) => ({
+        label: label, sub: sub, isTour: id === 'tour', isLink: id !== 'tour', border: i < todo.length - 1 ? '1px solid var(--border)' : 'none',
+        go: id === 'tour' ? () => this.setState({ tuStep: 0 }) : () => { try { window.localStorage.setItem('cadence.obResume', id); window.localStorage.setItem('cadence.obFrom', 'AccueilVideMobile.dc.html'); } catch (e) {} }
+      }))
+    } };
+  }
+  renderVals() {
+    const s = this.state || {};
+    return {
+      theme: this.themeNow(),
+      palette: this.paletteNow(),
+      cvd: this.cvdNow(),
+      cvdStyle: this.cvdVars() + this.zoomStyle(),
+      ...this.tutoCtl(),
+      ...this.obCardCtl(),
+      menuOpen: !!s.menuOpen,
+      openMenu: () => this.setState({ menuOpen: true }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      tmMenu: () => { try { window.localStorage.setItem('cadence.tmFrom', 'home'); } catch (e) {} this.setState({ menuOpen: false }); },
+      compOn: !!s.comp,
+      socialOn: !!s.social,
+      ...this.fresh(!!s.social)
+    };
+  }
+  fresh(social) {
+    let idx = '';
+    try { idx = window.localStorage.getItem('cadence.index') || ''; } catch (e) {}
+    let first = 'Lucas';
+    try { const p = JSON.parse(window.localStorage.getItem('cadence.profile') || '{}') || {}; if (p.first !== undefined) first = String(p.first).trim(); } catch (e) {}
+    return {
+      hello: 'Bienvenue' + (first ? ', ' + first : ''), initials: (first ? first.slice(0, 2) : '?').toUpperCase(),
+      indexLabel: idx || '—',
+      indexSub: idx ? 'Ta courbe démarre ici' : 'Pas encore d’index : il sera calculé avec tes parties',
+      lastBorder: social ? '1px solid var(--border)' : 'none'
+    };
+  }
+}
+</script>
+</body>
+</html>
