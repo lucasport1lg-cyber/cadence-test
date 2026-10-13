@@ -179,6 +179,54 @@
   // ---------- Application ----------
   function App() {
     const vp = useViewport();
+    // À la souris : clic maintenu + glisser fait défiler les rangées horizontales, comme au doigt
+    useEffect(() => {
+      let drag = null;
+      const scroller = (node) => {
+        for (let el = node; el && el.classList && !el.classList.contains('t-phone-inner'); el = el.parentElement) {
+          const ox = getComputedStyle(el).overflowX;
+          if ((ox === 'auto' || ox === 'scroll') && el.scrollWidth > el.clientWidth + 2) return el;
+        }
+        return null;
+      };
+      const down = (e) => {
+        if (e.pointerType !== 'mouse' || e.button !== 0 || !e.target.closest || !e.target.closest('.t-phone-inner')) return;
+        const el = scroller(e.target);
+        if (el) drag = { el: el, x: e.clientX, left: el.scrollLeft, moved: false };
+      };
+      const move = (e) => {
+        if (!drag) return;
+        if (!(e.buttons & 1)) { drag = null; return; }
+        const dx = e.clientX - drag.x;
+        if (!drag.moved && Math.abs(dx) > 5) {
+          drag.moved = true;
+          document.documentElement.classList.add('t-dragging');
+        }
+        if (drag.moved) { drag.el.scrollLeft = drag.left - dx; e.preventDefault(); }
+      };
+      const up = () => {
+        if (!drag) return;
+        if (drag.moved) {
+          // Le relâchement après un glissement ne doit pas déclencher le bouton situé dessous
+          const block = (ev) => { ev.stopPropagation(); ev.preventDefault(); };
+          window.addEventListener('click', block, { capture: true, once: true });
+          setTimeout(() => window.removeEventListener('click', block, { capture: true }), 0);
+        }
+        document.documentElement.classList.remove('t-dragging');
+        drag = null;
+      };
+      window.addEventListener('pointerdown', down, true);
+      window.addEventListener('pointermove', move, true);
+      window.addEventListener('pointerup', up, true);
+      window.addEventListener('pointercancel', up, true);
+      return () => {
+        window.removeEventListener('pointerdown', down, true);
+        window.removeEventListener('pointermove', move, true);
+        window.removeEventListener('pointerup', up, true);
+        window.removeEventListener('pointercancel', up, true);
+      };
+    }, []);
+
     // Verrouille le défilement de la page pendant une mission ou l'exploration libre
     useEffect(() => {
       const lock = () => document.documentElement.classList.toggle('t-lock', !!document.querySelector('.t-run'));

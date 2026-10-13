@@ -108,3 +108,6 @@ html.t-lock, html.t-lock body { overflow: hidden; height: 100%; overscroll-behav
 .t-phone-inner [style*="overflow-y: auto"],
 .t-phone-inner [style*="overflow: auto"],
 .t-phone-inner [style*="overflow-y: scroll"] { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+/* Glisser à la souris : pas de sélection de texte pendant le geste */
+html.t-dragging, html.t-dragging * { cursor: grabbing !important; user-select: none !important; -webkit-user-select: none !important; }
