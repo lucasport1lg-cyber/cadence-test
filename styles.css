@@ -100,3 +100,11 @@ body { background: #0f1411; overscroll-behavior: none; }
 .t-phone-inner [style*="overflow-y: auto"] > *,
 .t-phone-inner [style*="overflow: auto"] > *,
 .t-phone-inner [style*="overflow-y: scroll"] > * { flex-shrink: 0; }
+
+/* iPhone : l'écran de mission est fixé à la fenêtre, la page elle-même ne défile jamais.
+   Seules les zones de l'appli défilent, sans « voler » le geste à la page. */
+html.t-lock, html.t-lock body { overflow: hidden; height: 100%; overscroll-behavior: none; }
+.t-run { position: fixed; inset: 0; height: auto; }
+.t-phone-inner [style*="overflow-y: auto"],
+.t-phone-inner [style*="overflow: auto"],
+.t-phone-inner [style*="overflow-y: scroll"] { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }

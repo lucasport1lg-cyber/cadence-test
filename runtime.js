@@ -159,7 +159,7 @@
     if (isRoot && props.style && ctx.frameH) {
       const z = parseFloat(props.style.zoom) || 1;
       props.style.height = (ctx.frameH / z).toFixed(2) + 'px';
-      props.style.width = (390 / z).toFixed(2) + 'px';
+      props.style.width = ((ctx.frameW || 390) / z).toFixed(2) + 'px';
     }
     return props;
   }

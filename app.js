@@ -134,16 +134,18 @@
     useEffect(() => { if (mod && mod.css) styleEl.textContent = mod.css; }, [mod]);
 
     const small = availW < 520;
-    const scale = small ? availW / 390 : Math.min(1, availH / 700);
-    const frameH = small ? availH / scale : Math.min(844, availH / scale);
+    // Sur téléphone, pas de mise à l'échelle : un parent transformé gêne le défilement tactile sur iPhone.
+    const scale = small ? 1 : Math.min(1, availH / 700);
+    const frameW = small ? Math.round(availW) : 390;
+    const frameH = small ? availH : Math.min(844, availH / scale);
 
     const ready = mod && mod.name === screen && !mod.failed;
     const inner = ready
-      ? h(Guard, { key: navKey, onHome: () => onNavigate(HOME) }, h(mod.Comp, { __ctx: { tpl: mod.tpl, navigate: onNavigate, frameH: frameH } }))
+      ? h(Guard, { key: navKey, onHome: () => onNavigate(HOME) }, h(mod.Comp, { __ctx: { tpl: mod.tpl, navigate: onNavigate, frameH: frameH, frameW: frameW } }))
       : h('div', { className: 't-phone-loading' }, mod && mod.failed ? 'Écran introuvable. Vérifie ta connexion puis recharge la page.' : 'Chargement…');
 
-    return h('div', { className: 't-phone' + (small ? ' is-full' : ''), style: { width: 390 * scale + 'px', height: frameH * scale + 'px' }, onClickCapture: onClickInside },
-      h('div', { className: 't-phone-inner', onScroll: (e) => { e.currentTarget.scrollTop = 0; e.currentTarget.scrollLeft = 0; }, style: { width: '390px', height: frameH + 'px', transform: 'scale(' + scale + ')' } }, inner));
+    return h('div', { className: 't-phone' + (small ? ' is-full' : ''), style: { width: frameW * scale + 'px', height: frameH * scale + 'px' }, onClickCapture: onClickInside },
+      h('div', { className: 't-phone-inner', onScroll: (e) => { e.currentTarget.scrollTop = 0; e.currentTarget.scrollLeft = 0; }, style: { width: frameW + 'px', height: frameH + 'px', transform: scale === 1 ? 'none' : 'scale(' + scale + ')' } }, inner));
   }
 
   // ---------- Petits composants d'interface ----------
@@ -177,6 +179,13 @@
   // ---------- Application ----------
   function App() {
     const vp = useViewport();
+    // Verrouille le défilement de la page pendant une mission ou l'exploration libre
+    useEffect(() => {
+      const lock = () => document.documentElement.classList.toggle('t-lock', !!document.querySelector('.t-run'));
+      lock();
+      const t = setInterval(lock, 500);
+      return () => clearInterval(t);
+    }, []);
     const free = /[?&]libre\b/.test(window.location.search);
     const [s, setS] = useState(() => (free ? null : load()));
     const [screen, setScreen] = useState(() => (s && s.run && s.run.screen) || HOME);
